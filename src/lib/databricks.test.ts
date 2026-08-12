@@ -50,4 +50,17 @@ describe('databricks feature flag', () => {
     assert.equal(isDatabricksFeatureEnabled(), true);
     assert.equal(isDatabricksConfigured(), true);
   });
+
+  it('honors ENABLE_DATABRICKS=false even when credentials are present', () => {
+    for (const key of envKeys) {
+      previous[key] = process.env[key];
+    }
+    process.env.ENABLE_DATABRICKS = 'false';
+    process.env.DATABRICKS_SERVER_HOSTNAME = 'example.cloud.databricks.com';
+    process.env.DATABRICKS_HTTP_PATH = '/sql/1.0/warehouses/abc123';
+    process.env.DATABRICKS_TOKEN = 'dapi-test';
+
+    assert.equal(isDatabricksFeatureEnabled(), false);
+    assert.equal(isDatabricksConfigured(), false);
+  });
 });

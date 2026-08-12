@@ -48,7 +48,9 @@ function getConfig(): DatabricksConfig | null {
 }
 
 export function isDatabricksFeatureEnabled(): boolean {
-  return process.env.ENABLE_DATABRICKS === 'true';
+  const flag = process.env.ENABLE_DATABRICKS?.trim().toLowerCase();
+  if (flag === 'false' || flag === '0' || flag === 'no') return false;
+  return flag === 'true';
 }
 
 export function isDatabricksConfigured(): boolean {
