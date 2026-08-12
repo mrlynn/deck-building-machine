@@ -47,15 +47,21 @@ function getConfig(): DatabricksConfig | null {
   };
 }
 
+export function isDatabricksFeatureEnabled(): boolean {
+  return process.env.ENABLE_DATABRICKS === 'true';
+}
+
 export function isDatabricksConfigured(): boolean {
-  return getConfig() !== null;
+  return isDatabricksFeatureEnabled() && getConfig() !== null;
 }
 
 export function databricksConfigStatus(): {
+  enabled: boolean;
   configured: boolean;
   missing: string[];
   resolved: { host: boolean; token: boolean; warehouseId: boolean };
 } {
+  const enabled = isDatabricksFeatureEnabled();
   const host = Boolean(resolveHost());
   const token = Boolean(process.env.DATABRICKS_TOKEN);
   const warehouseId = Boolean(resolveWarehouseId());
@@ -64,7 +70,8 @@ export function databricksConfigStatus(): {
   if (!token) missing.push('DATABRICKS_TOKEN');
   if (!warehouseId) missing.push('DATABRICKS_WAREHOUSE_ID or DATABRICKS_HTTP_PATH');
   return {
-    configured: host && token && warehouseId,
+    enabled,
+    configured: enabled && host && token && warehouseId,
     missing,
     resolved: { host, token, warehouseId },
   };

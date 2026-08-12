@@ -75,7 +75,7 @@ Defaults start as reference reference tokens; the downloaded zip is fully parame
 - \`POST /api/assistant\` — this help assistant (streaming chat)
 
 ### Integrations
-- Databricks: \`DATABRICKS_*\` env vars. Without them, Customer step falls back to manual entry / Brandfetch search.
+- Databricks: set \`ENABLE_DATABRICKS=true\` plus \`DATABRICKS_*\` env vars. Off by default — Customer step uses manual entry / Brandfetch search.
 - Brandfetch: \`BRANDFETCH_API_KEY\` (server) + \`NEXT_PUBLIC_BRANDFETCH_CLIENT_ID\` (browser search). Prefill is advisory — user should review colors/logos.
 - Logo theme mapping: Brandfetch \`theme: light\` → logoOnDark; \`theme: dark\` → logoOnLight.
 

@@ -17,7 +17,7 @@ export const WIZARD_STEPS: WizardStepMeta[] = [
     label: 'Find account',
     title: 'Find the customer',
     subtitle:
-      'Search Databricks or Brandfetch, import a pack, or resume a recent account.',
+      'Enter a customer name, search Brandfetch, import a pack, or resume a recent account.',
     helpTopic: 'customer',
   },
   {

@@ -28,7 +28,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ### Wizard flow
 
-1. **Customer** — search Salesforce accounts via Databricks, match a brand name via Brandfetch Search, or enter manually
+1. **Customer** — enter a customer name, optionally search Salesforce via Databricks, match a brand via Brandfetch Search, or import a pack
 2. **Brand pack** — colors, fonts, voice, logos (optional **Prefill from Brandfetch** using the website/domain)
 3. **Generate** — download `<slug>-deck-machine.zip`
 
@@ -49,13 +49,15 @@ Restart `npm run dev` after editing `.env.local`. Without these keys, the wizard
 
 Logo theme mapping (Brandfetch docs): `theme: light` → logo for dark backgrounds (`logoOnDark`); `theme: dark` → logo for light backgrounds (`logoOnLight`). Gray ramp stays as product defaults.
 
-## Databricks (optional)
+## Databricks (optional, off by default)
 
-Studio reads `.env.local` at the repo root. **Restart `npm run dev` after changing it.**
+Account search is **disabled unless** you set `ENABLE_DATABRICKS=true` in `.env.local`. Without it, the Customer step uses manual entry and Brandfetch only.
 
-Either naming style works:
+When enabled, Studio reads Databricks credentials from `.env.local`. **Restart `npm run dev` after changing it.**
 
 ```bash
+ENABLE_DATABRICKS=true
+
 # Statement API style
 DATABRICKS_HOST=https://your-workspace.cloud.databricks.com
 DATABRICKS_WAREHOUSE_ID=abc123
@@ -69,7 +71,7 @@ DATABRICKS_TOKEN=dapi...
 
 Optional: `DATABRICKS_CATALOG=revops`, `DATABRICKS_SCHEMA=pt_salesforce`.
 
-Without these, the UI falls back to manual customer entry. Generate never requires Databricks.
+Generate never requires Databricks.
 
 ## Architecture
 

@@ -142,6 +142,7 @@ export function Wizard() {
   const [brand, setBrand] = useState<BrandPack>({ ...DEFAULT_BRAND });
   const [query, setQuery] = useState('');
   const [accounts, setAccounts] = useState<SalesforceAccount[]>([]);
+  const [dbEnabled, setDbEnabled] = useState<boolean | null>(null);
   const [dbConfigured, setDbConfigured] = useState<boolean | null>(null);
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
@@ -289,7 +290,7 @@ export function Wizard() {
   );
 
   useEffect(() => {
-    if (query.trim().length < 2) {
+    if (!dbEnabled || !dbConfigured || query.trim().length < 2) {
       setAccounts([]);
       return;
     }
@@ -299,10 +300,8 @@ export function Wizard() {
       try {
         const res = await fetch(`/api/customers/search?q=${encodeURIComponent(query)}`);
         const data = await res.json();
-        setDbConfigured(Boolean(data.configured));
         setAccounts(data.accounts || []);
         if (data.error) setSearchError(data.error);
-        if (data.message && !data.configured) setSearchError(data.message);
       } catch (e) {
         setSearchError(e instanceof Error ? e.message : 'Search failed');
       } finally {
@@ -310,7 +309,7 @@ export function Wizard() {
       }
     }, 350);
     return () => clearTimeout(handle);
-  }, [query]);
+  }, [dbConfigured, dbEnabled, query]);
 
   useEffect(() => {
     if (!brandClientId || brandQuery.trim().length < 2) {
@@ -341,7 +340,7 @@ export function Wizard() {
       customerSlug: brand.customerSlug,
       website: brand.website,
       layoutStyle: brand.layoutStyle,
-      databricksConfigured: dbConfigured,
+      databricksConfigured: dbEnabled && dbConfigured,
       brandfetchReady: brandApiReady,
       brandSearchReady: Boolean(brandClientId),
     });
@@ -354,14 +353,21 @@ export function Wizard() {
     brandApiReady,
     brandClientId,
     dbConfigured,
+    dbEnabled,
     setWizardState,
   ]);
 
   useEffect(() => {
-    fetch('/api/customers/search?q=ab')
+    fetch('/api/customers/search?q=')
       .then((r) => r.json())
-      .then((d) => setDbConfigured(Boolean(d.configured)))
-      .catch(() => setDbConfigured(false));
+      .then((d) => {
+        setDbEnabled(Boolean(d.enabled));
+        setDbConfigured(Boolean(d.configured));
+      })
+      .catch(() => {
+        setDbEnabled(false);
+        setDbConfigured(false);
+      });
 
     fetch('/api/brand/status')
       .then((r) => r.json())
@@ -414,6 +420,10 @@ export function Wizard() {
   const downloadBlocked = leakReport.severity === 'fail';
   const heroExpanded =
     forceTeachingTips || (!heroQuiet && activeStep === 0);
+  const databricksSearchReady = dbEnabled === true && dbConfigured === true;
+  const customerStepSubtitle = databricksSearchReady
+    ? 'Search Databricks or Brandfetch, import a pack, or resume a recent account.'
+    : WIZARD_STEPS[0].subtitle;
 
   async function onGenerate() {
     setGenerating(true);
@@ -729,14 +739,14 @@ export function Wizard() {
               <StudioPageHeader
                 icon={<SearchIcon fontSize="small" />}
                 title={WIZARD_STEPS[0].title}
-                subtitle={WIZARD_STEPS[0].subtitle}
+                subtitle={customerStepSubtitle}
                 helpTopic={WIZARD_STEPS[0].helpTopic}
                 trailing={
                   <Stack direction="row" spacing={0.75} sx={{ flexWrap: 'wrap', gap: 0.75 }}>
-                    {dbConfigured === true && (
+                    {databricksSearchReady && (
                       <Chip size="small" color="success" label="Databricks" />
                     )}
-                    {dbConfigured === false && (
+                    {!databricksSearchReady && (
                       <Chip size="small" label="Manual entry" />
                     )}
                     {brandClientId && (
@@ -749,7 +759,17 @@ export function Wizard() {
                 }
               />
 
-              {searchError && <Alert severity="info">{searchError}</Alert>}
+              {searchError && databricksSearchReady && (
+                <Alert severity="warning">{searchError}</Alert>
+              )}
+
+              {dbEnabled === true && dbConfigured === false && (
+                <Alert severity="info">
+                  Databricks account search is enabled but not fully configured. Use manual
+                  entry below, or finish the DATABRICKS_* settings in .env.local and restart
+                  `npm run dev`.
+                </Alert>
+              )}
 
               {recentEntries.length > 0 ? (
                 <Stack spacing={1}>
@@ -772,6 +792,7 @@ export function Wizard() {
                 }}
               />
 
+              {databricksSearchReady ? (
               <Autocomplete
                 freeSolo
                 options={accounts}
@@ -822,7 +843,7 @@ export function Wizard() {
                   <TextField
                     {...params}
                     label="Search Salesforce accounts (Databricks)"
-                    placeholder="e.g. Acme, Stripe, Acme"
+                    placeholder="e.g. Stripe, Acme Corp"
                     helperText={
                       searching
                         ? 'Searching…'
@@ -831,6 +852,27 @@ export function Wizard() {
                   />
                 )}
               />
+              ) : (
+                <TextField
+                  fullWidth
+                  label="Customer name"
+                  placeholder="e.g. Stripe, Acme Corp"
+                  value={brand.customerName}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    update({
+                      customerName: value,
+                      customerSlug: slugify(value),
+                      defaultAudience: value ? `${value} leadership` : '',
+                      ...CLEARED_LOGO_FIELDS,
+                    });
+                    setQuery(value);
+                    setPrefillNotice(null);
+                    setLastPrefillDomain(null);
+                  }}
+                  helperText="Enter the customer name for this leave-behind."
+                />
+              )}
 
               {brandClientId && (
                 <>
