@@ -1,0 +1,17 @@
+{
+  "id": "use-cursor-cli",
+  "version": "1.0.0",
+  "status": "draft",
+  "jobTitle": "Run the same Agent from the terminal with Cursor CLI",
+  "audience": "ADMs enabling engineers who live in the terminal, CI, or a non-Cursor editor",
+  "summary": "Install Cursor CLI, run interactive Agent with the same Rules/MCP as the editor, and show print mode for scripts — so the leave-behind factory is not IDE-only.",
+  "deps": ["prove-primitives-with-lab4"],
+  "sourceDocs": [
+    "https://cursor.com/docs/cli/overview",
+    "https://cursor.com/docs/cli/using",
+    "docs/content-blocks.md"
+  ],
+  "slides": "slides.json",
+  "briefFragment": "brief-fragment.md",
+  "talkTrack": "talk-track.md"
+}

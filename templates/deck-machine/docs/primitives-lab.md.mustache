@@ -1,0 +1,86 @@
+# Primitives lab — Skills, Rules, and Agents
+
+Timed practice for {{customerName}}. The PPTX is proof; these labs teach *why* the repo is wired this way.
+
+**Prereq:** one successful `/create-brief` → `/build-deck` so `deck-content.json` and `output/` exist.
+
+**Total time:** ~20 minutes · **Exit criteria** at the bottom.
+
+---
+
+## Lab 1 — Rules (5 min)
+
+**Goal:** Feel always-on constraints.
+
+1. Open `.cursor/rules/{{ruleFileName}}`. Note `alwaysApply: true`.
+2. Open `.cursor/rules/deck-workflow.mdc`. Note it is *not* always on — process loads when you work on decks.
+3. In Agent chat (no skill), ask: `Write one content slide about Q2 results` with a topic-label headline like “Q2 Results”.
+4. Observe: the Agent should push an **insight** headline and brand voice without you pasting the rule.
+
+**Pass when:** you can point at the always-on brand rule and the contextual workflow rule and say how they differ.
+
+---
+
+## Lab 2 — Skills (5 min)
+
+**Goal:** Skills are what humans type under `/`.
+
+1. Open `/` in Agent chat. Find `create-brief`, `write-slide`, `brand-check`, `export-pptx`, `build-deck`.
+2. Run **only** `/write-slide` — rewrite one headline in `deck-content.json` (do not run `/build-deck`).
+3. Run `/export-pptx` to refresh the PPTX.
+
+**Pass when:** you used an atomic skill for a small change instead of re-running the full pipeline.
+
+---
+
+## Lab 3 — Agents (5 min)
+
+**Goal:** Skills are the button; agents are the pipeline.
+
+1. Open `.cursor/agents/deck-builder.md` and `.cursor/agents/brand-guardian.md` side by side.
+2. Run `/brand-check`. Watch it delegate to `brand-guardian` (skill wraps agent).
+3. Optional: start `/build-deck` on a short brief and, while it runs, skim `brief-analyzer` → `slide-writer` → `visual-creator` under `.cursor/agents/`.
+
+**Pass when:** you can explain why customers rarely type agent names, and why `brand-guardian` is an agent (deep review) invoked by a skill (human chooses when).
+
+---
+
+## Lab 4 — Break → fix (5 min)
+
+**Goal:** Rules + agents enforce quality.
+
+1. In `deck-content.json`, change one slide headline to a topic label (e.g. “Overview”) **or** insert a banned phrase from `brand/voice.md`.
+2. Run `/brand-check`. Expect warn/fail.
+3. Apply fixes (or fix by hand), then `/export-pptx`.
+
+**Pass when:** you saw brand-guardian catch a rule violation you introduced on purpose.
+
+---
+
+## Lab 5 — Depth in one command (5 min, optional)
+
+**Goal:** See all three primitives compound: the depth standard is a **Rule**, `/polish-deck` is a **Skill**, `narrative-editor` is an **Agent**.
+
+1. Strip a slide down in `deck-content.json`: replace its bullets with plain strings, delete its `takeaway` and `notes`.
+2. Run `/polish-deck`.
+3. Open the new PPTX and check the **notes pane** (View → Notes in PowerPoint): every slide has an opening line, talking points, a transition, and a time estimate. The stripped slide got its takeaway strip and assertion + detail bullets back.
+4. Skim the change log the skill reports — headlines rewritten, bullets deepened, total talk time.
+
+**Pass when:** you can name which primitive did what: the rule defined the standard, the agent applied it, the skill let you choose when.
+
+---
+
+## Exit criteria (you are done when)
+
+- [ ] You changed (or could change) something in the **always-on brand rule** and know it shapes Agent output without `/`
+- [ ] You ran an **atomic skill** (`/write-slide` or `/export-pptx`) without a full rebuild
+- [ ] You can say in one sentence: **Skills are the button; agents are the pipeline**
+- [ ] You ran `/brand-check` after a deliberate bad edit and saw a flag
+
+## Placement cheat sheet
+
+Unsure where a new instruction belongs? Read [primitives-decision-tree.md](./primitives-decision-tree.md).
+
+## Account-team tip
+
+After the happy-path PPTX demo, spend these 20 minutes. Exit criteria beat another feature tour.

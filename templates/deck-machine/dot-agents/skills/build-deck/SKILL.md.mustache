@@ -1,0 +1,61 @@
+---
+name: build-deck
+description: Build a complete branded presentation deck from a brief. End-to-end: brief → outline → slides → visuals → brand review → PPTX.
+---
+
+# /build-deck
+
+Build a complete, brand-compliant {{customerName}} deck from a brief in one command — including native charts, diagrams, and agent-generated images.
+
+## How to use
+
+```
+/build-deck path/to/brief.md
+```
+
+Or without a path — the skill will look for `brief.md` in the current directory.
+
+No brief yet? Run `/create-brief` first (or invoke `/build-deck` with no file — it will start intake for you).
+
+## What happens
+
+1. Reads and analyzes your brief
+2. Creates a slide-by-slide outline (visual types when the story needs them; every slide gets a "so what" and an evidence pointer)
+3. Writes content for each slide under brand rules
+4. Runs `visual-creator` — validates chart/diagram JSON; generates PNGs into `assets/` for `image` slides
+5. Runs `narrative-editor` — headline spine, assertion+detail bullets, takeaways, structured speaker notes, chart highlights
+6. Reviews the deck for brand compliance
+7. Runs the quality scorecard, then exports a `.pptx` file to `output/` — with the full talk track in the notes pane
+
+Humans do **not** drop image files into `assets/`. Agents create visuals.
+
+## Prompt for agent
+
+When invoked, do the following:
+
+1. Resolve the brief file:
+   - If a path was given, use it
+   - Else if `brief.md` exists in the current directory, use it
+   - Else follow the `/create-brief` skill to interview or extract notes, write `brief.md`, then continue
+2. Delegate to the `deck-builder` subagent with the full brief content (it orchestrates brief-analyzer → slide-writer → visual-creator → narrative-editor → brand-guardian → scorecard → export)
+3. `deck-builder` owns the scorecard gate and bundled export: run `score-deck.js --json` (optional `--brief`) after brand review; print `Quality: {score} ({grade}) — {errorCount} errors, {warningCount} warnings`. If `DECK_QUALITY_GATE=strict` or the user passed `--strict` and `errorCount > 0`, **do not export**; show `topFixes` and stop. Otherwise export (coach only).
+4. Report back: quality one-liner, deck title, slide count, visual slide counts, asset paths, speaker-notes coverage and total talk time vs. delivery time, output file path, and any review flags
+
+Do **not** ask the user to fill `templates/brief.md` by hand. Intake always goes through `/create-brief`.
+Do **not** ask the user to supply PNGs or chart screenshots.
+
+## Output
+
+- `deck-content.json` — Full structured deck (editable)
+- `assets/*.png` — Agent-generated images for `image` slides (when used)
+- `output/<deck-title>.pptx` — PowerPoint file
+
+## Quick edits after running
+
+Edit `deck-content.json` and re-run the export:
+```
+/export-pptx
+```
+If you change an `image` slide's prompt or path, re-run via `deck-builder` / `visual-creator` so the asset is regenerated before export.
+
+Have an older or hand-edited deck that predates the depth standard? Run `/polish-deck` to retrofit takeaways, speaker notes, and chart highlights.

@@ -1,0 +1,15 @@
+{
+  "assembledAt": "2026-07-18T17:53:54.804Z",
+  "blocks": [
+    {
+      "id": "govern-quality-with-cli",
+      "version": "1.0.0",
+      "jobTitle": "Catch thin decks with /deck-score before export",
+      "slideCount": 3
+    }
+  ],
+  "outputs": [
+    "brief.md",
+    "deck-content.json"
+  ]
+}

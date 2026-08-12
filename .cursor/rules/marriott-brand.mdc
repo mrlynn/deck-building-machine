@@ -1,0 +1,126 @@
+---
+alwaysApply: true
+---
+
+# Marriott International Corporate Brand Standards
+
+You are working in a Marriott International corporate presentation context. Apply these standards in every interaction.
+
+## Color Palette
+
+| Token | Hex | Use |
+|---|---|---|
+| Marriott Red | `#BE202E` | Title slides, section dividers, key stats, accent lines |
+| Marriott Dark | `#1D1D1B` | Body text, dark backgrounds |
+| Corporate Gray | `#4A4A4A` | Secondary text, subheadings |
+| Light Gray | `#F2F2F2` | Slide backgrounds, card fills |
+| Mid Gray | `#9B9B9B` | Captions, footnotes, muted text |
+| White | `#FFFFFF` | Backgrounds, reverse text |
+| Gold (use sparingly) | `#B8973A` | Luxury emphasis only, thin dividers |
+
+**Color rules:**
+- Red is accent — never fill large areas with red except title and section slides
+- Never use red text on a red background
+- Body text is always Dark (`#1D1D1B`) on light backgrounds
+- White text only on Dark or Red backgrounds
+
+## Typography
+
+**Font stack (internal corporate):** Arial, Calibri, Helvetica Neue, sans-serif
+
+| Element | Size | Weight |
+|---|---|---|
+| Deck title | 44-52pt | Regular |
+| Slide title | 26-32pt | Regular |
+| Subtitle / eyebrow | 14-16pt | Regular |
+| Body / bullets | 13-15pt | Regular |
+| Caption / footnote | 10-11pt | Regular |
+
+**Type rules:**
+- Title case for slide titles
+- Sentence case for body copy and bullets
+- Never use decorative or display fonts
+- Minimum body size: 12pt
+- Do not use bold for entire paragraphs — bold only for emphasis within a sentence
+
+## Slide Writing Rules
+
+### One idea per slide
+Every slide must have exactly one main idea. If you find yourself writing "and also..." on a slide, that is a second slide.
+
+### Insight headlines, not topic labels
+Slide titles must state the insight, not just the topic.
+- ❌ "Q2 Results"
+- ✓ "Q2 revenue exceeded forecast by 14%"
+- ❌ "Cursor adoption"
+- ✓ "Team Cursor usage grew 40% in 90 days with no formal rollout"
+
+### Bullets
+- Maximum 5 bullets per slide
+- Maximum ~12 words per bullet (shorter is always better)
+- No nested bullets — depth comes from the assertion + detail form instead
+- Every bullet is a complete thought, not a label
+- Start bullets with a verb when possible
+
+### Assertion + detail (how bullets carry depth)
+Prefer the two-line bullet form: a bold assertion (`text`) followed by one indented evidence line (`detail`) — the number, example, or name that proves the claim. This is the sanctioned way to add depth; it is not a nested bullet.
+- ❌ "Improve deck quality"
+- ✓ text: "Cut deck production from days to minutes" · detail: "Last 3 briefs exported in under 10 minutes each"
+
+### Lead with the conclusion
+The most important information goes first. Do not build to the conclusion — state it, then support it.
+
+### Speaker notes are part of the slide
+Every slide ships with a structured talk track in the PPTX notes pane: opening line, 2–4 points that go beyond the slide text, a transition, and a time estimate. A deck without speaker notes is not done.
+
+## Brand Voice
+
+**Tone:** Clear, confident, warm, action-oriented.
+
+**Avoid:**
+- "Going forward" → use "from here" or just state what happens
+- "Leverage" → use "use"
+- "Synergies" → describe the actual benefit
+- "Best-in-class" → cite the evidence instead
+- "In this space" → be specific
+- Passive voice wherever possible
+
+**Numbers:**
+- Round to the meaningful digit (1,200 not 1,197)
+- Always include context (1,200 engineers — up from 800 last year)
+- Use % for comparisons, absolute numbers for scale
+
+## Layout style
+
+Selected layout: **Executive Classic** (`classic`) — Primary title slides, clear accent bars
+
+Layout style is Executive Classic. Prefer primary/full-bleed title and section slides. Use content slides with a clear insight headline and short bullets. Metrics tiles on light gray. Keep visual density moderate — do not overcrowd.
+
+**Slide mix hint:** Balanced mix: title, optional agenda, content, metrics, chart/diagram where the story is numeric or process, closing. Section dividers when the deck exceeds ~10 slides. Prefer diagram/chart over image.
+
+The PPTX exporter (`bundled/export-pptx.cjs`) reads layout from `brand/brand-pack.json` (`layoutStyle`) or `DECK_LAYOUT`. Default dogfood layout is classic.
+
+## Slide Type Reference
+
+1. **Title** — Red or dark background, white text, deck title + subtitle
+2. **Agenda** — Light background, numbered items, title in Red
+3. **Section divider** — Red background, section number and title
+4. **Content (single)** — White background, insight headline, bullets or narrative
+5. **Two-column** — White background, side-by-side comparison
+6. **Metrics** — White or light gray background, 2-4 large stat blocks in Red
+7. **Quote** — Light gray or red background, large pull quote, attribution
+8. **Closing / Next steps** — Numbered action list, consistent with opening style
+9. **Chart** — Native PPTX chart from JSON series (trends and comparisons)
+10. **Diagram** — Process / architecture / swimlane from structured nodes (exporter draws shapes)
+11. **Image** — Agent-generated illustration in `assets/` (prefer diagram/chart when possible)
+
+## What Not to Do
+
+- Do not use clip art, stock photo collages, or 3D effects
+- Do not ask humans to drop PNGs into `assets/` — `visual-creator` generates image slides during `/build-deck`
+- Do not invent precise chart numbers that are not in the brief
+- Do not use more than 2 typefaces per slide
+- Do not use WordArt or text shadows
+- Do not include a slide title that is longer than one line
+- Do not create slides that are purely decorative with no information
+- Do not include your working notes or "draft" text in slides shared externally

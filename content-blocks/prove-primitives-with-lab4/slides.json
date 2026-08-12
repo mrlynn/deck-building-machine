@@ -1,0 +1,113 @@
+[
+  {
+    "type": "section",
+    "headline": "Prove the three primitives in twenty minutes",
+    "content": {
+      "eyebrow": "Leave-behind lab",
+      "sectionNumber": "01"
+    },
+    "notes": {
+      "opening": "We pause the feature tour here on purpose.",
+      "points": [
+        "The PPTX already proved the pipeline works.",
+        "These labs make Rules, Skills, and Agents feel different.",
+        "Exit criteria beat another slide walkthrough."
+      ],
+      "transition": "Start with Rules — the always-on layer.",
+      "timeMinutes": 1
+    }
+  },
+  {
+    "type": "content",
+    "headline": "Rules shape every Agent reply without typing slash",
+    "content": {
+      "bullets": [
+        {
+          "text": "Always-on brand rule loads in every chat",
+          "detail": ".cursor/rules/<slug>-brand.mdc with alwaysApply: true"
+        },
+        {
+          "text": "Workflow rule loads when you work on decks",
+          "detail": "deck-workflow.mdc — process, not brand voice"
+        },
+        {
+          "text": "Ask for a topic-label headline and watch the rewrite",
+          "detail": "Insight headlines and banned phrases come from the rule"
+        }
+      ],
+      "takeaway": "If it should always apply, it is a Rule — not a Skill."
+    },
+    "notes": {
+      "opening": "Open the brand rule and point at alwaysApply.",
+      "points": [
+        "Contrast brand rule with deck-workflow.",
+        "Live ask: write a content slide titled Q2 Results.",
+        "Call out the insight rewrite without pasting the rule."
+      ],
+      "transition": "Skills are what people choose to run.",
+      "timeMinutes": 4
+    }
+  },
+  {
+    "type": "content",
+    "headline": "Skills are the buttons; agents are the pipeline",
+    "content": {
+      "bullets": [
+        {
+          "text": "Humans type slash commands under /",
+          "detail": "create-brief, write-slide, brand-check, export-pptx, build-deck"
+        },
+        {
+          "text": "Atomic skills beat a full rebuild for small edits",
+          "detail": "/write-slide then /export-pptx — no /build-deck required"
+        },
+        {
+          "text": "brand-check wraps brand-guardian",
+          "detail": "Customers rarely type agent names; skills choose when"
+        }
+      ],
+      "takeaway": "Teach the button first; the pipeline is why it scales."
+    },
+    "notes": {
+      "opening": "Open the slash menu and find the deck skills.",
+      "points": [
+        "Run write-slide only on one headline.",
+        "Export PPTX to show the atomic path.",
+        "Open brand-check and name the agent behind it."
+      ],
+      "transition": "Lab 4 makes quality enforcement visceral.",
+      "timeMinutes": 5
+    }
+  },
+  {
+    "type": "content",
+    "headline": "Lab 4 catches the bad edit you introduce on purpose",
+    "content": {
+      "bullets": [
+        {
+          "text": "Break one headline or insert a banned phrase",
+          "detail": "Topic label like Overview, or a phrase from brand/voice.md"
+        },
+        {
+          "text": "Run /brand-check and expect warn or fail",
+          "detail": "Optional: delete a takeaway and run /deck-score"
+        },
+        {
+          "text": "Fix, then /export-pptx",
+          "detail": "Pass when brand-guardian flags the deliberate violation"
+        }
+      ],
+      "takeaway": "Quality is enforced in the repo — not by hoping presenters remember."
+    },
+    "notes": {
+      "opening": "This is the required exit for the leave-behind demo.",
+      "points": [
+        "Have someone else introduce the break if the room is large.",
+        "Show the flag, then the fix.",
+        "Point at docs/primitives-lab.md for the full twenty minutes."
+      ],
+      "transition": "Next block: where brand tokens live so Agents and exporters agree.",
+      "timeMinutes": 5
+    }
+  }
+]

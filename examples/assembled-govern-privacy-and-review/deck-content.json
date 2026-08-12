@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "title": "Assembled blocks — govern-privacy-and-review",
+    "audience": "Customer champions and engineers in a Cursor demo",
+    "presenter": "ADM / FE",
+    "date": "July 2026",
+    "purpose": "inform",
+    "assembledFrom": [
+      {
+        "id": "govern-privacy-and-review",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "slides": [
+    {
+      "type": "title",
+      "headline": "Leave-behind teaching blocks — assembled",
+      "content": {
+        "eyebrow": "Content blocks spike",
+        "subtitle": "Answer privacy questions and show how review gates work"
+      },
+      "notes": {
+        "opening": "This deck was assembled from versioned content blocks.",
+        "points": [
+          "Edit blocks under content-blocks/, then re-run assemble.",
+          "Polish or export with existing deck skills."
+        ],
+        "transition": "Into the first block section.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "section",
+      "headline": "Privacy for the vendor — review for the artifact",
+      "content": {
+        "eyebrow": "Governance",
+        "sectionNumber": "06"
+      },
+      "notes": {
+        "opening": "This is the content gap Gong/Granola kept surfacing in 101s.",
+        "points": [
+          "Separate vendor privacy from leave-behind quality gates.",
+          "Stay on official docs — you are not legal counsel."
+        ],
+        "transition": "Start with Privacy Mode.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Privacy Mode: not used for training — with ZDR for most models",
+      "content": {
+        "bullets": [
+          {
+            "text": "Privacy Mode: code is not used for training by Cursor or providers",
+            "detail": "Stated in Cursor privacy help and data-use overview"
+          },
+          {
+            "text": "Most models run under zero data retention agreements",
+            "detail": "Providers do not store inputs/outputs for training under those agreements"
+          },
+          {
+            "text": "Inference still sends prompts and code context to providers",
+            "detail": "Do not claim the model runs fully offline — be precise"
+          }
+        ],
+        "takeaway": "Lead with Privacy Mode; never invent stronger guarantees than the docs."
+      },
+      "notes": {
+        "opening": "Put the privacy URL on screen if you can.",
+        "points": [
+          "Abuse/risk classifiers may retain data for investigation — mention if security is sophisticated.",
+          "Point to cursor.com/data-use for the canonical wording."
+        ],
+        "transition": "Who can turn it off?",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Enterprise turns Privacy Mode on by default — then enforce it",
+      "content": {
+        "bullets": [
+          {
+            "text": "Enterprise: Privacy Mode on by default",
+            "detail": "Teams/Enterprise admins can enforce org-wide from the dashboard"
+          },
+          {
+            "text": "Block personal accounts on corporate devices when needed",
+            "detail": "Allowed Team IDs / MDM — see Identity and Access Management docs"
+          },
+          {
+            "text": "Enterprise extras exist for stricter programs",
+            "detail": "CMEK, data residency, model access control — hand to account team"
+          }
+        ],
+        "takeaway": "Default plus enforce — do not rely on every developer finding a checkbox."
+      },
+      "notes": {
+        "opening": "This is the slide GRC usually wants.",
+        "points": [
+          "Do not deep-dive residency model lists unless asked.",
+          "Offer the enterprise privacy doc link as homework."
+        ],
+        "transition": "Call out the honest edges.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Be clear about Cloud Agents and retention-exception models",
+      "content": {
+        "bullets": [
+          {
+            "text": "Cloud Agents store encrypted repo copies while they run",
+            "detail": "Optional feature — if policy forbids storage, leave Cloud Agents off"
+          },
+          {
+            "text": "Some models require provider retention and need admin opt-in",
+            "detail": "Off by default under Privacy Mode until approved in the dashboard"
+          },
+          {
+            "text": "BYOK and third-party gateways follow those providers’ policies",
+            "detail": "US data residency docs explicitly exclude BYOK from residency guarantees"
+          }
+        ],
+        "takeaway": "Credibility comes from naming the exceptions before they do."
+      },
+      "notes": {
+        "opening": "Security teams respect ADMs who volunteer the caveats.",
+        "points": [
+          "IDE and CLI Agent without Cloud Agents still cover most leave-behind demos.",
+          "Re-check the models-with-retention section before each session."
+        ],
+        "transition": "Flip to customer-side review.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Review the leave-behind before it leaves the room",
+      "content": {
+        "bullets": [
+          {
+            "text": "/brand-check catches voice and insight failures",
+            "detail": "brand-guardian — judgment gate from Lab 4"
+          },
+          {
+            "text": "/deck-score catches thin structure",
+            "detail": "CLI gate — warn by default, --strict when they want CI teeth"
+          },
+          {
+            "text": "Same story in the IDE or with agent -p",
+            "detail": "Governance of the artifact travels with the repo"
+          }
+        ],
+        "takeaway": "Vendor privacy + in-repo review — teach both in one breath."
+      },
+      "notes": {
+        "opening": "Demo the Lab 4 break if you have not already.",
+        "points": [
+          "Point at govern-quality-with-cli for the deeper scorecard story.",
+          "SME/security should sign off this block before external 101."
+        ],
+        "transition": "Hand to assembled closing.",
+        "timeMinutes": 2
+      }
+    },
+    {
+      "type": "closing",
+      "headline": "Next: run Lab 4, then read after-the-demo",
+      "content": {
+        "items": [
+          {
+            "number": "01",
+            "action": "Open the leave-behind zip in Cursor",
+            "owner": "Champion",
+            "date": "Today"
+          },
+          {
+            "number": "02",
+            "action": "Complete Lab 4 exit criteria",
+            "owner": "Room",
+            "date": "docs/primitives-lab.md"
+          },
+          {
+            "number": "03",
+            "action": "Read day-2 ownership",
+            "owner": "Champion",
+            "date": "docs/after-the-demo.md"
+          },
+          {
+            "number": "04",
+            "action": "Author new JTBD blocks under content-blocks/",
+            "owner": "ADM / content",
+            "date": "Next"
+          }
+        ]
+      },
+      "notes": {
+        "opening": "Close on ownership and the required exit.",
+        "points": [
+          "Point at catalog.json for queued curriculum blocks.",
+          "CLI / tokens / governance blocks are next for SME draft."
+        ],
+        "transition": "End.",
+        "timeMinutes": 2
+      }
+    }
+  ]
+}

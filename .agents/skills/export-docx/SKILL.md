@@ -1,0 +1,37 @@
+---
+name: export-docx
+description: Convert doc-content.json into a branded Word document (.docx). Use after /build-doc or after editing doc-content.json.
+---
+
+# /export-docx
+
+Convert structured document JSON into a branded `.docx` file.
+
+## How to use
+
+```
+/export-docx
+```
+
+Reads `doc-content.json` in the current directory and writes to `output/`.
+
+Or:
+
+```
+/export-docx path/to/doc-content.json
+```
+
+## No npm install
+
+This skill ships a **bundled** exporter. Do **not** run `npm install`. Brand tokens load from `brand/brand-pack.json`.
+
+## Prompt for agent
+
+1. Verify `doc-content.json` exists (or the given path)
+2. Run the bundled exporter (never `npm install`):
+```bash
+cd .agents/skills/export-docx/scripts
+node bundled/export-docx.cjs ../../../../doc-content.json
+```
+3. Report output path and section count
+4. If `node` is missing, say Office export needs Node on PATH — do not ask for npm or a JS toolchain. If the bundle is missing, re-download the kit from Studio.

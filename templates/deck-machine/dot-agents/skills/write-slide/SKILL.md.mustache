@@ -1,0 +1,38 @@
+---
+name: write-slide
+description: Write content for a single {{customerName}} slide given a type and headline. Use when iterating on specific slides or building slide by slide.
+---
+
+# /write-slide
+
+Write or rewrite a single slide's content.
+
+## How to use
+
+```
+/write-slide
+```
+
+The agent will ask you:
+1. What slide type? (title, content, metrics, two-column, quote, closing, chart, diagram, image)
+2. What is the insight headline?
+3. What should this slide cover? (notes or bullet points)
+4. Who is the audience?
+
+Or pass a JSON spec directly:
+```
+/write-slide {"type": "diagram", "headline": "Brief to PPTX runs as one agent pipeline", "contentNote": "flow: brief → outline → write → visuals → export"}
+```
+
+## Prompt for agent
+
+When invoked:
+1. Collect the slide spec (interactively or from JSON)
+2. Delegate to `slide-writer` subagent — the slide comes back with assertion+detail bullets (`{text, detail}` where the material supplies evidence), a `takeaway` on content-bearing types, and a structured speaker-notes draft
+3. If the type is `image`, also run `visual-creator` so the PNG lands in `assets/` — never ask the user for a file; for `chart`, confirm `highlight` and a source `caption` are set
+4. Display the returned slide content in a readable preview, including the notes
+5. Ask: "Does this look right? Say 'save' to add to deck-content.json, or describe changes."
+
+## Output
+
+Slide content formatted for review, then added to `deck-content.json` on approval.

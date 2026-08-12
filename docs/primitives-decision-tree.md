@@ -1,0 +1,81 @@
+# Where does this go — Rule, Skill, Agent, or Doc?
+
+Use this when extending the Marriott deck machine. Placement matters more than prose quality.
+
+## The decision tree
+
+```
+Does it need to apply without anyone asking?
+  YES → Rule (.cursor/rules/)
+  NO  ↓
+
+Does a human choose when to run it (slash command under /)?
+  YES → Skill (.agents/skills/*/SKILL.md)
+  NO  ↓
+
+Is it multi-step, specialized, or worth isolating from the main chat?
+  YES → Agent (.cursor/agents/*.md)
+  NO  ↓
+
+Do humans need to read it too (reference, onboarding)?
+  YES → Doc (brand/, docs/, README)
+  NO  → Probably a Rule or Skill — you are underspecifying
+```
+
+## Quick map (this repo)
+
+| Primitive | Path | Marriott example | Why here |
+|---|---|---|---|
+| **Rule (always on)** | `.cursor/rules/marriott-brand.mdc` | Palette, voice, insight headlines, bullet limits | Brand must constrain every chat without `/` or `@` |
+| **Rule (on demand)** | `.cursor/rules/deck-workflow.mdc` | Outline-first, story arcs, `deck-content.json` schema | Process guidance — load when editing decks, not every unrelated chat |
+| **Skill** | `.agents/skills/` | `/create-brief`, `/build-deck`, `/brand-check`, `/export-pptx` | Humans pick the moment; skill text is the playbook |
+| **Agent** | `.cursor/agents/` | `deck-builder`, `slide-writer`, `brand-guardian` | Multi-step or specialized work skills invoke |
+| **Doc** | `brand/`, `docs/` | `brand/voice.md`, this file, `docs/primitives-lab.md` | Humans read it; Agents still obey the mirrored Rule |
+
+## Rule vs Skill vs Agent (the hard cases)
+
+| Temptation | Better home | Why |
+|---|---|---|
+| “Always write insight headlines” as a skill tip | **Rule** | Skills are optional; brand writing standards are not |
+| “Review brand before share” as only a rule | **Skill** (`/brand-check`) wrapping **Agent** (`brand-guardian`) | Humans choose when to audit; the agent does the deep pass |
+| “Build the whole deck” as one giant rule | **Skill** (`/build-deck`) → **Agent** (`deck-builder`) | Orchestration is a workflow, not ambient context |
+| “How colors work” only in a rule | **Doc** (`brand/palette.md`) + **Rule** (same tokens) | Teammates open Docs; Agents need the rule in context |
+| “Interview for a brief” as an agent the user must name | **Skill** (`/create-brief`) | Users discover work under `/`, not by memorizing agent names |
+
+## Rule modes in this zip
+
+| Mode | File | Behavior |
+|---|---|---|
+| Always apply | `marriott-brand.mdc` | Loaded into every Agent chat |
+| Requestable / contextual | `deck-workflow.mdc` | Loads when working on presentations (description-driven) |
+
+If you add a third rule later, prefer **path/glob scoping** (e.g. only when `deck-content.json` is open) when the guidance is file-specific.
+
+## Skill wraps Agent (pattern to copy)
+
+`/brand-check` is the clearest teaching example:
+
+1. **Skill** — user types `/brand-check`
+2. **Agent** — skill delegates to `brand-guardian`
+3. **Rule** — guardian grades against `marriott-brand.mdc`
+
+Same pattern: `/build-deck` → `deck-builder` → workers.
+
+`/polish-deck` is the same pattern applied to quality: the **Rule** (`deck-workflow.mdc` depth standard) defines what "deep" means, the **Agent** (`narrative-editor`) applies it — headline spine, assertion+detail bullets, takeaways, speaker notes — and the **Skill** lets the human choose when to retrofit an existing deck.
+
+## Anti-patterns
+
+- Putting the full brand palette only in a Skill (easy to skip)
+- Asking users to `@` agent names for the happy path (hide agents behind skills)
+- Duplicating long brand prose in five places without a Doc + Rule mirror
+- Turning every tip into `alwaysApply: true` (context bloat; demote process to requestable rules)
+
+## Scope of this leave-behind
+
+This zip teaches **Rules, Skills, and Agents** through one branded deck workflow. PPTX is the primary proof; `/build-doc` and `/export-metrics-xlsx` are thin second renderers. `/revise-deck` + `/preview-deck` are the weekly edit loop.
+
+**MCP** is optional intake inside `/create-brief` when tools are connected — not a required install. **Hooks** and the plugin marketplace remain the usual next factory layers. Extend later using the decision tree above.
+
+## Next
+
+Hands-on practice: [primitives-lab.md](./primitives-lab.md) · Day 2: [after-the-demo.md](./after-the-demo.md)

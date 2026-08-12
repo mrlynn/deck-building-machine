@@ -1,0 +1,45 @@
+---
+name: deck-score
+description: Score a deck-content.json for structural depth, visuals, variety, and Marriott-aligned aesthetics. Warn by default; optional strict gate.
+---
+
+# /deck-score
+
+Run the zero-dependency quality scorecard on a deck.
+
+## How to use
+
+```
+/deck-score
+/deck-score path/to/deck-content.json
+/deck-score path/to/deck-content.json --strict
+```
+
+Defaults to `deck-content.json` in the repo root.
+
+## What it measures
+
+Structural categories: structure, notes, depth, visuals, variety.  
+Aesthetics (coach only): brand type/color invariants, no animation, metrics tile cap, text-heavy runs, quote attribution.
+
+**Not scored (conflicts with Marriott brand):** body ≥18pt, 5/5/5 word rules, dual fonts, external palettes, white-space %, Morph/Fade.
+
+## Prompt for agent
+
+1. Resolve deck path (argument or `deck-content.json`).
+2. If `brief.md` exists beside the deck, pass `--brief` to enable talk-time check.
+3. Run (never `npm install`):
+
+```bash
+node .agents/skills/deck-score/scripts/score-deck.js path/to/deck-content.json
+```
+
+For machine-readable:
+
+```bash
+node .agents/skills/deck-score/scripts/score-deck.js path/to/deck-content.json --json
+```
+
+4. Display the human summary (categories including Aesthetics, top fixes, gate line).
+5. If `overall.score < 80` or `errorCount > 0`, suggest `/polish-deck`.
+6. Remind: strict fails only on structural errors — `DECK_QUALITY_GATE=strict` or `--strict`. Aesthetics never hard-fail.

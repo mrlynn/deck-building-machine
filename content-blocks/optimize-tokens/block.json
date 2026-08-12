@@ -1,0 +1,17 @@
+{
+  "id": "optimize-tokens",
+  "version": "1.0.0",
+  "status": "draft",
+  "jobTitle": "Spend context on the task, not on rule bloat",
+  "audience": "ADMs and champions who own .cursor/rules and run long Agent sessions",
+  "summary": "Treat context as a budget: keep always-on rules lean, scope the rest with globs or descriptions, point at files instead of pasting them, and start fresh chats when the job changes.",
+  "deps": ["encode-brand-as-tokens", "prove-primitives-with-lab4"],
+  "sourceDocs": [
+    "https://cursor.com/docs/context/rules",
+    "docs/primitives-decision-tree.md",
+    "docs/content-blocks.md"
+  ],
+  "slides": "slides.json",
+  "briefFragment": "brief-fragment.md",
+  "talkTrack": "talk-track.md"
+}

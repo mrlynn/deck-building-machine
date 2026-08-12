@@ -1,0 +1,774 @@
+{
+  "metadata": {
+    "title": "Assembled blocks — standard-enablement",
+    "audience": "Customer champions and engineers in a Cursor demo",
+    "presenter": "ADM / FE",
+    "date": "July 2026",
+    "purpose": "inform",
+    "assembledFrom": [
+      {
+        "id": "prove-primitives-with-lab4",
+        "version": "1.0.0"
+      },
+      {
+        "id": "encode-brand-as-tokens",
+        "version": "1.0.0"
+      },
+      {
+        "id": "govern-quality-with-cli",
+        "version": "1.0.0"
+      },
+      {
+        "id": "use-cursor-cli",
+        "version": "1.0.0"
+      },
+      {
+        "id": "optimize-tokens",
+        "version": "1.0.0"
+      },
+      {
+        "id": "govern-privacy-and-review",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "slides": [
+    {
+      "type": "title",
+      "headline": "Standard enablement spine — assembled for review",
+      "content": {
+        "eyebrow": "Enablement review package",
+        "subtitle": "Prove Rules stay on with Lab 4 · Encode brand once so Agents and exporters share tokens · Catch thin decks with /deck-score before export · Run the same Agent from the terminal with Cursor CLI · Spend context on the task, not on rule bloat · Answer privacy questions and show how review gates work"
+      },
+      "notes": {
+        "opening": "Candidate standard deck — leave-behind plus curriculum drafts.",
+        "points": [
+          "Edit blocks under content-blocks/, then re-run assemble.",
+          "CLI / tokens / privacy stay draft until SME sign-off."
+        ],
+        "transition": "Into the first block section.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "section",
+      "headline": "Prove the three primitives in twenty minutes",
+      "content": {
+        "eyebrow": "Leave-behind lab",
+        "sectionNumber": "01"
+      },
+      "notes": {
+        "opening": "We pause the feature tour here on purpose.",
+        "points": [
+          "The PPTX already proved the pipeline works.",
+          "These labs make Rules, Skills, and Agents feel different.",
+          "Exit criteria beat another slide walkthrough."
+        ],
+        "transition": "Start with Rules — the always-on layer.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Rules shape every Agent reply without typing slash",
+      "content": {
+        "bullets": [
+          {
+            "text": "Always-on brand rule loads in every chat",
+            "detail": ".cursor/rules/<slug>-brand.mdc with alwaysApply: true"
+          },
+          {
+            "text": "Workflow rule loads when you work on decks",
+            "detail": "deck-workflow.mdc — process, not brand voice"
+          },
+          {
+            "text": "Ask for a topic-label headline and watch the rewrite",
+            "detail": "Insight headlines and banned phrases come from the rule"
+          }
+        ],
+        "takeaway": "If it should always apply, it is a Rule — not a Skill."
+      },
+      "notes": {
+        "opening": "Open the brand rule and point at alwaysApply.",
+        "points": [
+          "Contrast brand rule with deck-workflow.",
+          "Live ask: write a content slide titled Q2 Results.",
+          "Call out the insight rewrite without pasting the rule."
+        ],
+        "transition": "Skills are what people choose to run.",
+        "timeMinutes": 4
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Skills are the buttons; agents are the pipeline",
+      "content": {
+        "bullets": [
+          {
+            "text": "Humans type slash commands under /",
+            "detail": "create-brief, write-slide, brand-check, export-pptx, build-deck"
+          },
+          {
+            "text": "Atomic skills beat a full rebuild for small edits",
+            "detail": "/write-slide then /export-pptx — no /build-deck required"
+          },
+          {
+            "text": "brand-check wraps brand-guardian",
+            "detail": "Customers rarely type agent names; skills choose when"
+          }
+        ],
+        "takeaway": "Teach the button first; the pipeline is why it scales."
+      },
+      "notes": {
+        "opening": "Open the slash menu and find the deck skills.",
+        "points": [
+          "Run write-slide only on one headline.",
+          "Export PPTX to show the atomic path.",
+          "Open brand-check and name the agent behind it."
+        ],
+        "transition": "Lab 4 makes quality enforcement visceral.",
+        "timeMinutes": 5
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Lab 4 catches the bad edit you introduce on purpose",
+      "content": {
+        "bullets": [
+          {
+            "text": "Break one headline or insert a banned phrase",
+            "detail": "Topic label like Overview, or a phrase from brand/voice.md"
+          },
+          {
+            "text": "Run /brand-check and expect warn or fail",
+            "detail": "Optional: delete a takeaway and run /deck-score"
+          },
+          {
+            "text": "Fix, then /export-pptx",
+            "detail": "Pass when brand-guardian flags the deliberate violation"
+          }
+        ],
+        "takeaway": "Quality is enforced in the repo — not by hoping presenters remember."
+      },
+      "notes": {
+        "opening": "This is the required exit for the leave-behind demo.",
+        "points": [
+          "Have someone else introduce the break if the room is large.",
+          "Show the flag, then the fix.",
+          "Point at docs/primitives-lab.md for the full twenty minutes."
+        ],
+        "transition": "Next block: where brand tokens live so Agents and exporters agree.",
+        "timeMinutes": 5
+      }
+    },
+    {
+      "type": "section",
+      "headline": "Encode brand once — Agents and exporters share it",
+      "content": {
+        "eyebrow": "Brand pack",
+        "sectionNumber": "02"
+      },
+      "notes": {
+        "opening": "This is the Encode brand teachable moment.",
+        "points": [
+          "Studio writes rules and brand assets, not a finished customer deck.",
+          "Same tokens show up in Cursor and in Office exporters."
+        ],
+        "transition": "Start with what lands in the zip.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "content",
+      "headline": "One pack feeds always-on rules and the exporters",
+      "content": {
+        "bullets": [
+          {
+            "text": "Colors, fonts, and voice become an always-on rule",
+            "detail": ".cursor/rules/<slug>-brand.mdc shapes Agent output in every chat"
+          },
+          {
+            "text": "brand/ mirrors the same tokens for humans and exporters",
+            "detail": "brand-pack.json, palette, voice, logos on dark and light"
+          },
+          {
+            "text": "Layout style sets slide mix and frame treatment",
+            "detail": "classic, minimal, or bold — Agents and PPTX stay aligned"
+          }
+        ],
+        "takeaway": "Encode once in Studio; regenerate the zip when brand changes."
+      },
+      "notes": {
+        "opening": "Walk the Encode brand fields without drowning in hex.",
+        "points": [
+          "Call out logos on dark vs light.",
+          "Mention words-to-avoid as brand-guardian fuel.",
+          "Preview shows the layout style before download."
+        ],
+        "transition": "Same factory, more than one Office renderer.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "PPTX is the proof; Doc and workbook reuse the tokens",
+      "content": {
+        "bullets": [
+          {
+            "text": "Happy path stays /create-brief → /build-deck → PPTX",
+            "detail": "output/ appears after skills run — not pre-built in the zip"
+          },
+          {
+            "text": "Optional /build-doc and /export-metrics-xlsx",
+            "detail": "Thin skills; same brand tokens; not a design-agency replacement"
+          },
+          {
+            "text": "Day 2: brand stays owned by marketing plus champion",
+            "detail": "See docs/after-the-demo.md for regenerate vs edit"
+          }
+        ],
+        "takeaway": "Renderers are skills; the product is the Cursor factory."
+      },
+      "notes": {
+        "opening": "Toggle factory outputs in Studio if you are mid-demo.",
+        "points": [
+          "Keep silhouettes honest — Doc/XLSX are not finished files in Studio.",
+          "Point champions at after-the-demo ownership table."
+        ],
+        "transition": "Next: catch thin decks before export.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "section",
+      "headline": "Gate quality before the PPTX leaves the room",
+      "content": {
+        "eyebrow": "Scorecard",
+        "sectionNumber": "03"
+      },
+      "notes": {
+        "opening": "Two gates, one leave-behind.",
+        "points": [
+          "brand-check is the judgment call.",
+          "deck-score is the structural CLI."
+        ],
+        "transition": "Show how they differ.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "two-column",
+      "headline": "Judgment and structure catch different failures",
+      "content": {
+        "left": {
+          "heading": "/brand-check",
+          "bullets": [
+            "brand-guardian agent review",
+            "Insight headlines and banned phrases",
+            "Voice and Marriott-leak style checks"
+          ]
+        },
+        "right": {
+          "heading": "/deck-score",
+          "bullets": [
+            "Node CLI on deck-content.json",
+            "Structure, depth, aesthetics",
+            "Warn by default; --strict to fail"
+          ]
+        },
+        "takeaway": "Run both before you call the demo done."
+      },
+      "notes": {
+        "opening": "Do not collapse these into one button in the story.",
+        "points": [
+          "Champions can wire smoke:deck-quality into CI later.",
+          "Studio UI for scores is intentionally out of scope."
+        ],
+        "transition": "Lab 4 optional path makes the CLI real.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Delete a takeaway and watch /deck-score move",
+      "content": {
+        "bullets": [
+          {
+            "text": "Strip depth from one slide on purpose",
+            "detail": "Remove takeaway or flatten assertion+detail bullets"
+          },
+          {
+            "text": "Run /deck-score before you fix it",
+            "detail": "Optional --strict if the champion wants a hard gate"
+          },
+          {
+            "text": "Restore depth, re-score, then /export-pptx",
+            "detail": "Pairs with the required /brand-check Lab 4 exit"
+          }
+        ],
+        "takeaway": "Thin decks fail in the repo — not in the customer meeting."
+      },
+      "notes": {
+        "opening": "Only if Lab 4 already landed; otherwise demo the command on a sample.",
+        "points": [
+          "Point at examples/delight-sample for a known baseline.",
+          "Mention docs/superpowers scorecard design for maintainers."
+        ],
+        "transition": "Close the leave-behind quality story.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "section",
+      "headline": "Run Agent from the terminal — same factory, more surfaces",
+      "content": {
+        "eyebrow": "Cursor CLI",
+        "sectionNumber": "04"
+      },
+      "notes": {
+        "opening": "This block is for engineers who will not live only in the IDE.",
+        "points": [
+          "CLI is a first-class Agent surface, not a side tool.",
+          "Leave-behind Rules still apply when you run from the repo root."
+        ],
+        "transition": "Start with install and login.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Install once, then type agent in any project",
+      "content": {
+        "bullets": [
+          {
+            "text": "Install from the official Cursor docs",
+            "detail": "macOS/Linux: curl https://cursor.com/install -fsS | bash · Windows: PowerShell irm install script"
+          },
+          {
+            "text": "Authenticate and confirm who you are",
+            "detail": "agent login · agent status · agent about"
+          },
+          {
+            "text": "Start interactive Agent in the leave-behind repo",
+            "detail": "cd into the zip · agent · or agent \"explain the brand rule\""
+          }
+        ],
+        "takeaway": "The entrypoint to learn is agent — verify against cursor.com/docs/cli before you demo."
+      },
+      "notes": {
+        "opening": "Do the install on a clean laptop once before the customer room.",
+        "points": [
+          "If cursor alone errors, point them at agent as documented.",
+          "Stay in the leave-behind directory so Rules load."
+        ],
+        "transition": "Modes match the editor.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Agent, Plan, and Ask work the same as in the IDE",
+      "content": {
+        "bullets": [
+          {
+            "text": "Agent mode is the default — full tools for coding tasks",
+            "detail": "No --mode flag required for the happy path"
+          },
+          {
+            "text": "Plan before you build",
+            "detail": "/plan, --plan, or --mode=plan — clarifying questions first"
+          },
+          {
+            "text": "Ask stays read-only",
+            "detail": "/ask or --mode=ask — explore without edits"
+          }
+        ],
+        "takeaway": "Teach one mode model: IDE and CLI share Agent / Plan / Ask."
+      },
+      "notes": {
+        "opening": "Switch modes live with slash commands so muscle memory transfers.",
+        "points": [
+          "Ask a Plan question about Lab 4 before any edit.",
+          "Remind them Rules and mcp.json are respected in CLI."
+        ],
+        "transition": "Show the automation path.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Print mode puts Agent into scripts and CI",
+      "content": {
+        "bullets": [
+          {
+            "text": "Use -p / --print for non-interactive runs",
+            "detail": "agent -p \"review these changes for security issues\" --output-format text"
+          },
+          {
+            "text": "Hand off long work to Cloud Agent mid-session",
+            "detail": "Prepend & to a message · pick up at cursor.com/agents"
+          },
+          {
+            "text": "Resume and worktrees keep context under control",
+            "detail": "agent resume · agent -w for an isolated git worktree"
+          }
+        ],
+        "takeaway": "CLI is how the factory shows up in automation — still rules-aware."
+      },
+      "notes": {
+        "opening": "One print-mode demo is enough; do not boil the ocean on flags.",
+        "points": [
+          "Sandbox: mention /sandbox if security folks are in the room.",
+          "Point reviewers at the draft status — SME should sanity-check before external share."
+        ],
+        "transition": "Close on when to use CLI vs IDE.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Pick the surface; keep the same Rules",
+      "content": {
+        "bullets": [
+          {
+            "text": "IDE for live pairing and visual review",
+            "detail": "Still the default for most ADM leave-behind demos"
+          },
+          {
+            "text": "CLI for terminal-first engineers, scripts, and CI",
+            "detail": "agent -p for print mode · same .cursor/rules in the repo"
+          },
+          {
+            "text": "SME-review this block before external 101",
+            "detail": "Draft status — verify flags at cursor.com/docs/cli/overview"
+          }
+        ],
+        "takeaway": "Surfaces differ; Rules travel with the repo."
+      },
+      "notes": {
+        "opening": "Close on parity, not on memorizing every flag.",
+        "points": [
+          "Docs source of truth: cursor.com/docs/cli/overview.",
+          "Next curriculum blocks: optimize-tokens, govern-privacy-and-review."
+        ],
+        "transition": "Hand to assembled closing checklist.",
+        "timeMinutes": 2
+      }
+    },
+    {
+      "type": "section",
+      "headline": "Context is a budget — spend it on the task",
+      "content": {
+        "eyebrow": "Token / context hygiene",
+        "sectionNumber": "05"
+      },
+      "notes": {
+        "opening": "This is enablement priority two after CLI.",
+        "points": [
+          "Not about shaving pennies — about quality of Agent answers.",
+          "Leave-behind brand rules are the good kind of always-on tax."
+        ],
+        "transition": "How rules enter context.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Always-on rules pay on every Agent turn",
+      "content": {
+        "bullets": [
+          {
+            "text": "Applied rules are included at the start of model context",
+            "detail": "Cursor Rules docs — persistent guidance, no memory between completions"
+          },
+          {
+            "text": "alwaysApply: true means every chat pays the cost",
+            "detail": "Use for brand voice and hard constraints — keep those files short"
+          },
+          {
+            "text": "The leave-behind brand rule is intentional tax",
+            "detail": "Do not delete it to “save tokens” — trim other always-on clutter instead"
+          }
+        ],
+        "takeaway": "Pay every turn only for what must always be true."
+      },
+      "notes": {
+        "opening": "Open the brand .mdc and point at alwaysApply.",
+        "points": [
+          "Contrast with deck-workflow — contextual, not always on.",
+          "Ask the room what they would wrongly put in alwaysApply."
+        ],
+        "transition": "Three other ways to apply rules.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Scope rules with globs, descriptions, or @ — not more always-on",
+      "content": {
+        "bullets": [
+          {
+            "text": "Apply to Specific Files when a glob matches",
+            "detail": "e.g. **/*.tsx patterns — see Cursor Rules glob table"
+          },
+          {
+            "text": "Apply Intelligently when description is clear",
+            "detail": "Agent decides from description — vague blurbs never load"
+          },
+          {
+            "text": "Apply Manually for rare checklists",
+            "detail": "@-mention the rule when you need it"
+          }
+        ],
+        "takeaway": "Same four modes as the docs — teach the dropdown, not a custom framework."
+      },
+      "notes": {
+        "opening": "Draw the four-mode table on a whiteboard if helpful.",
+        "points": [
+          "Good description reads like an API doc: what + when.",
+          "Point at primitives-decision-tree for Rule vs Skill vs Agent."
+        ],
+        "transition": "How to keep each rule file cheap.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Point at files — do not paste the whole guide into a rule",
+      "content": {
+        "bullets": [
+          {
+            "text": "Keep rules focused; split large ones",
+            "detail": "Official guidance: under 500 lines; composable .mdc files"
+          },
+          {
+            "text": "Reference examples with @ instead of copying code",
+            "detail": "Keeps rules short and stops them going stale"
+          },
+          {
+            "text": "Skip what Agent and linters already know",
+            "detail": "No full style guides in alwaysApply — encode only project-specific truth"
+          }
+        ],
+        "takeaway": "Short rules + pointers beat encyclopedias in context."
+      },
+      "notes": {
+        "opening": "Show a bad fat rule vs a thin rule that @-references a template.",
+        "points": [
+          "AGENTS.md is fine for simple cases — still keep it lean.",
+          "Team Rules exist on Team/Enterprise — mention, do not deep-dive."
+        ],
+        "transition": "Session hygiene closes the loop.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "New chat for a new job — stop attaching the whole repo",
+      "content": {
+        "bullets": [
+          {
+            "text": "Start a fresh Agent chat when the task changes",
+            "detail": "Long threads carry stale goals into the next request"
+          },
+          {
+            "text": "Let Agent explore; attach only the files you know matter",
+            "detail": "Prefer targeted @file over dumping a dozen paths"
+          },
+          {
+            "text": "Index and ignore noise so search stays useful",
+            "detail": "Keep generated junk out of the workspace the Agent walks"
+          }
+        ],
+        "takeaway": "Hygiene is a habit — Rules design plus session design."
+      },
+      "notes": {
+        "opening": "This is the practical close for ADMs in the room.",
+        "points": [
+          "Optional: show starting a new chat mid-demo after Lab 4.",
+          "SME should sanity-check before external 101."
+        ],
+        "transition": "Hand to assembled closing.",
+        "timeMinutes": 2
+      }
+    },
+    {
+      "type": "section",
+      "headline": "Privacy for the vendor — review for the artifact",
+      "content": {
+        "eyebrow": "Governance",
+        "sectionNumber": "06"
+      },
+      "notes": {
+        "opening": "This is the content gap Gong/Granola kept surfacing in 101s.",
+        "points": [
+          "Separate vendor privacy from leave-behind quality gates.",
+          "Stay on official docs — you are not legal counsel."
+        ],
+        "transition": "Start with Privacy Mode.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Privacy Mode: not used for training — with ZDR for most models",
+      "content": {
+        "bullets": [
+          {
+            "text": "Privacy Mode: code is not used for training by Cursor or providers",
+            "detail": "Stated in Cursor privacy help and data-use overview"
+          },
+          {
+            "text": "Most models run under zero data retention agreements",
+            "detail": "Providers do not store inputs/outputs for training under those agreements"
+          },
+          {
+            "text": "Inference still sends prompts and code context to providers",
+            "detail": "Do not claim the model runs fully offline — be precise"
+          }
+        ],
+        "takeaway": "Lead with Privacy Mode; never invent stronger guarantees than the docs."
+      },
+      "notes": {
+        "opening": "Put the privacy URL on screen if you can.",
+        "points": [
+          "Abuse/risk classifiers may retain data for investigation — mention if security is sophisticated.",
+          "Point to cursor.com/data-use for the canonical wording."
+        ],
+        "transition": "Who can turn it off?",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Enterprise turns Privacy Mode on by default — then enforce it",
+      "content": {
+        "bullets": [
+          {
+            "text": "Enterprise: Privacy Mode on by default",
+            "detail": "Teams/Enterprise admins can enforce org-wide from the dashboard"
+          },
+          {
+            "text": "Block personal accounts on corporate devices when needed",
+            "detail": "Allowed Team IDs / MDM — see Identity and Access Management docs"
+          },
+          {
+            "text": "Enterprise extras exist for stricter programs",
+            "detail": "CMEK, data residency, model access control — hand to account team"
+          }
+        ],
+        "takeaway": "Default plus enforce — do not rely on every developer finding a checkbox."
+      },
+      "notes": {
+        "opening": "This is the slide GRC usually wants.",
+        "points": [
+          "Do not deep-dive residency model lists unless asked.",
+          "Offer the enterprise privacy doc link as homework."
+        ],
+        "transition": "Call out the honest edges.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Be clear about Cloud Agents and retention-exception models",
+      "content": {
+        "bullets": [
+          {
+            "text": "Cloud Agents store encrypted repo copies while they run",
+            "detail": "Optional feature — if policy forbids storage, leave Cloud Agents off"
+          },
+          {
+            "text": "Some models require provider retention and need admin opt-in",
+            "detail": "Off by default under Privacy Mode until approved in the dashboard"
+          },
+          {
+            "text": "BYOK and third-party gateways follow those providers’ policies",
+            "detail": "US data residency docs explicitly exclude BYOK from residency guarantees"
+          }
+        ],
+        "takeaway": "Credibility comes from naming the exceptions before they do."
+      },
+      "notes": {
+        "opening": "Security teams respect ADMs who volunteer the caveats.",
+        "points": [
+          "IDE and CLI Agent without Cloud Agents still cover most leave-behind demos.",
+          "Re-check the models-with-retention section before each session."
+        ],
+        "transition": "Flip to customer-side review.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Review the leave-behind before it leaves the room",
+      "content": {
+        "bullets": [
+          {
+            "text": "/brand-check catches voice and insight failures",
+            "detail": "brand-guardian — judgment gate from Lab 4"
+          },
+          {
+            "text": "/deck-score catches thin structure",
+            "detail": "CLI gate — warn by default, --strict when they want CI teeth"
+          },
+          {
+            "text": "Same story in the IDE or with agent -p",
+            "detail": "Governance of the artifact travels with the repo"
+          }
+        ],
+        "takeaway": "Vendor privacy + in-repo review — teach both in one breath."
+      },
+      "notes": {
+        "opening": "Demo the Lab 4 break if you have not already.",
+        "points": [
+          "Point at govern-quality-with-cli for the deeper scorecard story.",
+          "SME/security should sign off this block before external 101."
+        ],
+        "transition": "Hand to assembled closing.",
+        "timeMinutes": 2
+      }
+    },
+    {
+      "type": "closing",
+      "headline": "Next: SME sign-off, then Lab 4 in the room",
+      "content": {
+        "items": [
+          {
+            "number": "01",
+            "action": "Open the leave-behind zip in Cursor",
+            "owner": "Champion",
+            "date": "Today"
+          },
+          {
+            "number": "02",
+            "action": "Complete Lab 4 exit criteria",
+            "owner": "Room",
+            "date": "docs/primitives-lab.md"
+          },
+          {
+            "number": "03",
+            "action": "Read day-2 ownership",
+            "owner": "Champion",
+            "date": "docs/after-the-demo.md"
+          },
+          {
+            "number": "04",
+            "action": "Author new JTBD blocks under content-blocks/",
+            "owner": "ADM / content",
+            "date": "Next"
+          }
+        ]
+      },
+      "notes": {
+        "opening": "Close on ownership and the required exit.",
+        "points": [
+          "Mark reviewed blocks in catalog notes; re-assemble after edits.",
+          "Day-of kit: npm run field-kit · docs/adm-field-kit.md."
+        ],
+        "transition": "End.",
+        "timeMinutes": 2
+      }
+    }
+  ]
+}

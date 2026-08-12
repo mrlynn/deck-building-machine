@@ -1,0 +1,34 @@
+---
+name: create-brief
+description: Interview, paste, or MCP context → brief.md. Teaches skills over templates — users never hand-fill the brief format.
+---
+
+# /create-brief
+
+Turn a conversation, pasted notes, or connected meeting/account context into a structured `brief.md`.
+
+## How to use
+
+```
+/create-brief
+```
+
+Or paste notes after the command. Default output: `brief.md`.
+
+## Prompt for agent
+
+### 0. MCP context pass (before interview)
+
+If MCP / connected tools are available, query once to pre-fill the brief — then only ask for gaps. Meeting notes tools for named meetings; company/CRM tools for account context. Paste wins over MCP when both exist. If tools are missing or empty, continue to paste/interview silently.
+
+### 1–4. Intake → confirm → write
+
+1. **Paste / MCP-assisted / Interview** — extract fields; do not re-ask for present info
+2. Confirm a short summary (include context source: paste | interview | MCP | mix)
+3. Write `brief.md` matching `templates/brief.md`
+4. Offer `/build-deck brief.md` (or `/build-doc brief.md` for a Word narrative)
+
+Defaults if skipped: audience = "{{defaultAudience}}", purpose = persuade, slides = 8–10, time = 20 minutes.
+
+Never tell the user to open or fill `templates/brief.md` themselves.
+Never require MCP setup to use this skill.

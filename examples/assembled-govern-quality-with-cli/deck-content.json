@@ -1,0 +1,154 @@
+{
+  "metadata": {
+    "title": "Assembled blocks — govern-quality-with-cli",
+    "audience": "Customer champions and engineers in a Cursor demo",
+    "presenter": "ADM / FE",
+    "date": "July 2026",
+    "purpose": "inform",
+    "assembledFrom": [
+      {
+        "id": "govern-quality-with-cli",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "slides": [
+    {
+      "type": "title",
+      "headline": "Leave-behind teaching blocks — assembled",
+      "content": {
+        "eyebrow": "Content blocks spike",
+        "subtitle": "Catch thin decks with /deck-score before export"
+      },
+      "notes": {
+        "opening": "This deck was assembled from versioned content blocks.",
+        "points": [
+          "Edit blocks under content-blocks/, then re-run assemble.",
+          "Polish or export with existing deck skills."
+        ],
+        "transition": "Into the first block section.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "section",
+      "headline": "Gate quality before the PPTX leaves the room",
+      "content": {
+        "eyebrow": "Scorecard",
+        "sectionNumber": "03"
+      },
+      "notes": {
+        "opening": "Two gates, one leave-behind.",
+        "points": [
+          "brand-check is the judgment call.",
+          "deck-score is the structural CLI."
+        ],
+        "transition": "Show how they differ.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "two-column",
+      "headline": "Judgment and structure catch different failures",
+      "content": {
+        "left": {
+          "heading": "/brand-check",
+          "bullets": [
+            "brand-guardian agent review",
+            "Insight headlines and banned phrases",
+            "Voice and Marriott-leak style checks"
+          ]
+        },
+        "right": {
+          "heading": "/deck-score",
+          "bullets": [
+            "Node CLI on deck-content.json",
+            "Structure, depth, aesthetics",
+            "Warn by default; --strict to fail"
+          ]
+        },
+        "takeaway": "Run both before you call the demo done."
+      },
+      "notes": {
+        "opening": "Do not collapse these into one button in the story.",
+        "points": [
+          "Champions can wire smoke:deck-quality into CI later.",
+          "Studio UI for scores is intentionally out of scope."
+        ],
+        "transition": "Lab 4 optional path makes the CLI real.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Delete a takeaway and watch /deck-score move",
+      "content": {
+        "bullets": [
+          {
+            "text": "Strip depth from one slide on purpose",
+            "detail": "Remove takeaway or flatten assertion+detail bullets"
+          },
+          {
+            "text": "Run /deck-score before you fix it",
+            "detail": "Optional --strict if the champion wants a hard gate"
+          },
+          {
+            "text": "Restore depth, re-score, then /export-pptx",
+            "detail": "Pairs with the required /brand-check Lab 4 exit"
+          }
+        ],
+        "takeaway": "Thin decks fail in the repo — not in the customer meeting."
+      },
+      "notes": {
+        "opening": "Only if Lab 4 already landed; otherwise demo the command on a sample.",
+        "points": [
+          "Point at examples/delight-sample for a known baseline.",
+          "Mention docs/superpowers scorecard design for maintainers."
+        ],
+        "transition": "Close the leave-behind quality story.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "closing",
+      "headline": "Next: run Lab 4, then read after-the-demo",
+      "content": {
+        "items": [
+          {
+            "number": "01",
+            "action": "Open the leave-behind zip in Cursor",
+            "owner": "Champion",
+            "date": "Today"
+          },
+          {
+            "number": "02",
+            "action": "Complete Lab 4 exit criteria",
+            "owner": "Room",
+            "date": "docs/primitives-lab.md"
+          },
+          {
+            "number": "03",
+            "action": "Read day-2 ownership",
+            "owner": "Champion",
+            "date": "docs/after-the-demo.md"
+          },
+          {
+            "number": "04",
+            "action": "Author new JTBD blocks under content-blocks/",
+            "owner": "ADM / content",
+            "date": "Next"
+          }
+        ]
+      },
+      "notes": {
+        "opening": "Close on ownership and the required exit.",
+        "points": [
+          "Point at catalog.json for queued curriculum blocks.",
+          "CLI / tokens / governance blocks are next for SME draft."
+        ],
+        "transition": "End.",
+        "timeMinutes": 2
+      }
+    }
+  ]
+}

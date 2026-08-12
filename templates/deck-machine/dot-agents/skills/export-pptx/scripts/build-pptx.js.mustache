@@ -1,0 +1,607 @@
+'use strict';
+/**
+ * {{customerName}} Deck Machine — PPTX Builder
+ * Brand tokens load from brand/brand-pack.json at runtime.
+ * Prefer the bundled exporter (no npm): node bundled/export-pptx.cjs …
+ * Usage: node build-pptx.js path/to/deck-content.json
+ */
+const fs   = require('fs');
+const path = require('path');
+const PptxGenJS = require('pptxgenjs');
+const {
+  renderChartSlide,
+  renderDiagramSlide,
+  renderImageSlide,
+  renderBullets,
+  renderTakeaway,
+  speakerNotesText,
+  headlineSize,
+} = require('./visual-slides');
+const { loadBrand, repoRootFromInput } = require('../../_shared/load-brand');
+
+const [,, inputPath] = process.argv;
+if (!inputPath) { console.error('Usage: node build-pptx.js deck-content.json'); process.exit(1); }
+
+const deckJsonAbs = path.resolve(inputPath);
+const deck = JSON.parse(fs.readFileSync(deckJsonAbs, 'utf8'));
+const outDir = path.resolve(path.dirname(deckJsonAbs), 'output');
+fs.mkdirSync(outDir, { recursive: true });
+
+const brand = loadBrand(repoRootFromInput(deckJsonAbs));
+const C = {
+  red:       brand.primaryBare,
+  dark:      brand.darkBare,
+  gray:      brand.grayBare,
+  lgray:     brand.lightGrayBare,
+  mgray:     brand.midGrayBare,
+  white:     brand.whiteBare,
+  gold:      brand.accentBare,
+};
+const F  = brand.fontStack.split(',')[0].trim() || 'Arial';
+const W  = 13.33, H = 7.5, ML = 0.75, MT = 0.55, CW = W - ML * 2;
+const LT = H - 0.45 - 0.28;
+const LOGO_SIZE = 0.32;
+const LOGO_X = W - ML - LOGO_SIZE;
+const LOGO_Y = H - 0.28 - LOGO_SIZE;
+
+/** Typography scale — aligned with brand/typography.md */
+const TYPE = {
+  deckTitle: 48,
+  slideTitle: 26,
+  subtitle: 18,
+  body: 15,
+  caption: 11,
+  metricValue: 40,
+  sectionNumber: 56,
+};
+
+const LAYOUT = brand.layoutStyle; // classic | minimal | bold
+
+const BRAND_DIR = brand.brandDir;
+const LOGO_ON_DARK  = path.join(BRAND_DIR, 'logo.png');
+const LOGO_ON_LIGHT_CANDIDATES = [
+  path.join(BRAND_DIR, 'logo-on-light.png'),
+  path.join(BRAND_DIR, 'logo-red.png'),
+];
+
+function resolveLogoLight() {
+  for (const p of LOGO_ON_LIGHT_CANDIDATES) {
+    if (fs.existsSync(p)) return p;
+  }
+  return LOGO_ON_LIGHT_CANDIDATES[0];
+}
+
+async function build() {
+  const pptx = new PptxGenJS();
+  pptx.defineLayout({ name: 'W', width: W, height: H });
+  pptx.layout = 'W';
+  pptx.title  = deck.metadata?.title || `${brand.customerName} Deck`;
+  pptx.author = deck.metadata?.presenter || brand.customerName;
+
+  const hasLogoDark  = fs.existsSync(LOGO_ON_DARK);
+  const LOGO_ON_LIGHT = resolveLogoLight();
+  const hasLogoLight = fs.existsSync(LOGO_ON_LIGHT);
+  const totalSlides = deck.slides.length;
+
+  const t = (sl, s, x, y, w, h, o={}) =>
+    sl.addText(s||'', { x,y,w,h, fontFace:F, ...o });
+  const box = (sl, x, y, w, h, color) =>
+    sl.addShape('rect', { x,y,w,h, fill:{color}, line:{type:'none'} });
+  const hline = (sl, x1, y, x2, color, pt=0.5) =>
+    sl.addShape('line', { x:x1, y, w:x2-x1, h:0.001, line:{color,width:pt,type:'solid'} });
+  const vline = (sl, x, y1, y2, color, pt=1.5) =>
+    sl.addShape('line', { x, y:y1, w:0.001, h:y2-y1, line:{color,width:pt,type:'solid'} });
+  const addFooterLogo = (sl, variant) => {
+    const file = variant === 'dark' ? LOGO_ON_DARK : LOGO_ON_LIGHT;
+    const ok   = variant === 'dark' ? hasLogoDark : hasLogoLight;
+    if (!ok) return;
+    sl.addImage({ path: file, x: LOGO_X, y: LOGO_Y, w: LOGO_SIZE, h: LOGO_SIZE });
+  };
+
+  const addSlideNumber = (sl, index, darkBg) => {
+    t(sl, `${index + 1} / ${totalSlides}`, ML, LOGO_Y + 0.02, 1.4, 0.28, {
+      fontSize: 10,
+      color: darkBg ? C.mgray : C.mgray,
+    });
+  };
+
+  const topBar = (sl, thickness = 0.04) => box(sl, ML, MT, CW, thickness, C.red);
+  const leftRail = (sl, y, h, thickness = 0.06) => box(sl, ML - 0.12, y, thickness, h, C.red);
+
+  const visualCtx = () => ({
+    t, box, hline, leftRail, C, F, ML, MT, CW, W, H, LAYOUT, TYPE, pptx,
+  });
+
+  for (let slideIndex = 0; slideIndex < deck.slides.length; slideIndex++) {
+    const slide = deck.slides[slideIndex];
+    const sl = pptx.addSlide();
+    const hl  = slide.headline || '';
+    const cnt = slide.content || {};
+    let footerVariant = 'light';
+    let darkBg = false;
+
+    switch (slide.type) {
+      case 'title': {
+        const eyebrow = cnt.eyebrow || deck.metadata?.audience || '';
+        if (LAYOUT === 'minimal') {
+          footerVariant = 'light';
+          sl.background = { color: C.white };
+          box(sl, 0, 0, 0.18, H, C.red);
+          if (eyebrow)
+            t(sl, eyebrow, ML + 0.15, 1.55, 10, 0.35, { fontSize: 13, color: C.mgray });
+          t(sl, hl, ML + 0.15, 2.0, 11, 2.0, {
+            fontSize: headlineSize(hl, TYPE.deckTitle - 4),
+            color: C.dark,
+            valign: 'middle',
+          });
+          hline(sl, ML + 0.15, 4.15, ML + 4.5, C.red, 1.25);
+          if (cnt.subtitle)
+            t(sl, cnt.subtitle, ML + 0.15, 4.35, 10, 0.7, { fontSize: TYPE.subtitle, color: C.gray });
+          if (deck.metadata?.presenter)
+            t(sl, `${deck.metadata.presenter}  ·  ${deck.metadata.date||''}`,
+              ML + 0.15, LT, 8, 0.35, { fontSize: TYPE.caption, color: C.mgray });
+        } else if (LAYOUT === 'bold') {
+          footerVariant = 'dark';
+          darkBg = true;
+          sl.background = { color: C.dark };
+          box(sl, 0, H - 0.55, W, 0.55, C.red);
+          if (eyebrow)
+            t(sl, eyebrow, ML, 1.0, 10, 0.35, { fontSize: 13, color: C.mgray });
+          t(sl, hl, ML, 1.4, 11, 2.4, {
+            fontSize: headlineSize(hl, TYPE.deckTitle),
+            color: C.white,
+            valign: 'middle',
+          });
+          if (cnt.subtitle)
+            t(sl, cnt.subtitle, ML, 4.0, 10, 0.8, { fontSize: 20, color: C.mgray });
+          if (deck.metadata?.presenter)
+            t(sl, `${deck.metadata.presenter}  ·  ${deck.metadata.date||''}`,
+              ML, H - 0.48, 8, 0.35, { fontSize: TYPE.caption, color: C.white });
+        } else {
+          footerVariant = 'dark';
+          darkBg = true;
+          sl.background = { color: C.red };
+          if (eyebrow)
+            t(sl, eyebrow, ML, 0.85, 10, 0.35, { fontSize: 13, color: C.lgray });
+          t(sl, hl, ML, 1.2, 11, 2.1, {
+            fontSize: headlineSize(hl, TYPE.deckTitle),
+            color: C.white,
+            valign: 'middle',
+          });
+          hline(sl, ML, 3.45, ML + 3.2, C.white, 1.0);
+          if (cnt.subtitle)
+            t(sl, cnt.subtitle, ML, 3.65, 10, 0.9, { fontSize: 20, color: C.lgray });
+          if (deck.metadata?.presenter)
+            t(sl, `${deck.metadata.presenter}  ·  ${deck.metadata.date||''}`,
+              ML, LT, 8, 0.35, { fontSize: TYPE.caption, color: C.lgray });
+        }
+        break;
+      }
+      case 'agenda': {
+        if (LAYOUT === 'minimal') {
+          sl.background = { color: C.white };
+          t(sl, hl, ML, 0.9, 5, 2.0, { fontSize: 34, color: C.dark, valign: 'top' });
+          vline(sl, 5.6, 1.0, 6.2, C.red, 1.25);
+        } else if (LAYOUT === 'bold') {
+          sl.background = { color: C.lgray };
+          box(sl, 0, 0, 0.22, H, C.dark);
+          t(sl, hl, ML, 0.9, 5, 2.2, { fontSize: 36, color: C.dark, valign: 'top' });
+        } else {
+          sl.background = { color: C.lgray };
+          t(sl, hl, ML, 1.0, 5, 2.5, { fontSize: 38, color: C.dark, valign: 'top' });
+        }
+        {
+          const items = cnt.items || [];
+          const sx = LAYOUT === 'minimal' ? 6.0 : 6.2;
+          const iw = LAYOUT === 'minimal' ? 6.3 : 6.5;
+          const ih = LAYOUT === 'minimal' ? 0.95 : 0.88;
+          const sy = LAYOUT === 'minimal' ? 1.1 : 1.0;
+          items.forEach((item, i) => {
+            const iy = sy + i * ih;
+            hline(sl, sx, iy, sx + iw, LAYOUT === 'bold' ? C.dark : C.mgray, LAYOUT === 'bold' ? 0.7 : 0.5);
+            t(sl, item, sx, iy + 0.1, iw - 0.8, ih - 0.15, {
+              fontSize: LAYOUT === 'minimal' ? 18 : 19,
+              color: C.dark,
+              valign: 'middle',
+            });
+            t(sl, String(i + 1), sx + iw - 0.7, iy + 0.1, 0.65, ih - 0.15, {
+              fontSize: LAYOUT === 'bold' ? 22 : 19,
+              color: C.red,
+              valign: 'middle',
+              align: 'right',
+            });
+          });
+          hline(sl, sx, sy + items.length * ih, sx + iw, LAYOUT === 'bold' ? C.dark : C.mgray, LAYOUT === 'bold' ? 0.7 : 0.5);
+        }
+        break;
+      }
+      case 'section': {
+        if (LAYOUT === 'minimal') {
+          footerVariant = 'light';
+          sl.background = { color: C.lgray };
+          if (cnt.sectionNumber)
+            t(sl, cnt.sectionNumber, ML, 2.0, 2.5, 1.0, { fontSize: 48, color: C.mgray });
+          t(sl, hl, ML, 3.15, 10.5, 1.8, {
+            fontSize: headlineSize(hl, 34),
+            color: C.dark,
+          });
+          hline(sl, ML, 5.1, ML + 2.5, C.red, 1.5);
+        } else if (LAYOUT === 'bold') {
+          footerVariant = 'dark';
+          darkBg = true;
+          sl.background = { color: C.dark };
+          box(sl, 0, 0, 0.22, H, C.red);
+          if (cnt.sectionNumber)
+            t(sl, cnt.sectionNumber, ML, 1.5, 2.5, 1.2, { fontSize: TYPE.sectionNumber, color: C.red });
+          t(sl, hl, ML, 2.9, 10.5, 1.8, {
+            fontSize: headlineSize(hl, 38),
+            color: C.white,
+          });
+        } else {
+          footerVariant = 'dark';
+          darkBg = true;
+          sl.background = { color: C.red };
+          if (cnt.sectionNumber)
+            t(sl, cnt.sectionNumber, ML, 1.5, 2.5, 1.2, { fontSize: TYPE.sectionNumber, color: C.lgray });
+          t(sl, hl, ML, 2.9, 10.5, 1.8, {
+            fontSize: headlineSize(hl, 38),
+            color: C.white,
+          });
+          hline(sl, ML, 5.0, ML + 2.8, C.white, 1.0);
+        }
+        break;
+      }
+      case 'questions': {
+        if (LAYOUT === 'minimal') {
+          footerVariant = 'light';
+          sl.background = { color: C.white };
+          box(sl, 0, 0, 0.18, H, C.red);
+          t(sl, hl || 'Questions?', ML + 0.15, 2.2, CW - 0.15, 3.0, {
+            fontSize: 48,
+            color: C.dark,
+            valign: 'middle',
+            align: 'left',
+          });
+        } else if (LAYOUT === 'bold') {
+          footerVariant = 'dark';
+          darkBg = true;
+          sl.background = { color: C.dark };
+          box(sl, 0, H - 0.55, W, 0.55, C.red);
+          t(sl, hl || 'Questions?', ML, 2.2, CW, 3.0, {
+            fontSize: 52,
+            color: C.white,
+            valign: 'middle',
+            align: 'center',
+          });
+        } else {
+          footerVariant = 'dark';
+          darkBg = true;
+          sl.background = { color: C.red };
+          t(sl, hl || 'Questions?', ML, 2.2, CW, 3.0, {
+            fontSize: 52,
+            color: C.white,
+            valign: 'middle',
+            align: 'center',
+          });
+        }
+        break;
+      }
+      case 'metrics': {
+        sl.background = { color: C.white };
+        if (LAYOUT === 'minimal') {
+          t(sl, hl, ML, 0.7, CW, 0.7, {
+            fontSize: headlineSize(hl, TYPE.slideTitle + 2),
+            color: C.dark,
+          });
+        } else if (LAYOUT === 'bold') {
+          topBar(sl, 0.1);
+          t(sl, hl, ML, 0.85, CW, 0.7, {
+            fontSize: headlineSize(hl, TYPE.slideTitle),
+            color: C.dark,
+          });
+        } else {
+          topBar(sl, 0.04);
+          t(sl, hl, ML, 0.75, CW, 0.7, {
+            fontSize: headlineSize(hl, TYPE.slideTitle),
+            color: C.dark,
+          });
+        }
+        {
+          const metrics = cnt.metrics || [];
+          const n = Math.max(metrics.length, 1);
+          const gap = LAYOUT === 'minimal' ? 0.28 : n <= 2 ? 0.35 : 0.22;
+          const tw = (CW - (n - 1) * gap) / n;
+          const tileY = LAYOUT === 'minimal' ? 1.75 : 1.85;
+          const baseTileH = n <= 2 ? 4.4 : LAYOUT === 'minimal' ? 4.25 : 4.4;
+          const tileH = cnt.takeaway ? baseTileH - 0.45 : baseTileH;
+          metrics.forEach((m, i) => {
+            const tx = ML + i * (tw + gap);
+            const hasDelta = Boolean(m.delta);
+            if (LAYOUT === 'minimal') {
+              box(sl, tx, tileY, tw, tileH, C.white);
+              hline(sl, tx, tileY, tx + tw, C.red, 1.75);
+              hline(sl, tx, tileY + tileH, tx + tw, C.lgray, 0.75);
+              t(sl, m.value, tx + 0.22, tileY + 0.45, tw - 0.44, 1.3, {
+                fontSize: n <= 2 ? 48 : TYPE.metricValue + 2,
+                color: C.red,
+              });
+              if (hasDelta)
+                t(sl, m.delta, tx + 0.22, tileY + 1.75, tw - 0.44, 0.4, {
+                  fontSize: 14,
+                  bold: true,
+                  color: C.red,
+                });
+              t(sl, m.label, tx + 0.22, tileY + (hasDelta ? 2.25 : 1.9), tw - 0.44, 0.5, {
+                fontSize: 13,
+                bold: true,
+                color: C.dark,
+              });
+              if (m.description)
+                t(sl, m.description, tx + 0.22, tileY + (hasDelta ? 2.85 : 2.5), tw - 0.44, 1.5, {
+                  fontSize: 12,
+                  color: C.gray,
+                  wrap: true,
+                });
+            } else if (LAYOUT === 'bold') {
+              box(sl, tx, tileY, tw, tileH, C.lgray);
+              box(sl, tx, tileY, tw, 1.05, C.dark);
+              t(sl, m.value, tx + 0.2, tileY + 0.18, tw - 0.4, 0.7, {
+                fontSize: n <= 2 ? 36 : 32,
+                color: C.white,
+              });
+              if (hasDelta)
+                t(sl, m.delta, tx + 0.2, tileY + 1.2, tw - 0.4, 0.35, {
+                  fontSize: 13,
+                  bold: true,
+                  color: C.red,
+                });
+              t(sl, m.label, tx + 0.2, tileY + (hasDelta ? 1.65 : 1.3), tw - 0.4, 0.5, {
+                fontSize: 13,
+                bold: true,
+                color: C.dark,
+              });
+              if (m.description)
+                t(sl, m.description, tx + 0.2, tileY + (hasDelta ? 2.25 : 1.9), tw - 0.4, 2.0, {
+                  fontSize: 12,
+                  color: C.gray,
+                  wrap: true,
+                });
+            } else {
+              box(sl, tx, tileY, tw, tileH, C.lgray);
+              box(sl, tx, tileY, tw, 0.06, C.red);
+              if (n >= 3 && i < n - 1) {
+                box(sl, tx + tw + gap / 2 - 0.01, tileY + 0.8, 0.02, tileH - 1.6, C.gold);
+              }
+              t(sl, m.value, tx + 0.22, tileY + 0.35, tw - 0.44, 1.25, {
+                fontSize: n <= 2 ? 46 : TYPE.metricValue,
+                color: C.red,
+              });
+              if (hasDelta)
+                t(sl, m.delta, tx + 0.22, tileY + 1.65, tw - 0.44, 0.4, {
+                  fontSize: 14,
+                  bold: true,
+                  color: C.red,
+                });
+              t(sl, m.label, tx + 0.22, tileY + (hasDelta ? 2.15 : 1.8), tw - 0.44, 0.5, {
+                fontSize: 13,
+                bold: true,
+                color: C.dark,
+              });
+              if (m.description)
+                t(sl, m.description, tx + 0.22, tileY + (hasDelta ? 2.75 : 2.4), tw - 0.44, 1.6, {
+                  fontSize: 12,
+                  color: C.gray,
+                  wrap: true,
+                });
+            }
+          });
+          renderTakeaway(visualCtx(), sl, cnt.takeaway);
+        }
+        break;
+      }
+      case 'two-column': {
+        sl.background = { color: C.white };
+        if (LAYOUT === 'minimal') {
+          t(sl, hl, ML, 0.7, CW, 0.7, {
+            fontSize: headlineSize(hl, TYPE.slideTitle + 2),
+            color: C.dark,
+          });
+        } else {
+          topBar(sl, LAYOUT === 'bold' ? 0.1 : 0.04);
+          t(sl, hl, ML, 0.75, CW, 0.7, {
+            fontSize: headlineSize(hl, TYPE.slideTitle),
+            color: C.dark,
+          });
+        }
+        {
+          const cw = (CW - 0.3) / 2;
+          const hasTakeaway = Boolean(cnt.takeaway);
+          const cardH = hasTakeaway ? 4.15 : 4.5;
+          [cnt.left, cnt.right].filter(Boolean).forEach((col, i) => {
+            const cx = ML + i * (cw + 0.3);
+            const bullets = col.bullets || [];
+            if (LAYOUT === 'minimal') {
+              hline(sl, cx, 1.85, cx + cw, C.red, 1.25);
+              t(sl, col.heading || '', cx, 2.0, cw, 0.5, { fontSize: 16, color: C.dark });
+              renderBullets(visualCtx(), sl, bullets, {
+                x: cx, y: 2.7, w: cw, h: cardH - 1.0, fontSize: 13, detailSize: 11,
+              });
+            } else if (LAYOUT === 'bold') {
+              box(sl, cx, 1.9, cw, cardH, C.lgray);
+              box(sl, cx, 1.9, 0.1, cardH, C.red);
+              t(sl, col.heading || '', cx + 0.28, 2.08, cw - 0.46, 0.55, { fontSize: 16, color: C.dark });
+              hline(sl, cx + 0.28, 2.72, cx + cw - 0.18, C.mgray, 0.5);
+              renderBullets(visualCtx(), sl, bullets, {
+                x: cx + 0.28, y: 2.9, w: cw - 0.46, h: cardH - 1.2, fontSize: 13, detailSize: 11,
+              });
+            } else {
+              box(sl, cx, 1.9, cw, cardH, C.lgray);
+              box(sl, cx, 1.9, cw, 0.05, C.red);
+              t(sl, col.heading || '', cx + 0.18, 2.08, cw - 0.36, 0.55, { fontSize: 16, color: C.dark });
+              hline(sl, cx + 0.18, 2.72, cx + cw - 0.18, C.mgray, 0.5);
+              renderBullets(visualCtx(), sl, bullets, {
+                x: cx + 0.18, y: 2.9, w: cw - 0.36, h: cardH - 1.2, fontSize: 13, detailSize: 11,
+              });
+            }
+          });
+          renderTakeaway(visualCtx(), sl, cnt.takeaway);
+        }
+        break;
+      }
+      case 'quote': {
+        if (LAYOUT === 'minimal') {
+          sl.background = { color: C.white };
+          box(sl, ML, 1.7, 0.06, 2.8, C.red);
+          t(sl, cnt.quote || '', ML + 0.4, 1.8, 10.2, 2.6, {
+            fontSize: 26,
+            color: C.dark,
+            wrap: true,
+            valign: 'middle',
+          });
+          t(sl, cnt.attribution || '', ML + 0.4, 4.85, 9, 0.4, { fontSize: 14, color: C.gray });
+          if (cnt.context)
+            t(sl, cnt.context, ML + 0.4, 5.3, 9, 0.35, { fontSize: 12, color: C.mgray, italic: true });
+        } else if (LAYOUT === 'bold') {
+          sl.background = { color: C.dark };
+          footerVariant = 'dark';
+          darkBg = true;
+          t(sl, '\u201C', ML, 0.45, 2, 1.4, { fontSize: 88, color: C.red });
+          t(sl, cnt.quote || '', ML + 0.15, 1.7, 10.8, 2.8, {
+            fontSize: 26,
+            color: C.white,
+            wrap: true,
+            valign: 'middle',
+          });
+          box(sl, ML, 1.65, 0.08, 2.9, C.red);
+          t(sl, cnt.attribution || '', ML + 0.15, 5.0, 9, 0.4, { fontSize: 14, color: C.mgray });
+          if (cnt.context)
+            t(sl, cnt.context, ML + 0.15, 5.4, 9, 0.35, { fontSize: 12, color: C.mgray, italic: true });
+        } else {
+          sl.background = { color: C.lgray };
+          t(sl, '\u201C', ML, 0.55, 2, 1.6, { fontSize: 88, color: C.red });
+          box(sl, ML, 1.55, 0.07, 2.9, C.red);
+          t(sl, cnt.quote || '', ML + 0.35, 1.6, 10.5, 2.8, {
+            fontSize: 26,
+            color: C.dark,
+            wrap: true,
+            valign: 'middle',
+          });
+          t(sl, cnt.attribution || '', ML + 0.35, 4.8, 9, 0.4, { fontSize: 14, color: C.gray });
+          if (cnt.context)
+            t(sl, cnt.context, ML + 0.35, 5.25, 9, 0.35, { fontSize: 12, color: C.mgray, italic: true });
+        }
+        break;
+      }
+      case 'closing': {
+        sl.background = { color: C.white };
+        if (LAYOUT === 'minimal') {
+          t(sl, hl, ML, 0.7, CW, 0.7, {
+            fontSize: headlineSize(hl, 34),
+            color: C.dark,
+          });
+        } else {
+          topBar(sl, LAYOUT === 'bold' ? 0.1 : 0.04);
+          t(sl, hl, ML, 0.75, CW, 0.7, {
+            fontSize: headlineSize(hl, LAYOUT === 'bold' ? 34 : 38),
+            color: C.dark,
+          });
+        }
+        {
+          const items = cnt.items || [];
+          const lineW = CW * 0.85;
+          const startY = LAYOUT === 'minimal' ? 1.85 : 2.0;
+          const rowH = LAYOUT === 'minimal' ? 1.1 : 1.05;
+          items.forEach((item, i) => {
+            const sy = startY + i * rowH;
+            hline(sl, ML, sy, ML + lineW, LAYOUT === 'bold' ? C.dark : C.mgray, LAYOUT === 'bold' ? 0.7 : 0.5);
+            t(sl, item.number || String(i + 1).padStart(2, '0'), ML, sy + 0.12, 0.6, 0.7, {
+              fontSize: 13,
+              bold: true,
+              color: C.red,
+            });
+            t(sl, item.action || '', ML + 0.55, sy + 0.12, 6.5, 0.55, { fontSize: 16, color: C.dark });
+            if (item.owner)
+              t(sl, item.owner, ML + 7.15, sy + 0.12, 2.5, 0.35, { fontSize: 11, color: C.gray, align: 'right' });
+            if (item.date)
+              t(sl, item.date, ML + 7.15, sy + 0.47, 2.5, 0.35, { fontSize: 11, color: C.mgray, align: 'right' });
+          });
+          hline(sl, ML, startY + items.length * rowH, ML + lineW, LAYOUT === 'bold' ? C.dark : C.mgray, LAYOUT === 'bold' ? 0.7 : 0.5);
+        }
+        break;
+      }
+      case 'chart': {
+        renderChartSlide(visualCtx(), sl, hl, cnt);
+        break;
+      }
+      case 'diagram': {
+        renderDiagramSlide(visualCtx(), sl, hl, cnt);
+        break;
+      }
+      case 'image': {
+        renderImageSlide(visualCtx(), sl, hl, cnt, deckJsonAbs);
+        break;
+      }
+      case 'content':
+      default: {
+        sl.background = { color: C.white };
+        const bullets = cnt.bullets || [];
+        const hasTakeaway = Boolean(cnt.takeaway);
+        const bottomY = hasTakeaway ? 6.25 : 6.55;
+        if (LAYOUT === 'minimal') {
+          leftRail(sl, 0.7, 5.8, 0.05);
+          t(sl, hl, ML + 0.1, 0.7, CW - 0.1, 0.85, {
+            fontSize: headlineSize(hl, TYPE.slideTitle + 2),
+            color: C.dark,
+          });
+          renderBullets(visualCtx(), sl, bullets, {
+            x: ML + 0.1, y: 1.85, w: CW - 0.1, h: bottomY - 1.85,
+          });
+        } else if (LAYOUT === 'bold') {
+          topBar(sl, 0.1);
+          leftRail(sl, 0.85, 5.6, 0.1);
+          t(sl, hl, ML + 0.15, 0.85, CW - 0.15, 0.75, {
+            fontSize: headlineSize(hl, TYPE.slideTitle),
+            color: C.dark,
+          });
+          hline(sl, ML + 0.15, 1.7, ML + CW, C.lgray, 0.75);
+          renderBullets(visualCtx(), sl, bullets, {
+            x: ML + 0.15, y: 1.95, w: CW - 0.15, h: bottomY - 1.95,
+          });
+        } else {
+          topBar(sl, 0.04);
+          t(sl, hl, ML, 0.75, CW, 0.75, {
+            fontSize: headlineSize(hl, TYPE.slideTitle),
+            color: C.dark,
+          });
+          hline(sl, ML, 1.6, ML + CW, C.lgray, 0.75);
+          renderBullets(visualCtx(), sl, bullets, {
+            x: ML, y: 1.8, w: CW, h: bottomY - 1.8,
+          });
+        }
+        if (cnt.note) {
+          t(sl, cnt.note, ML, (hasTakeaway ? LT - 0.6 : LT - 0.15), CW, 0.35, { fontSize: TYPE.caption, color: C.mgray, italic: true });
+        }
+        renderTakeaway(visualCtx(), sl, cnt.takeaway);
+        break;
+      }
+    }
+
+    const notesText = speakerNotesText(slide.notes);
+    if (notesText) sl.addNotes(notesText);
+
+    addFooterLogo(sl, footerVariant);
+    if (slide.type !== 'title' && slide.type !== 'section' && slide.type !== 'questions') {
+      addSlideNumber(sl, slideIndex, darkBg);
+    }
+  }
+
+  const safeName = (deck.metadata?.title || `${brand.customerName}-deck`)
+    .toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const outFile = path.join(outDir, `${safeName}.pptx`);
+  await pptx.writeFile({ fileName: outFile });
+  console.log(`\nDeck built: ${outFile}`);
+  console.log(`Layout: {{layoutLabel}} ({{layoutStyle}})`);
+  console.log(`Slides: ${deck.slides.length}`);
+}
+
+build().catch(err => { console.error(err); process.exit(1); });

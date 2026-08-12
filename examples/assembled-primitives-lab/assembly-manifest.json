@@ -1,0 +1,27 @@
+{
+  "assembledAt": "2026-07-18T09:36:05.065Z",
+  "blocks": [
+    {
+      "id": "prove-primitives-with-lab4",
+      "version": "1.0.0",
+      "jobTitle": "Prove Rules stay on with Lab 4",
+      "slideCount": 4
+    },
+    {
+      "id": "encode-brand-as-tokens",
+      "version": "1.0.0",
+      "jobTitle": "Encode brand once so Agents and exporters share tokens",
+      "slideCount": 3
+    },
+    {
+      "id": "govern-quality-with-cli",
+      "version": "1.0.0",
+      "jobTitle": "Catch thin decks with /deck-score before export",
+      "slideCount": 3
+    }
+  ],
+  "outputs": [
+    "brief.md",
+    "deck-content.json"
+  ]
+}

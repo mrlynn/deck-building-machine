@@ -1,0 +1,64 @@
+# {{customerName}} Cursor Deck Machine
+
+This repo teaches Cursor **skills**, **rules**, and **subagents** through a branded deck workflow for {{customerName}}. The PPTX is proof — not the product.
+
+**Teaching docs:** [docs/primitives-decision-tree.md](docs/primitives-decision-tree.md) (placement) · [docs/primitives-lab.md](docs/primitives-lab.md) (20-min practice) · [docs/after-the-demo.md](docs/after-the-demo.md) (day 2)
+
+## Where things live
+
+- **Brand rule** (always on): `.cursor/rules/{{ruleFileName}}`
+- **Deck workflow rule**: `.cursor/rules/deck-workflow.mdc` (loads when working on decks)
+- **Skills**: `.agents/skills/` — available via `/` in Agent chat
+- **Subagents**: `.cursor/agents/` — invoked by skills (especially `/build-deck`), not typed as slash commands
+- **Visual assets**: `assets/` — written by `visual-creator` during `/build-deck` (never by hand)
+
+## When to use each skill
+
+| Skill | Use when... |
+|---|---|
+| `/create-brief` | Starting a deck — MCP when available, else interview or paste; writes `brief.md` |
+| `/build-deck` | You have a brief and want a complete deck in one shot |
+| `/build-doc` | Branded Word narrative from the same brief (or from a deck) |
+| `/create-outline` | You want to review the story structure before writing slides |
+| `/write-slide` | You're iterating on a specific slide or adding one |
+| `/revise-deck` | Surgical edits to an existing deck, then HTML preview |
+| `/preview-deck` | HTML story preview before PPTX export |
+| `/polish-deck` | An existing deck needs depth: takeaways, speaker notes, chart highlights |
+| `/brand-check` | Before sharing any deck externally |
+| `/export-pptx` | You've edited `deck-content.json` and need a new PPTX |
+| `/export-docx` | You've edited `doc-content.json` and need a new DOCX |
+| `/export-metrics-xlsx` | Metrics/chart slides → branded Excel workbook |
+
+Office exporters are **pre-bundled** (`scripts/bundled/export-*.cjs`) — no `npm install`. Brand tokens load from `brand/brand-pack.json`.
+
+## Subagents (invoked by skills)
+
+| Agent | Role |
+|---|---|
+| `deck-builder` | Orchestrates the full pipeline behind `/build-deck` |
+| `brief-analyzer` | Turns a brief into a slide-by-slide outline |
+| `slide-writer` | Writes content for individual slides |
+| `visual-creator` | Validates chart/diagram JSON; generates PNGs into `assets/` for image slides |
+| `narrative-editor` | Headline spine, assertion+detail bullets, takeaways, speaker notes |
+| `brand-guardian` | Reviews `deck-content.json` for brand compliance |
+
+## How a deck is built
+
+1. Run `/create-brief` (talk or paste notes — **do not fill the template by hand**)
+2. Run `/build-deck brief.md`
+3. The `deck-builder` subagent orchestrates:
+   - `brief-analyzer` → creates the outline
+   - `slide-writer` → writes each slide
+   - `visual-creator` → native charts/diagrams + generated images (no human file drops)
+   - `narrative-editor` → headline spine, bullet depth, takeaways, speaker notes
+   - `brand-guardian` → reviews for compliance
+   - Export script → generates `output/<name>.pptx`
+4. Pick up your PPTX from `output/`
+
+`templates/brief.md` is the schema the Agent writes to. Humans use `/create-brief`.
+
+## Updating brand standards
+
+1. Edit files in `brand/`
+2. Update `.cursor/rules/{{ruleFileName}}`
+3. Commit — teammates pick up changes automatically

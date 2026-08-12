@@ -1,0 +1,17 @@
+{
+  "customerName": "Marriott",
+  "customerSlug": "marriott",
+  "displayName": "Marriott International",
+  "primaryColor": "#BE202E",
+  "darkColor": "#1D1D1B",
+  "grayColor": "#4A4A4A",
+  "lightGrayColor": "#F2F2F2",
+  "midGrayColor": "#9B9B9B",
+  "whiteColor": "#FFFFFF",
+  "accentColor": "#B8973A",
+  "fontStack": "Arial, Calibri, Helvetica Neue, sans-serif",
+  "voiceSummary": "Clear, confident, warm, and action-oriented. Lead with the conclusion. Insight headlines, not topic labels.",
+  "wordsToAvoid": ["leverage", "synergies", "best-in-class", "going forward", "in this space"],
+  "defaultAudience": "Marriott leadership",
+  "layoutStyle": "classic"
+}

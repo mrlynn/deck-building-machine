@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "title": "Assembled blocks — use-cursor-cli",
+    "audience": "Customer champions and engineers in a Cursor demo",
+    "presenter": "ADM / FE",
+    "date": "July 2026",
+    "purpose": "inform",
+    "assembledFrom": [
+      {
+        "id": "use-cursor-cli",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "slides": [
+    {
+      "type": "title",
+      "headline": "Leave-behind teaching blocks — assembled",
+      "content": {
+        "eyebrow": "Content blocks",
+        "subtitle": "Run the same Agent from the terminal with Cursor CLI"
+      },
+      "notes": {
+        "opening": "This deck was assembled from versioned content blocks.",
+        "points": [
+          "Edit blocks under content-blocks/, then re-run assemble.",
+          "Polish or export with existing deck skills."
+        ],
+        "transition": "Into the first block section.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "section",
+      "headline": "Run Agent from the terminal — same factory, more surfaces",
+      "content": {
+        "eyebrow": "Cursor CLI",
+        "sectionNumber": "04"
+      },
+      "notes": {
+        "opening": "This block is for engineers who will not live only in the IDE.",
+        "points": [
+          "CLI is a first-class Agent surface, not a side tool.",
+          "Leave-behind Rules still apply when you run from the repo root."
+        ],
+        "transition": "Start with install and login.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Install once, then type agent in any project",
+      "content": {
+        "bullets": [
+          {
+            "text": "Install from the official Cursor docs",
+            "detail": "macOS/Linux: curl https://cursor.com/install -fsS | bash · Windows: PowerShell irm install script"
+          },
+          {
+            "text": "Authenticate and confirm who you are",
+            "detail": "agent login · agent status · agent about"
+          },
+          {
+            "text": "Start interactive Agent in the leave-behind repo",
+            "detail": "cd into the zip · agent · or agent \"explain the brand rule\""
+          }
+        ],
+        "takeaway": "The entrypoint to learn is agent — verify against cursor.com/docs/cli before you demo."
+      },
+      "notes": {
+        "opening": "Do the install on a clean laptop once before the customer room.",
+        "points": [
+          "If cursor alone errors, point them at agent as documented.",
+          "Stay in the leave-behind directory so Rules load."
+        ],
+        "transition": "Modes match the editor.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Agent, Plan, and Ask work the same as in the IDE",
+      "content": {
+        "bullets": [
+          {
+            "text": "Agent mode is the default — full tools for coding tasks",
+            "detail": "No --mode flag required for the happy path"
+          },
+          {
+            "text": "Plan before you build",
+            "detail": "/plan, --plan, or --mode=plan — clarifying questions first"
+          },
+          {
+            "text": "Ask stays read-only",
+            "detail": "/ask or --mode=ask — explore without edits"
+          }
+        ],
+        "takeaway": "Teach one mode model: IDE and CLI share Agent / Plan / Ask."
+      },
+      "notes": {
+        "opening": "Switch modes live with slash commands so muscle memory transfers.",
+        "points": [
+          "Ask a Plan question about Lab 4 before any edit.",
+          "Remind them Rules and mcp.json are respected in CLI."
+        ],
+        "transition": "Show the automation path.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Print mode puts Agent into scripts and CI",
+      "content": {
+        "bullets": [
+          {
+            "text": "Use -p / --print for non-interactive runs",
+            "detail": "agent -p \"review these changes for security issues\" --output-format text"
+          },
+          {
+            "text": "Hand off long work to Cloud Agent mid-session",
+            "detail": "Prepend & to a message · pick up at cursor.com/agents"
+          },
+          {
+            "text": "Resume and worktrees keep context under control",
+            "detail": "agent resume · agent -w for an isolated git worktree"
+          }
+        ],
+        "takeaway": "CLI is how the factory shows up in automation — still rules-aware."
+      },
+      "notes": {
+        "opening": "One print-mode demo is enough; do not boil the ocean on flags.",
+        "points": [
+          "Sandbox: mention /sandbox if security folks are in the room.",
+          "Point reviewers at the draft status — SME should sanity-check before external share."
+        ],
+        "transition": "Close on when to use CLI vs IDE.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Pick the surface; keep the same Rules",
+      "content": {
+        "bullets": [
+          {
+            "text": "IDE for live pairing and visual review",
+            "detail": "Still the default for most ADM leave-behind demos"
+          },
+          {
+            "text": "CLI for terminal-first engineers, scripts, and CI",
+            "detail": "agent -p for print mode · same .cursor/rules in the repo"
+          },
+          {
+            "text": "SME-review this block before external 101",
+            "detail": "Draft status — verify flags at cursor.com/docs/cli/overview"
+          }
+        ],
+        "takeaway": "Surfaces differ; Rules travel with the repo."
+      },
+      "notes": {
+        "opening": "Close on parity, not on memorizing every flag.",
+        "points": [
+          "Docs source of truth: cursor.com/docs/cli/overview.",
+          "Next curriculum blocks: optimize-tokens, govern-privacy-and-review."
+        ],
+        "transition": "Hand to assembled closing checklist.",
+        "timeMinutes": 2
+      }
+    },
+    {
+      "type": "closing",
+      "headline": "Next: run Lab 4, then read after-the-demo",
+      "content": {
+        "items": [
+          {
+            "number": "01",
+            "action": "Open the leave-behind zip in Cursor",
+            "owner": "Champion",
+            "date": "Today"
+          },
+          {
+            "number": "02",
+            "action": "Complete Lab 4 exit criteria",
+            "owner": "Room",
+            "date": "docs/primitives-lab.md"
+          },
+          {
+            "number": "03",
+            "action": "Read day-2 ownership",
+            "owner": "Champion",
+            "date": "docs/after-the-demo.md"
+          },
+          {
+            "number": "04",
+            "action": "Author new JTBD blocks under content-blocks/",
+            "owner": "ADM / content",
+            "date": "Next"
+          }
+        ]
+      },
+      "notes": {
+        "opening": "Close on ownership and the required exit.",
+        "points": [
+          "Point at catalog.json for curriculum blocks.",
+          "Assemble --preset standard-enablement for the full review spine."
+        ],
+        "transition": "End.",
+        "timeMinutes": 2
+      }
+    }
+  ]
+}

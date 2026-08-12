@@ -1,0 +1,212 @@
+{
+  "metadata": {
+    "title": "Assembled blocks — optimize-tokens",
+    "audience": "Customer champions and engineers in a Cursor demo",
+    "presenter": "ADM / FE",
+    "date": "July 2026",
+    "purpose": "inform",
+    "assembledFrom": [
+      {
+        "id": "optimize-tokens",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "slides": [
+    {
+      "type": "title",
+      "headline": "Leave-behind teaching blocks — assembled",
+      "content": {
+        "eyebrow": "Content blocks spike",
+        "subtitle": "Spend context on the task, not on rule bloat"
+      },
+      "notes": {
+        "opening": "This deck was assembled from versioned content blocks.",
+        "points": [
+          "Edit blocks under content-blocks/, then re-run assemble.",
+          "Polish or export with existing deck skills."
+        ],
+        "transition": "Into the first block section.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "section",
+      "headline": "Context is a budget — spend it on the task",
+      "content": {
+        "eyebrow": "Token / context hygiene",
+        "sectionNumber": "05"
+      },
+      "notes": {
+        "opening": "This is enablement priority two after CLI.",
+        "points": [
+          "Not about shaving pennies — about quality of Agent answers.",
+          "Leave-behind brand rules are the good kind of always-on tax."
+        ],
+        "transition": "How rules enter context.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Always-on rules pay on every Agent turn",
+      "content": {
+        "bullets": [
+          {
+            "text": "Applied rules are included at the start of model context",
+            "detail": "Cursor Rules docs — persistent guidance, no memory between completions"
+          },
+          {
+            "text": "alwaysApply: true means every chat pays the cost",
+            "detail": "Use for brand voice and hard constraints — keep those files short"
+          },
+          {
+            "text": "The leave-behind brand rule is intentional tax",
+            "detail": "Do not delete it to “save tokens” — trim other always-on clutter instead"
+          }
+        ],
+        "takeaway": "Pay every turn only for what must always be true."
+      },
+      "notes": {
+        "opening": "Open the brand .mdc and point at alwaysApply.",
+        "points": [
+          "Contrast with deck-workflow — contextual, not always on.",
+          "Ask the room what they would wrongly put in alwaysApply."
+        ],
+        "transition": "Three other ways to apply rules.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Scope rules with globs, descriptions, or @ — not more always-on",
+      "content": {
+        "bullets": [
+          {
+            "text": "Apply to Specific Files when a glob matches",
+            "detail": "e.g. **/*.tsx patterns — see Cursor Rules glob table"
+          },
+          {
+            "text": "Apply Intelligently when description is clear",
+            "detail": "Agent decides from description — vague blurbs never load"
+          },
+          {
+            "text": "Apply Manually for rare checklists",
+            "detail": "@-mention the rule when you need it"
+          }
+        ],
+        "takeaway": "Same four modes as the docs — teach the dropdown, not a custom framework."
+      },
+      "notes": {
+        "opening": "Draw the four-mode table on a whiteboard if helpful.",
+        "points": [
+          "Good description reads like an API doc: what + when.",
+          "Point at primitives-decision-tree for Rule vs Skill vs Agent."
+        ],
+        "transition": "How to keep each rule file cheap.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Point at files — do not paste the whole guide into a rule",
+      "content": {
+        "bullets": [
+          {
+            "text": "Keep rules focused; split large ones",
+            "detail": "Official guidance: under 500 lines; composable .mdc files"
+          },
+          {
+            "text": "Reference examples with @ instead of copying code",
+            "detail": "Keeps rules short and stops them going stale"
+          },
+          {
+            "text": "Skip what Agent and linters already know",
+            "detail": "No full style guides in alwaysApply — encode only project-specific truth"
+          }
+        ],
+        "takeaway": "Short rules + pointers beat encyclopedias in context."
+      },
+      "notes": {
+        "opening": "Show a bad fat rule vs a thin rule that @-references a template.",
+        "points": [
+          "AGENTS.md is fine for simple cases — still keep it lean.",
+          "Team Rules exist on Team/Enterprise — mention, do not deep-dive."
+        ],
+        "transition": "Session hygiene closes the loop.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "New chat for a new job — stop attaching the whole repo",
+      "content": {
+        "bullets": [
+          {
+            "text": "Start a fresh Agent chat when the task changes",
+            "detail": "Long threads carry stale goals into the next request"
+          },
+          {
+            "text": "Let Agent explore; attach only the files you know matter",
+            "detail": "Prefer targeted @file over dumping a dozen paths"
+          },
+          {
+            "text": "Index and ignore noise so search stays useful",
+            "detail": "Keep generated junk out of the workspace the Agent walks"
+          }
+        ],
+        "takeaway": "Hygiene is a habit — Rules design plus session design."
+      },
+      "notes": {
+        "opening": "This is the practical close for ADMs in the room.",
+        "points": [
+          "Optional: show starting a new chat mid-demo after Lab 4.",
+          "SME should sanity-check before external 101."
+        ],
+        "transition": "Hand to assembled closing.",
+        "timeMinutes": 2
+      }
+    },
+    {
+      "type": "closing",
+      "headline": "Next: run Lab 4, then read after-the-demo",
+      "content": {
+        "items": [
+          {
+            "number": "01",
+            "action": "Open the leave-behind zip in Cursor",
+            "owner": "Champion",
+            "date": "Today"
+          },
+          {
+            "number": "02",
+            "action": "Complete Lab 4 exit criteria",
+            "owner": "Room",
+            "date": "docs/primitives-lab.md"
+          },
+          {
+            "number": "03",
+            "action": "Read day-2 ownership",
+            "owner": "Champion",
+            "date": "docs/after-the-demo.md"
+          },
+          {
+            "number": "04",
+            "action": "Author new JTBD blocks under content-blocks/",
+            "owner": "ADM / content",
+            "date": "Next"
+          }
+        ]
+      },
+      "notes": {
+        "opening": "Close on ownership and the required exit.",
+        "points": [
+          "Point at catalog.json for queued curriculum blocks.",
+          "CLI / tokens / governance blocks are next for SME draft."
+        ],
+        "transition": "End.",
+        "timeMinutes": 2
+      }
+    }
+  ]
+}

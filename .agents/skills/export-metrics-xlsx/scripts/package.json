@@ -1,0 +1,12 @@
+{
+  "name": "marriott-metrics-xlsx",
+  "version": "1.0.0",
+  "description": "Branded metrics workbook from deck-content.json",
+  "main": "build-metrics-xlsx.js",
+  "scripts": {
+    "build": "node build-metrics-xlsx.js"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  }
+}

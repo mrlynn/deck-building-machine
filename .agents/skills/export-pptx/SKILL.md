@@ -1,0 +1,74 @@
+---
+name: export-pptx
+description: Convert a deck-content.json file into a branded PowerPoint (.pptx) file. Supports chart, diagram, and image slide types. Use after creating or editing deck-content.json.
+---
+
+# /export-pptx
+
+Convert a structured deck JSON into a branded PowerPoint file.
+
+## How to use
+
+```
+/export-pptx
+```
+
+Reads `deck-content.json` in the current directory and outputs to `output/`.
+
+Or specify a file:
+```
+/export-pptx path/to/deck-content.json
+```
+
+## No npm install
+
+This skill ships a **bundled** exporter. Do **not** run `npm install`. Brand colors/fonts load from `brand/brand-pack.json` at runtime.
+
+## Smoke test (delight sample)
+
+```bash
+cd .agents/skills/export-pptx/scripts
+node bundled/export-pptx.cjs ../../../../examples/delight-sample/deck-content.json
+# Optional layout override: DECK_LAYOUT=minimal|bold node bundled/export-pptx.cjs ...
+```
+
+Opens `examples/delight-sample/output/` with title, metrics (deltas), chart, diagram, quote, and closing — use to verify exporter polish.
+
+## Prompt for agent
+
+When invoked:
+1. Verify `deck-content.json` exists (or the specified file)
+2. For any `image` slides, confirm the `content.path` file exists under `assets/`. If missing, delegate to `visual-creator` before export — do not ask the user for a file.
+3. **Quality scorecard (before export)**
+   - Run (from repo root; use the same deck path as export):
+   ```bash
+   node .agents/skills/deck-score/scripts/score-deck.js path/to/deck-content.json --json
+   ```
+   - If `brief.md` exists beside the deck, add `--brief path/to/brief.md`.
+   - Print one line: `Quality: {score} ({grade}) — {errorCount} errors, {warningCount} warnings`
+   - If `DECK_QUALITY_GATE=strict` or the user passed `--strict`: when `errorCount > 0`, **do not export**; show `topFixes` and stop.
+   - Otherwise continue export even when errors/warnings exist (coach only).
+4. Run the **bundled** build script (never `npm install`):
+```bash
+cd .agents/skills/export-pptx/scripts
+node bundled/export-pptx.cjs ../../../../deck-content.json
+```
+5. Report: output file path and slide count
+6. If the script fails because `node` is missing, tell the user Cursor needs a Node runtime on PATH for Office export — do not ask them to become a JavaScript developer or run npm. If `bundled/export-pptx.cjs` is missing, say the kit is incomplete and they should re-download from Deck Machine Studio.
+7. Source fallback (maintainers only): `node build-pptx.js …` after local `npm install` in this scripts folder
+
+## Supported slide types
+
+| Type | Description |
+|---|---|
+| title | Opening slide |
+| agenda | Section list with numbered items |
+| section | Section divider |
+| content | Single-column bullets |
+| two-column | Side-by-side comparison |
+| metrics | 2-4 large stat tiles |
+| quote | Pull quote with attribution |
+| closing | Numbered next-steps list |
+| chart | Native PPTX chart from JSON series data |
+| diagram | Process/architecture shapes from nodes/edges |
+| image | Agent-generated PNG from `assets/` |

@@ -1,0 +1,241 @@
+---
+description: Deck creation workflow rules. Apply when working on any presentation, outline, or slide content.
+alwaysApply: false
+---
+
+# Deck Creation Workflow
+
+When creating or editing presentation content, follow this workflow.
+
+## Step 0: Brief intake
+If there is no brief yet, run `/create-brief` (MCP context when tools are connected, else interview or paste notes). Do not ask the user to fill `templates/brief.md` by hand. The template is the schema the Agent writes.
+
+## Revise / preview loop (after a deck exists)
+Prefer `/revise-deck` + `/preview-deck` for surgical edits. Do not restart `/build-deck` for one-line fixes. Export with `/export-pptx` only after the HTML preview looks right (or the user explicitly skips preview).
+
+## Other renderers (same factory)
+- `/build-doc` → branded DOCX from brief or deck (narrative)
+- `/export-metrics-xlsx` → branded workbook from `metrics` / `chart` slides only — never invent numbers
+
+## Step 1: Brief Analysis
+Before writing a single slide, extract from the brief:
+- **Primary audience** (who is in the room and what they care about)
+- **Decision or action** (what should happen after the deck is seen)
+- **Three key messages** (the deck should support exactly three core ideas)
+- **Evidence available** (data, examples, quotes, proof points)
+- **Constraints** (time, slide count, what to avoid)
+
+## Step 2: Outline First
+Always create the outline before writing slide content. The outline must specify:
+- Total slide count
+- Slide type for each slide
+- Insight headline for each slide
+- **So what** (one sentence: why this slide earns its place)
+- **Evidence pointer** (which brief data/example/quote backs it)
+
+Review the outline before proceeding. If the outline does not tell a coherent story, fix it before writing slides.
+
+## Step 3: Story arc
+Every deck must follow one of these structures:
+
+**Executive brief (8-10 slides):**
+Title → Agenda → Situation → Complication → Resolution → Evidence → Next Steps → Questions → Close
+
+**Team update (10-14 slides):**
+Title → Agenda → Context → Progress → Gaps → Recommendations → Detailed evidence → Questions → Next Steps
+
+**Proposal (10-15 slides):**
+Title → Executive summary → Problem → Solution → Evidence → ROI → Implementation → Risks → Ask → Questions → Close
+
+**Slide-mix variety:** never place 3 `content` slides in a row. When the brief contains numbers or a process, at least one `chart` or `diagram` slide is required.
+
+## Step 4: Write slides
+For each slide:
+1. State the headline first (insight format)
+2. Choose the right slide type
+3. Write the minimum content that supports the headline
+4. Remove anything that doesn't directly support the headline
+
+## Depth standard (what separates a deck from a document)
+
+- **Assertion + evidence.** Every bullet's `text` is a claim; the specific proof (number, example, customer name, date) goes in its `detail` line. A bullet with no possible detail is usually a filler bullet — cut it.
+- **So what test.** Every content-bearing slide should carry a `takeaway`: the one line the audience must remember. If you cannot write the takeaway, the slide is not ready.
+- **Headline spine test.** Read only the headlines, top to bottom. They must tell the complete story on their own. If a headline could sit in any deck ("Our approach"), rewrite it.
+- **Banned generic bullets.** Never ship bullets like "Improve efficiency", "Drive alignment", "Enhance collaboration", "Streamline processes". State the specific change and its measure instead.
+
+## Speaker notes (required on every slide)
+
+Every slide object carries `notes` — a structured talk track the exporter writes into the PPTX notes pane:
+
+```json
+{
+  "opening": "The first sentence the presenter says on this slide",
+  "points": ["Expansion beyond the slide text — context, story, numbers behind the numbers"],
+  "transition": "The sentence that hands off to the next slide",
+  "timeMinutes": 2
+}
+```
+
+- `points` (2–4) must add material that is **not** on the slide — background, objection handling, the anecdote behind the stat.
+- The sum of `timeMinutes` across slides must fit the brief's delivery time.
+- A plain string is accepted for quick edits, but agents write the structured form.
+
+## Step 5: Narrative and notes pass
+After all slides are written, run the `narrative-editor` pass: headline spine check, bullet deepening (assertion + detail), `takeaway` lines, and full speaker notes. `/polish-deck` runs this same pass on any existing `deck-content.json`.
+
+## Step 6: Edit for brand compliance
+After writing, check each slide against:
+- [ ] Headline is an insight, not a topic label
+- [ ] Max 5 bullets
+- [ ] Every bullet passes assertion + evidence; no banned generic bullets
+- [ ] Speaker notes present and add material beyond the slide text
+- [ ] No jargon (see voice.md)
+- [ ] Correct color usage
+- [ ] One idea per slide
+
+## Output format
+
+When creating deck content, output a JSON structure at `deck-content.json`:
+
+```json
+{
+  "metadata": {
+    "title": "Deck title",
+    "audience": "Audience description",
+    "presenter": "Name",
+    "date": "Month YYYY",
+    "purpose": "inform|persuade|update|request"
+  },
+  "slides": [
+    {
+      "type": "title|agenda|section|content|two-column|metrics|quote|closing|chart|diagram|image",
+      "headline": "The insight headline",
+      "content": { ...type-specific fields, "takeaway": "Optional so-what line" },
+      "notes": { "opening": "…", "points": ["…"], "transition": "…", "timeMinutes": 2 }
+    }
+  ]
+}
+```
+
+`notes` is required on every slide. `takeaway` is supported on `content`, `two-column`, `metrics`, `chart`, and `diagram` slides.
+
+## Visual slides (agent-authored — never ask humans to drop files)
+
+Prefer native visuals when the brief has trends, processes, architecture, or needs illustration:
+- **chart** — numeric comparison/trend (PptxGenJS chart from JSON data)
+- **diagram** — process, architecture, or relationship (structured nodes/edges → shapes)
+- **image** — illustration only; `visual-creator` generates PNG into `assets/` during `/build-deck`
+
+Do **not** ask the ADM, FE, or end user to supply image files. Agents create chart data, diagram JSON, and (for `image`) the asset.
+
+Slide content schemas by type:
+
+**content:**
+```json
+{
+  "bullets": [
+    "Plain string bullet",
+    { "text": "Assertion — the claim", "detail": "Evidence — the number, example, or name that proves it" }
+  ],
+  "takeaway": "The one line to remember",
+  "note": "Optional footnote"
+}
+```
+Prefer the `{text, detail}` form — the exporter renders `text` bold with `detail` as an indented evidence line under it, as native PPTX bullets.
+
+**metrics:**
+```json
+{"metrics": [{"value": "1,200", "label": "Active users", "description": "Up 40% in 90 days", "delta": "+40%"}], "takeaway": "Optional"}
+```
+Optional `delta` is a short comparison string from the brief only (never invent). Exporter renders it under the hero value when present.
+
+**two-column:**
+```json
+{"left": {"heading": "Before", "bullets": []}, "right": {"heading": "After", "bullets": []}, "takeaway": "Optional"}
+```
+Column bullets accept the same `string | {text, detail}` forms as `content`.
+
+**quote:**
+```json
+{"quote": "Quote text", "attribution": "Name, Title", "context": "Where/when"}
+```
+
+**closing:**
+```json
+{"items": [{"number": "01", "action": "Action item", "owner": "Owner", "date": "Date"}]}
+```
+
+**agenda:**
+```json
+{"items": ["Section one", "Section two", "Section three"]}
+```
+
+**title:**
+```json
+{"subtitle": "Optional subtitle"}
+```
+
+**section:**
+```json
+{"sectionNumber": "01"}
+```
+
+**chart:**
+```json
+{
+  "chartType": "bar|hbar|stacked-bar|line|area|pie|doughnut|combo",
+  "categories": ["Q1", "Q2", "Q3", "Q4"],
+  "series": [{ "name": "MAU", "values": [800, 1000, 1200, 1300] }],
+  "highlight": "Q4",
+  "valueFormat": "percent|currency|number",
+  "valAxisTitle": "Optional axis label",
+  "catAxisTitle": "Optional axis label",
+  "insights": [{ "text": "Assertion about the data", "detail": "The evidence" }],
+  "target": 1500,
+  "showLegend": true,
+  "caption": "Source or caveat — required"
+}
+```
+- `highlight` names the category (single series / pie) or series (multi-series) that carries the headline's claim — it renders in the primary brand color while everything else recedes to gray. Set it on every chart that makes a point.
+- `insights` (optional, ≤3) moves the chart to ~60% width and renders assertion bullets beside it — use when the chart needs interpretation.
+- `combo` mixes bar + line series: mark the rate/trend series with `"type": "line"`; add `"secondaryAxis": true` (with optional `secondaryValAxisTitle`) when the line uses a different scale.
+- `caption` (data source) is required whenever a chart is present.
+
+**Chart selection guide:**
+| Story | Type |
+|---|---|
+| Change over time | `line` (or `area` for cumulative volume) |
+| Compare categories | `bar`; `hbar` when labels are long or there are >6 categories |
+| Composition of a total across categories | `stacked-bar` |
+| Volume + rate together (e.g. users and adoption %) | `combo` with `secondaryAxis` |
+| Parts of a whole at one point in time | `pie`/`doughnut` — only with ≤5 slices |
+
+Sort bar categories by value unless the order is inherent (time, funnel stages). Never invent precise numbers; if data is qualitative, use `diagram` or `content` instead.
+
+**diagram:**
+```json
+{
+  "layout": "flow|grid|swimlane",
+  "nodes": [
+    { "id": "a", "label": "Brief", "sublabel": "Talk or paste", "lane": "Input" },
+    { "id": "b", "label": "Build", "sublabel": "Agents + rules" }
+  ],
+  "edges": [{ "from": "a", "to": "b", "label": "optional" }],
+  "lanes": ["Input", "Build"],
+  "takeaway": "Optional",
+  "caption": "Optional caption"
+}
+```
+Use `flow` for sequential processes (max 6 nodes). Use `grid` for 2–6 peer concepts. Use `swimlane` when nodes have a `lane` (and optional `lanes` order).
+
+**image:**
+```json
+{
+  "path": "assets/slide-05-architecture.png",
+  "layout": "right|left|full",
+  "prompt": "Flat corporate diagram, white background, red accent #BE202E, no stock photo collage, no people faces, architecture of Agent → Rules → Export",
+  "bullets": ["Optional supporting bullets for left/right layouts"],
+  "caption": "Optional caption"
+}
+```
+`path` must be under `assets/`. `prompt` is required for generation — `visual-creator` writes the PNG before export. Prefer `diagram` or `chart` over `image` when the idea is structural or numeric.

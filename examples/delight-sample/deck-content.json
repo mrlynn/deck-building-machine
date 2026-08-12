@@ -1,0 +1,135 @@
+{
+  "metadata": {
+    "title": "Delight Sample — Cursor Primitives in Action",
+    "audience": "Marriott AI Studio leadership",
+    "presenter": "Michael Lynn",
+    "date": "July 2026",
+    "purpose": "persuade"
+  },
+  "slides": [
+    {
+      "type": "title",
+      "headline": "Cursor turns brand rules into branded decks in minutes",
+      "content": {
+        "eyebrow": "Marriott AI Studio",
+        "subtitle": "Skills, rules, and agents — proved by the PowerPoint"
+      }
+    },
+    {
+      "type": "agenda",
+      "headline": "What we will prove today",
+      "content": {
+        "items": [
+          "Rules shape every slide without asking",
+          "Skills are the buttons people type",
+          "Agents run the pipeline behind /build-deck",
+          "The PPTX is the proof artifact"
+        ]
+      }
+    },
+    {
+      "type": "metrics",
+      "headline": "Adoption metrics outpaced the informal rollout",
+      "content": {
+        "metrics": [
+          {
+            "value": "1,300",
+            "label": "Monthly active users",
+            "description": "Up from roughly 800 two quarters ago",
+            "delta": "+40%"
+          },
+          {
+            "value": "40%",
+            "label": "MCP adoption",
+            "description": "Share of active users connecting tools",
+            "delta": "vs peers"
+          },
+          {
+            "value": "4 hrs",
+            "label": "Review cycle",
+            "description": "Down from multi-day design loops",
+            "delta": "−3 days"
+          }
+        ]
+      }
+    },
+    {
+      "type": "chart",
+      "headline": "MAU climbed steadily while rollout stayed organic",
+      "content": {
+        "chartType": "bar",
+        "categories": ["Q1", "Q2", "Q3", "Q4"],
+        "series": [
+          { "name": "MAU", "values": [800, 950, 1100, 1300] }
+        ],
+        "showLegend": false,
+        "caption": "Illustrative trend from account brief metrics — not invented precision"
+      }
+    },
+    {
+      "type": "diagram",
+      "headline": "Brief to PPTX runs as one agent pipeline",
+      "content": {
+        "layout": "flow",
+        "nodes": [
+          { "id": "brief", "label": "Brief", "sublabel": "/create-brief" },
+          { "id": "outline", "label": "Outline", "sublabel": "brief-analyzer" },
+          { "id": "slides", "label": "Slides", "sublabel": "slide-writer" },
+          { "id": "export", "label": "PPTX", "sublabel": "export + brand check" }
+        ],
+        "edges": [
+          { "from": "brief", "to": "outline", "label": "" },
+          { "from": "outline", "to": "slides", "label": "" },
+          { "from": "slides", "to": "export", "label": "" }
+        ],
+        "caption": "Customers type skills; agents do the multi-step work"
+      }
+    },
+    {
+      "type": "content",
+      "headline": "Three primitives stay visible in every leave-behind",
+      "content": {
+        "bullets": [
+          "Rules load brand without anyone typing @ or /",
+          "Skills appear under / as the human-facing workflow",
+          "Agents orchestrate outline, slides, visuals, and review"
+        ]
+      }
+    },
+    {
+      "type": "quote",
+      "headline": "",
+      "content": {
+        "quote": "This is not a new IT app. Marriott already uses Cursor — this turns organic usage into a repeatable builder workflow.",
+        "attribution": "Account team leave-behind",
+        "context": "Marriott Cursor Deck Machine one-pager"
+      }
+    },
+    {
+      "type": "closing",
+      "headline": "Ship the next real deck this way",
+      "content": {
+        "items": [
+          {
+            "number": "01",
+            "action": "Open the repo and run /create-brief with a live meeting",
+            "owner": "Paul",
+            "date": "This week"
+          },
+          {
+            "number": "02",
+            "action": "Run /build-deck and open the PPTX from output/",
+            "owner": "Paul",
+            "date": "Same session"
+          },
+          {
+            "number": "03",
+            "action": "Complete docs/primitives-lab.md Lab 4 (break → brand-check)",
+            "owner": "AI Studio",
+            "date": "Next enablement"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "govern-quality-with-cli",
+  "version": "1.0.0",
+  "status": "draft",
+  "jobTitle": "Catch thin decks with /deck-score before export",
+  "audience": "Customer champions running Lab 4 and ADMs teaching quality gates",
+  "summary": "Use /brand-check (judgment) and /deck-score (structural CLI) so weak headlines and missing depth fail before the PPTX ships.",
+  "deps": ["prove-primitives-with-lab4"],
+  "sourceDocs": [
+    "docs/superpowers/specs/2026-07-17-deck-quality-scorecard-design.md",
+    ".agents/skills/deck-score/SKILL.md",
+    "docs/primitives-lab.md"
+  ],
+  "slides": "slides.json",
+  "briefFragment": "brief-fragment.md",
+  "talkTrack": "talk-track.md"
+}

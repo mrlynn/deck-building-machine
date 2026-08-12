@@ -1,0 +1,45 @@
+{
+  "assembledAt": "2026-07-18T17:59:33.191Z",
+  "blocks": [
+    {
+      "id": "prove-primitives-with-lab4",
+      "version": "1.0.0",
+      "jobTitle": "Prove Rules stay on with Lab 4",
+      "slideCount": 4
+    },
+    {
+      "id": "encode-brand-as-tokens",
+      "version": "1.0.0",
+      "jobTitle": "Encode brand once so Agents and exporters share tokens",
+      "slideCount": 3
+    },
+    {
+      "id": "govern-quality-with-cli",
+      "version": "1.0.0",
+      "jobTitle": "Catch thin decks with /deck-score before export",
+      "slideCount": 3
+    },
+    {
+      "id": "use-cursor-cli",
+      "version": "1.0.0",
+      "jobTitle": "Run the same Agent from the terminal with Cursor CLI",
+      "slideCount": 5
+    },
+    {
+      "id": "optimize-tokens",
+      "version": "1.0.0",
+      "jobTitle": "Spend context on the task, not on rule bloat",
+      "slideCount": 5
+    },
+    {
+      "id": "govern-privacy-and-review",
+      "version": "1.0.0",
+      "jobTitle": "Answer privacy questions and show how review gates work",
+      "slideCount": 5
+    }
+  ],
+  "outputs": [
+    "brief.md",
+    "deck-content.json"
+  ]
+}

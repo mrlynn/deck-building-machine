@@ -1,0 +1,81 @@
+[
+  {
+    "type": "section",
+    "headline": "Gate quality before the PPTX leaves the room",
+    "content": {
+      "eyebrow": "Scorecard",
+      "sectionNumber": "03"
+    },
+    "notes": {
+      "opening": "Two gates, one leave-behind.",
+      "points": [
+        "brand-check is the judgment call.",
+        "deck-score is the structural CLI."
+      ],
+      "transition": "Show how they differ.",
+      "timeMinutes": 1
+    }
+  },
+  {
+    "type": "two-column",
+    "headline": "Judgment and structure catch different failures",
+    "content": {
+      "left": {
+        "heading": "/brand-check",
+        "bullets": [
+          "brand-guardian agent review",
+          "Insight headlines and banned phrases",
+          "Voice and Marriott-leak style checks"
+        ]
+      },
+      "right": {
+        "heading": "/deck-score",
+        "bullets": [
+          "Node CLI on deck-content.json",
+          "Structure, depth, aesthetics",
+          "Warn by default; --strict to fail"
+        ]
+      },
+      "takeaway": "Run both before you call the demo done."
+    },
+    "notes": {
+      "opening": "Do not collapse these into one button in the story.",
+      "points": [
+        "Champions can wire smoke:deck-quality into CI later.",
+        "Studio UI for scores is intentionally out of scope."
+      ],
+      "transition": "Lab 4 optional path makes the CLI real.",
+      "timeMinutes": 3
+    }
+  },
+  {
+    "type": "content",
+    "headline": "Delete a takeaway and watch /deck-score move",
+    "content": {
+      "bullets": [
+        {
+          "text": "Strip depth from one slide on purpose",
+          "detail": "Remove takeaway or flatten assertion+detail bullets"
+        },
+        {
+          "text": "Run /deck-score before you fix it",
+          "detail": "Optional --strict if the champion wants a hard gate"
+        },
+        {
+          "text": "Restore depth, re-score, then /export-pptx",
+          "detail": "Pairs with the required /brand-check Lab 4 exit"
+        }
+      ],
+      "takeaway": "Thin decks fail in the repo — not in the customer meeting."
+    },
+    "notes": {
+      "opening": "Only if Lab 4 already landed; otherwise demo the command on a sample.",
+      "points": [
+        "Point at examples/delight-sample for a known baseline.",
+        "Mention docs/superpowers scorecard design for maintainers."
+      ],
+      "transition": "Close the leave-behind quality story.",
+      "timeMinutes": 3
+    }
+  }
+]

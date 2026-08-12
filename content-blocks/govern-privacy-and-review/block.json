@@ -1,0 +1,18 @@
+{
+  "id": "govern-privacy-and-review",
+  "version": "1.0.0",
+  "status": "draft",
+  "jobTitle": "Answer privacy questions and show how review gates work",
+  "audience": "ADMs facing security/GRC questions and champions running leave-behind quality gates",
+  "summary": "Frame Privacy Mode and enterprise controls from Cursor docs, then show review as a habit: /brand-check and /deck-score before anything leaves the room.",
+  "deps": ["govern-quality-with-cli", "use-cursor-cli"],
+  "sourceDocs": [
+    "https://cursor.com/docs/enterprise/privacy-and-data-governance",
+    "https://cursor.com/help/security-and-privacy/privacy",
+    "https://cursor.com/data-use",
+    "docs/content-blocks.md"
+  ],
+  "slides": "slides.json",
+  "briefFragment": "brief-fragment.md",
+  "talkTrack": "talk-track.md"
+}

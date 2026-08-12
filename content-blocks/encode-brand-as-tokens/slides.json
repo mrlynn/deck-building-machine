@@ -1,0 +1,80 @@
+[
+  {
+    "type": "section",
+    "headline": "Encode brand once — Agents and exporters share it",
+    "content": {
+      "eyebrow": "Brand pack",
+      "sectionNumber": "02"
+    },
+    "notes": {
+      "opening": "This is the Encode brand teachable moment.",
+      "points": [
+        "Studio writes rules and brand assets, not a finished customer deck.",
+        "Same tokens show up in Cursor and in Office exporters."
+      ],
+      "transition": "Start with what lands in the zip.",
+      "timeMinutes": 1
+    }
+  },
+  {
+    "type": "content",
+    "headline": "One pack feeds always-on rules and the exporters",
+    "content": {
+      "bullets": [
+        {
+          "text": "Colors, fonts, and voice become an always-on rule",
+          "detail": ".cursor/rules/<slug>-brand.mdc shapes Agent output in every chat"
+        },
+        {
+          "text": "brand/ mirrors the same tokens for humans and exporters",
+          "detail": "brand-pack.json, palette, voice, logos on dark and light"
+        },
+        {
+          "text": "Layout style sets slide mix and frame treatment",
+          "detail": "classic, minimal, or bold — Agents and PPTX stay aligned"
+        }
+      ],
+      "takeaway": "Encode once in Studio; regenerate the zip when brand changes."
+    },
+    "notes": {
+      "opening": "Walk the Encode brand fields without drowning in hex.",
+      "points": [
+        "Call out logos on dark vs light.",
+        "Mention words-to-avoid as brand-guardian fuel.",
+        "Preview shows the layout style before download."
+      ],
+      "transition": "Same factory, more than one Office renderer.",
+      "timeMinutes": 3
+    }
+  },
+  {
+    "type": "content",
+    "headline": "PPTX is the proof; Doc and workbook reuse the tokens",
+    "content": {
+      "bullets": [
+        {
+          "text": "Happy path stays /create-brief → /build-deck → PPTX",
+          "detail": "output/ appears after skills run — not pre-built in the zip"
+        },
+        {
+          "text": "Optional /build-doc and /export-metrics-xlsx",
+          "detail": "Thin skills; same brand tokens; not a design-agency replacement"
+        },
+        {
+          "text": "Day 2: brand stays owned by marketing plus champion",
+          "detail": "See docs/after-the-demo.md for regenerate vs edit"
+        }
+      ],
+      "takeaway": "Renderers are skills; the product is the Cursor factory."
+    },
+    "notes": {
+      "opening": "Toggle factory outputs in Studio if you are mid-demo.",
+      "points": [
+        "Keep silhouettes honest — Doc/XLSX are not finished files in Studio.",
+        "Point champions at after-the-demo ownership table."
+      ],
+      "transition": "Next: catch thin decks before export.",
+      "timeMinutes": 3
+    }
+  }
+]

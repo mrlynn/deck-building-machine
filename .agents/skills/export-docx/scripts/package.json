@@ -1,0 +1,12 @@
+{
+  "name": "marriott-docx-builder",
+  "version": "1.0.0",
+  "description": "Marriott branded DOCX export",
+  "main": "build-docx.js",
+  "scripts": {
+    "build": "node build-docx.js"
+  },
+  "dependencies": {
+    "docx": "^9.5.0"
+  }
+}

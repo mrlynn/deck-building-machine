@@ -1,0 +1,18 @@
+{
+  "customerName": "Cursor",
+  "customerSlug": "cursor",
+  "displayName": "Cursor",
+  "primaryColor": "#E8601B",
+  "darkColor": "#0B0B0C",
+  "grayColor": "#4A4A4A",
+  "lightGrayColor": "#F4F2ED",
+  "midGrayColor": "#9B9B9B",
+  "whiteColor": "#FFFFFF",
+  "accentColor": "#E8601B",
+  "fontStack": "Arial, Helvetica Neue, sans-serif",
+  "voiceSummary": "Clear, confident, concrete. Lead with the conclusion. Insight headlines, not topic labels.",
+  "wordsToAvoid": ["leverage", "synergies", "best-in-class", "going forward", "in this space"],
+  "defaultAudience": "Cursor ADMs and field enablement",
+  "layoutStyle": "classic",
+  "note": "Enablement / field-kit exports. Customer leave-behinds use brand/brand-pack.json (encoded per account)."
+}

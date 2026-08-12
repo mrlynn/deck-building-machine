@@ -1,0 +1,17 @@
+{
+  "id": "encode-brand-as-tokens",
+  "version": "1.0.0",
+  "status": "draft",
+  "jobTitle": "Encode brand once so Agents and exporters share tokens",
+  "audience": "ADMs packaging a leave-behind and champions who will own brand/",
+  "summary": "Colors, voice, logos, and layout style live in one brand pack so always-on rules and PPTX/DOCX/XLSX exporters read the same tokens.",
+  "deps": [],
+  "sourceDocs": [
+    "src/content/teachable-moments.ts",
+    "src/content/factory-outputs.ts",
+    "docs/after-the-demo.md"
+  ],
+  "slides": "slides.json",
+  "briefFragment": "brief-fragment.md",
+  "talkTrack": "talk-track.md"
+}

@@ -1,0 +1,15 @@
+{
+  "assembledAt": "2026-07-18T20:21:01.130Z",
+  "blocks": [
+    {
+      "id": "use-cursor-cli",
+      "version": "1.0.0",
+      "jobTitle": "Run the same Agent from the terminal with Cursor CLI",
+      "slideCount": 5
+    }
+  ],
+  "outputs": [
+    "brief.md",
+    "deck-content.json"
+  ]
+}

@@ -1,0 +1,4 @@
+version: 1
+owner: michael.lynn@anysphere.co
+vercel:
+  root_directory: .

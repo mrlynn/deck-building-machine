@@ -1,0 +1,119 @@
+---
+alwaysApply: true
+---
+
+# {{customerName}} Corporate Brand Standards
+
+You are working in a {{customerName}} corporate presentation context. Apply these standards in every interaction.
+
+## Color Palette
+
+| Token | Hex | Use |
+|---|---|---|
+| Primary | `{{primaryColor}}` | Title slides, section dividers, key stats, accent lines |
+| Dark | `{{darkColor}}` | Body text, dark backgrounds |
+| Corporate Gray | `{{grayColor}}` | Secondary text, subheadings |
+| Light Gray | `{{lightGrayColor}}` | Slide backgrounds, card fills |
+| Mid Gray | `{{midGrayColor}}` | Captions, footnotes, muted text |
+| White | `{{whiteColor}}` | Backgrounds, reverse text |
+| Accent (use sparingly) | `{{accentColor}}` | Thin dividers, luxury emphasis only |
+
+**Color rules:**
+- Primary is accent — never fill large areas with primary except title and section slides
+- Never use primary text on a primary background
+- Body text is always Dark (`{{darkColor}}`) on light backgrounds
+- White text only on Dark or Primary backgrounds
+
+## Typography
+
+**Font stack:** {{fontStack}}
+
+| Element | Size | Weight |
+|---|---|---|
+| Deck title | 44-52pt | Regular |
+| Slide title | 26-32pt | Regular |
+| Subtitle / eyebrow | 14-16pt | Regular |
+| Body / bullets | 13-15pt | Regular |
+| Caption / footnote | 10-11pt | Regular |
+
+**Type rules:**
+- Title case for slide titles
+- Sentence case for body copy and bullets
+- Never use decorative or display fonts
+- Minimum body size: 12pt
+- Do not use bold for entire paragraphs — bold only for emphasis within a sentence
+
+## Slide Writing Rules
+
+### One idea per slide
+Every slide must have exactly one main idea. If you find yourself writing "and also..." on a slide, that is a second slide.
+
+### Insight headlines, not topic labels
+Slide titles must state the insight, not just the topic.
+- ❌ "Q2 Results"
+- ✓ "Q2 revenue exceeded forecast by 14%"
+
+### Bullets
+- Maximum 5 bullets per slide
+- Maximum ~12 words per bullet (shorter is always better)
+- No nested bullets — depth comes from the assertion + detail form instead
+- Every bullet is a complete thought, not a label
+- Start bullets with a verb when possible
+
+### Assertion + detail (how bullets carry depth)
+Prefer the two-line bullet form: a bold assertion (`text`) followed by one indented evidence line (`detail`) — the number, example, or name that proves the claim. This is the sanctioned way to add depth; it is not a nested bullet.
+- ❌ "Improve deck quality"
+- ✓ text: "Cut deck production from days to minutes" · detail: "Last 3 briefs exported in under 10 minutes each"
+
+### Lead with the conclusion
+The most important information goes first. Do not build to the conclusion — state it, then support it.
+
+### Speaker notes are part of the slide
+Every slide ships with a structured talk track in the PPTX notes pane: opening line, 2–4 points that go beyond the slide text, a transition, and a time estimate. A deck without speaker notes is not done.
+
+## Brand Voice
+
+{{voiceSummary}}
+
+**Avoid:**
+{{wordsToAvoidBullets}}
+
+## Layout style
+
+Selected layout: **{{layoutLabel}}** (`{{layoutStyle}}`) — {{layoutTagline}}
+
+{{layoutGuidance}}
+
+**Slide mix hint:** {{layoutSlideMixHint}}
+
+The PPTX exporter reads layout from `brand/brand-pack.json` (`layoutStyle`: {{layoutStyle}}). Do not invent alternate visual systems in slide JSON — choose among the eight slide types and let the exporter apply {{layoutLabel}} framing.
+
+## Slide Type Reference
+
+1. **Title** — Primary or dark background, white text, deck title + subtitle (treatment varies by layout style)
+2. **Agenda** — Light background, numbered items, title in Primary
+3. **Section divider** — Primary or dark background, section number and title
+4. **Content (single)** — White background, insight headline, bullets or narrative
+5. **Two-column** — White background, side-by-side comparison
+6. **Metrics** — White or light gray background, 2-4 large stat blocks in Primary
+7. **Quote** — Light gray, white, or dark background, large pull quote, attribution
+8. **Closing / Next steps** — Numbered action list, consistent with opening style
+9. **Chart** — Native PPTX chart from JSON series (trends and comparisons)
+10. **Diagram** — Process / architecture / swimlane from structured nodes (exporter draws shapes)
+11. **Image** — Agent-generated illustration in `assets/` (prefer diagram/chart when possible)
+
+## Footer logo
+
+Every exported slide includes the {{customerName}} mark in the bottom-right corner (`brand/logo.png` on primary/dark slides, `brand/logo-on-light.png` on white/light slides).
+
+## What Not to Do
+
+- Do not use clip art, stock photo collages, or 3D effects
+- Do not ask humans to drop PNGs into `assets/` — `visual-creator` generates image slides during `/build-deck`
+- Do not invent precise chart numbers that are not in the brief
+- Do not use more than 2 typefaces per slide
+- Do not use WordArt or text shadows
+- Do not include a slide title that is longer than one line
+- Do not create slides that are purely decorative with no information
+- Do not include your working notes or "draft" text in slides shared externally
+- Do not ask the exporter for layouts outside {{layoutLabel}} — change layoutStyle in Studio and regenerate the zip instead

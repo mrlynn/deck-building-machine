@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "updated": "2026-07-18",
+  "description": "Leave-behind teaching blocks plus curriculum drafts. Curriculum blocks need SME review before customer delivery.",
+  "blocks": [
+    {
+      "id": "prove-primitives-with-lab4",
+      "version": "1.0.0",
+      "status": "draft",
+      "jobTitle": "Prove Rules stay on with Lab 4"
+    },
+    {
+      "id": "encode-brand-as-tokens",
+      "version": "1.0.0",
+      "status": "draft",
+      "jobTitle": "Encode brand once so Agents and exporters share tokens"
+    },
+    {
+      "id": "govern-quality-with-cli",
+      "version": "1.0.0",
+      "status": "draft",
+      "jobTitle": "Catch thin decks with /deck-score before export"
+    },
+    {
+      "id": "use-cursor-cli",
+      "version": "1.0.0",
+      "status": "draft",
+      "jobTitle": "Run the same Agent from the terminal with Cursor CLI",
+      "note": "Enablement priority #1 — SME review before external 101"
+    },
+    {
+      "id": "optimize-tokens",
+      "version": "1.0.0",
+      "status": "draft",
+      "jobTitle": "Spend context on the task, not on rule bloat",
+      "note": "Enablement priority #2 — SME review before external 101"
+    },
+    {
+      "id": "govern-privacy-and-review",
+      "version": "1.0.0",
+      "status": "draft",
+      "jobTitle": "Answer privacy questions and show how review gates work",
+      "note": "Enablement priority #3 — SME + security review before external 101"
+    }
+  ],
+  "queued": []
+}

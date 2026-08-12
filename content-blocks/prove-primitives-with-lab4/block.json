@@ -1,0 +1,17 @@
+{
+  "id": "prove-primitives-with-lab4",
+  "version": "1.0.0",
+  "status": "draft",
+  "jobTitle": "Prove Rules stay on with Lab 4",
+  "audience": "Customer champions and engineers opening the leave-behind in Cursor",
+  "summary": "Show that Rules stay on, Skills are the buttons, Agents are the pipeline — and prove it by breaking a headline and watching /brand-check catch it.",
+  "deps": [],
+  "sourceDocs": [
+    "docs/primitives-lab.md",
+    "docs/primitives-decision-tree.md",
+    "src/content/teachable-moments.ts"
+  ],
+  "slides": "slides.json",
+  "briefFragment": "brief-fragment.md",
+  "talkTrack": "talk-track.md"
+}

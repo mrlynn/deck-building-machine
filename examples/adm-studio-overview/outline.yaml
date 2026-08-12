@@ -1,0 +1,118 @@
+# Deck Machine Studio — ADM overview (Cursor Theme Template v2)
+footer: "Deck Machine Studio  ·  ADM enablement  ·  2026"
+output: ./Deck_Machine_Studio_for_ADMs.pptx
+
+slides:
+  - type: cover
+    title: "Package a Cursor leave-behind your customer can run"
+    series: CURSOR
+    number: "ADM"
+
+  - type: audience
+    title: "This session is for you if:"
+    bullets:
+      - "You package customer demos and need a branded Cursor repo, not another slide template."
+      - "You want a repeatable room script: brief → PPTX → Lab 4 → handoff."
+      - "You teach Rules, Skills, and Agents through one concrete factory — decks are the proof."
+
+  - type: agenda
+    title: "Today's\nAgenda"
+    items:
+      - "What Deck Machine Studio is"
+      - "Studio vs Cursor — two surfaces"
+      - "How packaging works"
+      - "What ships in the zip"
+      - "The live demo loop"
+      - "How ADMs should use it day-of"
+      - "Teaching modules and next steps"
+
+  - type: section-art
+    number: "1"
+    title: "What it is"
+
+  - type: generic-content
+    title: "Studio packages. Cursor is where the demo runs."
+    subtitle: "One sentence positioning"
+    body: "Deck Machine Studio is an ADM tool that encodes a customer brand into a downloadable Cursor project. The customer opens that zip in Cursor and runs skills — brief in chat, branded PPTX out. You are not selling a PowerPoint SaaS."
+    image: landscape-101-1
+
+  - type: generic-content-alt
+    title: "The product is a repeatable Cursor factory"
+    subtitle: "Proof, not the pitch"
+    body: "Rules stay on (brand). Skills are the buttons (/create-brief, /build-deck). Agents run the pipeline behind those skills. The PPTX proves those primitives work together — Lab 4 proves the champion learned them."
+
+  - type: generic-content
+    title: "Two jobs ADMs hire this system for"
+    subtitle: "Package and teach"
+    body: "Package — Find account → encode brand → download <slug>-deck-machine.zip. Teach — run the leave-behind live, then optional curriculum sidebars (CLI, tokens, privacy) from the field kit. Hub Studio can assemble blocks later; content comes first."
+    image: landscape-101-2
+
+  - type: section-art
+    number: "2"
+    title: "How it works"
+
+  - type: section-banner
+    number: "01"
+    title: "Package leave-behind"
+    image: landscape-101-3
+
+  - type: generic-content-alt
+    title: "Find account → encode brand → download"
+    subtitle: "Studio wizard"
+    body: "Find the account (Databricks when configured, or Brandfetch / manual). Encode palette, voice, logos, layout style. Download the zip. Mission control opens with the checklist — demo paste, slash commands, Lab 4, email handoff."
+
+  - type: generic-content
+    title: "What the customer receives"
+    subtitle: "Inside the zip"
+    body: "Brand pack + always-on brand rule. Deck workflow rule. Skills under / (create-brief, build-deck, brand-check, export-pptx, and more). Agents that run behind the skills. Bundled Office exporters — no npm install. Teaching docs: Lab 4, decision tree, after-the-demo."
+    image: landscape-101-4
+
+  - type: section-banner
+    number: "02"
+    title: "Live demo loop"
+    image: landscape-101-1
+
+  - type: generic-content-alt
+    title: "Talk or paste → brief → branded PPTX → Lab 4"
+    subtitle: "In Cursor, together"
+    body: "Open the unzipped folder in Cursor. /create-brief with a real upcoming meeting. /build-deck brief.md — pick up output/*.pptx. Change one headline → /export-pptx. Required exit: Lab 4 in docs/primitives-lab.md (bad headline → /brand-check → fix)."
+
+  - type: generic-content
+    title: "Quality gates travel with the repo"
+    subtitle: "Before anything leaves the room"
+    body: "/brand-check runs brand-guardian against the brand rule. /deck-score catches thin structure (CLI-friendly). Same story in the IDE or with agent -p. That is governance of their artifact — separate from vendor Privacy Mode."
+    image: field
+
+  - type: section-art
+    number: "3"
+    title: "How ADMs\nshould use it"
+
+  - type: generic-content-alt
+    title: "Before the call"
+    subtitle: "Night before or morning of"
+    body: "Package or resume the account in Studio. Optional: run Rehearse (~5 min). Keep Talk track open. If you will teach CLI, tokens, or privacy: npm run field-kit in this repo and open the matching talk-track.md — those modules are not in the zip picker."
+
+  - type: generic-content
+    title: "In the room"
+    subtitle: "Lead with primitives"
+    body: "Unzip → open in Cursor → narrate rules loading → /create-brief → /build-deck → Lab 4. Say: customers leave with a working Cursor repo tailored to their brand. Don't say: new AI tool, IT procurement, or learn the brief template by hand."
+    image: landscape-101-2
+
+  - type: generic-content-alt
+    title: "After download — Mission control"
+    subtitle: "Checklist + email handoff"
+    body: "Work the Mission control steps live. Copy the email blurb for the champion (unzip, skills path, Lab 4, docs/after-the-demo.md). Prefer email over Slack paste — many customer accounts are not on Slack."
+
+  - type: generic-content
+    title: "Teaching modules live in the field kit"
+    subtitle: "Content blocks, not a Hub library"
+    body: "Versioned jobs under content-blocks/: Lab 4, brand tokens, scorecard, Cursor CLI, token budget, privacy + review. Assemble with npm run assemble:blocks or npm run assemble:standard. Day-of: docs/adm-field-kit.md. Studio Help → Teaching modules (field kit)."
+    image: 101-v2
+
+  - type: generic-content-alt
+    title: "Regenerate vs edit — set expectations"
+    subtitle: "Day 2 ownership"
+    body: "Champion owns the Git home. Brand or layout style changes → regenerate zip from Studio. One headline → /revise-deck → /export-pptx. Point them at docs/after-the-demo.md before you leave so ownership is clear."
+
+  - layout: art-closing
+    title: "Package the zip.\nRun the factory.\nLeave Lab 4."

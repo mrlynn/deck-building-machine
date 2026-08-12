@@ -1,0 +1,49 @@
+# {{customerName}} Deck Slide Type Catalog
+
+Layout style for this machine: **{{layoutLabel}}** (`{{layoutStyle}}`).
+Visual framing (title bleed, accent weight, metric tiles) is compiled into `build-pptx.js` — pick types below; the exporter applies {{layoutLabel}}.
+
+{{layoutSlideMixHint}}
+
+**Applies to every type:** each slide carries structured speaker `notes` (opening, 2–4 points beyond the slide text, transition, timeMinutes). Content-bearing slides (`content`, `two-column`, `metrics`, `chart`, `diagram`) also carry a `takeaway` — the one line the audience must remember, rendered as a bottom accent strip.
+
+## 1. title
+**Style:** Full-bleed primary, dark frame, or light + left rail depending on layout style. White or dark text for contrast.
+
+## 2. agenda
+**Style:** Light gray or white background, numbered items, dark text
+
+## 3. section
+**Style:** Primary, dark, or light section frame depending on layout style
+
+## 4. content
+**Style:** White background, insight headline, bullets; accent bar / left rail weight varies by layout
+**Rules:** Bullets render as native PPTX lists — prefer the assertion + detail form (`{text, detail}`): bold claim line, indented evidence line beneath it.
+
+## 5. two-column
+**Style:** White background, side-by-side comparison (cards or hairline rules by layout)
+
+## 6. metrics
+**Style:** 2–4 large stat blocks; tile treatment varies (light gray cards, hairline minimal, or dark headers for Bold)
+
+## 7. quote
+**Style:** Pull quote with primary accent; background may be light gray, white, or dark by layout
+
+## 8. closing
+**Style:** White background, numbered next steps (action, owner, date)
+
+## 9. chart
+**Use for:** Trends and numeric comparisons (not just metric tiles)
+**Style:** Native PPTX chart from JSON (`chartType`, `categories`, `series`); the `highlight` category/series renders in {{primaryColor}} while the rest recedes to gray
+**Types:** `line`/`area` for time, `bar` for categories (`hbar` for long labels), `stacked-bar` for composition, `combo` for volume + rate, `pie`/`doughnut` for ≤5 slices of a whole
+**Rules:** Prefer when the story is change over time or category comparison. Set `highlight` on the data point that carries the headline. Add `insights` bullets when the chart needs interpretation. `caption` must name the data source. Agents author data — never paste chart screenshots.
+
+## 10. diagram
+**Use for:** Processes, architecture, SDLC flows, swimlanes
+**Style:** Structured nodes/edges rendered as shapes (`flow` | `grid` | `swimlane`)
+**Rules:** Prefer over `image` for structural ideas. Max 6 nodes. Agents author JSON — never ask users for Visio/PNG.
+
+## 11. image
+**Use for:** Illustration only when chart/diagram cannot carry the idea
+**Style:** Agent-generated PNG in `assets/`, embedded by exporter (`right` | `left` | `full`)
+**Rules:** `visual-creator` generates during `/build-deck`. Never ask humans to drop files. Flat corporate style; brand accent {{primaryColor}}; no stock collages.

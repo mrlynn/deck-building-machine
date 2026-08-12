@@ -1,0 +1,279 @@
+'use strict';
+/**
+ * Marriott Deck Machine — HTML preview from deck-content.json
+ * Usage: node preview-deck.js path/to/deck-content.json
+ */
+const fs = require('fs');
+const path = require('path');
+
+const [,, inputPath] = process.argv;
+if (!inputPath) {
+  console.error('Usage: node preview-deck.js deck-content.json');
+  process.exit(1);
+}
+
+const C = {
+  red: '#BE202E',
+  dark: '#1D1D1B',
+  gray: '#4A4A4A',
+  lgray: '#F2F2F2',
+  mgray: '#9B9B9B',
+  white: '#FFFFFF',
+  gold: '#B8973A',
+};
+
+const deckJsonAbs = path.resolve(inputPath);
+const deck = JSON.parse(fs.readFileSync(deckJsonAbs, 'utf8'));
+const outDir = path.resolve(path.dirname(deckJsonAbs), 'output');
+fs.mkdirSync(outDir, { recursive: true });
+const outFile = path.join(outDir, 'preview.html');
+
+function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function bulletHtml(b) {
+  if (b == null) return '';
+  if (typeof b === 'string') return `<li><span class="assert">${esc(b)}</span></li>`;
+  const text = b.text || b.label || '';
+  const detail = b.detail || '';
+  return `<li><span class="assert">${esc(text)}</span>${
+    detail ? `<div class="detail">${esc(detail)}</div>` : ''
+  }</li>`;
+}
+
+function bulletsList(bullets) {
+  if (!Array.isArray(bullets) || !bullets.length) return '';
+  return `<ul>${bullets.map(bulletHtml).join('')}</ul>`;
+}
+
+function renderSlide(slide, index, total) {
+  const type = slide.type || 'content';
+  const headline = esc(slide.headline || '');
+  const c = slide.content || {};
+  const takeaway = c.takeaway ? `<p class="takeaway">${esc(c.takeaway)}</p>` : '';
+  const n = `${index + 1} / ${total}`;
+  let body = '';
+  let shell = 'light';
+
+  switch (type) {
+    case 'title':
+      shell = 'red';
+      body = `
+        <p class="eyebrow">Title</p>
+        <h1>${headline}</h1>
+        <p class="sub">${esc(c.subtitle || '')}</p>
+        <p class="meta">${esc(c.presenter || '')}${c.date ? ` · ${esc(c.date)}` : ''}</p>`;
+      break;
+    case 'section':
+      shell = 'red';
+      body = `
+        <p class="section-num">${esc(c.sectionNumber || String(index + 1).padStart(2, '0'))}</p>
+        <h1>${headline}</h1>`;
+      break;
+    case 'agenda':
+      body = `
+        <p class="eyebrow">Agenda</p>
+        <h2>${headline}</h2>
+        <ol class="agenda">${(c.items || []).map((it) => `<li>${esc(it)}</li>`).join('')}</ol>
+        ${takeaway}`;
+      break;
+    case 'metrics':
+      body = `
+        <p class="eyebrow">Metrics</p>
+        <h2>${headline}</h2>
+        <div class="metrics">${(c.metrics || []).map((m) => `
+          <div class="metric">
+            <div class="value">${esc(m.value)}</div>
+            ${m.delta ? `<div class="delta">${esc(m.delta)}</div>` : ''}
+            <div class="label">${esc(m.label || '')}</div>
+            <div class="desc">${esc(m.description || '')}</div>
+          </div>`).join('')}</div>
+        ${takeaway}`;
+      break;
+    case 'two-column':
+      body = `
+        <p class="eyebrow">Two-column</p>
+        <h2>${headline}</h2>
+        <div class="cols">
+          <div><h3>${esc(c.left?.heading || '')}</h3>${bulletsList(c.left?.bullets)}</div>
+          <div><h3>${esc(c.right?.heading || '')}</h3>${bulletsList(c.right?.bullets)}</div>
+        </div>
+        ${takeaway}`;
+      break;
+    case 'quote':
+      shell = 'lgray';
+      body = `
+        <p class="eyebrow">Quote</p>
+        <blockquote>“${esc(c.quote || headline)}”</blockquote>
+        <p class="attr">— ${esc(c.attribution || '')}${c.context ? `<br><span class="muted">${esc(c.context)}</span>` : ''}</p>`;
+      break;
+    case 'closing':
+      body = `
+        <p class="eyebrow">Closing</p>
+        <h2>${headline}</h2>
+        <ol class="closing">${(c.items || []).map((it) => `
+          <li>
+            <span class="num">${esc(it.number || '')}</span>
+            <span class="action">${esc(it.action || '')}</span>
+            <span class="owner">${esc([it.owner, it.date].filter(Boolean).join(' · '))}</span>
+          </li>`).join('')}</ol>`;
+      break;
+    case 'chart': {
+      const cats = c.categories || [];
+      const series = c.series || [];
+      const rows = cats.map((cat, i) => {
+        const vals = series.map((s) => esc(s.values?.[i] ?? '')).join('</td><td>');
+        return `<tr><th>${esc(cat)}</th><td>${vals}</td></tr>`;
+      }).join('');
+      const headers = series.map((s) => `<th>${esc(s.name || 'Series')}</th>`).join('');
+      body = `
+        <p class="eyebrow">Chart · ${esc(c.chartType || 'bar')}</p>
+        <h2>${headline}</h2>
+        ${c.highlight ? `<p class="chip">Highlight: ${esc(c.highlight)}</p>` : ''}
+        <table class="chart"><thead><tr><th></th>${headers}</tr></thead><tbody>${rows}</tbody></table>
+        ${bulletsList(c.insights)}
+        ${c.caption ? `<p class="caption">${esc(c.caption)}</p>` : ''}
+        ${takeaway}`;
+      break;
+    }
+    case 'diagram': {
+      const nodes = (c.nodes || []).map((n) =>
+        `<div class="node"><strong>${esc(n.label)}</strong>${n.sublabel ? `<span>${esc(n.sublabel)}</span>` : ''}</div>`
+      ).join('<div class="arrow">→</div>');
+      body = `
+        <p class="eyebrow">Diagram · ${esc(c.layout || 'flow')}</p>
+        <h2>${headline}</h2>
+        <div class="flow">${nodes}</div>
+        ${c.caption ? `<p class="caption">${esc(c.caption)}</p>` : ''}
+        ${takeaway}`;
+      break;
+    }
+    case 'image':
+      body = `
+        <p class="eyebrow">Image</p>
+        <h2>${headline}</h2>
+        <p class="muted">Asset: ${esc(c.path || '(none)')}</p>
+        ${bulletsList(c.bullets)}
+        ${c.caption ? `<p class="caption">${esc(c.caption)}</p>` : ''}`;
+      break;
+    default:
+      body = `
+        <p class="eyebrow">Content</p>
+        <h2>${headline}</h2>
+        ${bulletsList(c.bullets)}
+        ${c.note ? `<p class="caption">${esc(c.note)}</p>` : ''}
+        ${takeaway}`;
+  }
+
+  return `<article class="slide ${shell}" id="s${index + 1}">
+    <div class="inner">${body}</div>
+    <footer><span>${n}</span><span class="type">${esc(type)}</span></footer>
+  </article>`;
+}
+
+const title = deck.metadata?.title || 'Deck preview';
+const slides = deck.slides || [];
+const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>${esc(title)} — preview</title>
+<style>
+  :root {
+    --red: ${C.red}; --dark: ${C.dark}; --gray: ${C.gray};
+    --lgray: ${C.lgray}; --mgray: ${C.mgray}; --white: ${C.white};
+    --font: Arial, Calibri, Helvetica Neue, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: var(--font); background: #e8e8e8; color: var(--dark);
+  }
+  header.bar {
+    position: sticky; top: 0; z-index: 2;
+    background: var(--dark); color: var(--white);
+    padding: 12px 24px; display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap;
+  }
+  header.bar h1 { font-size: 16px; font-weight: 600; margin: 0; }
+  header.bar p { margin: 0; font-size: 12px; color: var(--mgray); }
+  header.bar .note { margin-left: auto; font-size: 11px; color: var(--mgray); }
+  main { padding: 24px; display: flex; flex-direction: column; gap: 20px; max-width: 1100px; margin: 0 auto; }
+  .slide {
+    aspect-ratio: 16 / 9; width: 100%;
+    background: var(--white); border-radius: 4px; overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,.12);
+    display: flex; flex-direction: column; position: relative;
+  }
+  .slide.red { background: var(--red); color: var(--white); }
+  .slide.lgray { background: var(--lgray); }
+  .inner { flex: 1; padding: 36px 48px 28px; overflow: hidden; }
+  footer {
+    display: flex; justify-content: space-between; padding: 8px 48px 12px;
+    font-size: 11px; color: var(--mgray); border-top: 1px solid #e0e0e0;
+  }
+  .slide.red footer { border-top-color: rgba(255,255,255,.25); color: rgba(255,255,255,.75); }
+  .eyebrow { text-transform: uppercase; letter-spacing: .06em; font-size: 11px; color: var(--red); margin: 0 0 8px; }
+  .slide.red .eyebrow { color: rgba(255,255,255,.85); }
+  h1 { font-size: 32px; font-weight: 400; margin: 0 0 12px; line-height: 1.2; }
+  h2 { font-size: 24px; font-weight: 400; margin: 0 0 16px; line-height: 1.25; color: var(--red); }
+  .slide.red h1, .slide.red h2 { color: var(--white); }
+  h3 { font-size: 14px; color: var(--gray); margin: 0 0 8px; }
+  .sub { font-size: 16px; color: rgba(255,255,255,.9); margin: 0 0 24px; }
+  .meta { font-size: 13px; color: rgba(255,255,255,.75); }
+  ul { margin: 0; padding-left: 18px; }
+  li { margin: 0 0 10px; font-size: 14px; line-height: 1.35; }
+  .assert { font-weight: 600; }
+  .detail { font-weight: 400; color: var(--gray); font-size: 12px; margin-top: 2px; padding-left: 2px; }
+  .takeaway {
+    margin-top: 16px; padding: 10px 12px; background: var(--lgray); border-left: 3px solid var(--red);
+    font-size: 13px; font-weight: 600;
+  }
+  .slide.red .takeaway { background: rgba(0,0,0,.15); border-left-color: var(--white); }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 8px; }
+  .metric .value { font-size: 36px; color: var(--red); font-weight: 400; }
+  .metric .delta { font-size: 13px; color: var(--gray); }
+  .metric .label { font-size: 13px; font-weight: 600; margin-top: 4px; }
+  .metric .desc { font-size: 11px; color: var(--mgray); }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .agenda, .closing { margin: 0; padding-left: 22px; }
+  .agenda li, .closing li { margin-bottom: 10px; font-size: 15px; }
+  .closing .num { color: var(--red); font-weight: 700; margin-right: 8px; }
+  .closing .owner { display: block; font-size: 12px; color: var(--mgray); margin-top: 2px; }
+  blockquote { font-size: 22px; margin: 24px 0 12px; line-height: 1.35; }
+  .attr { font-size: 13px; color: var(--gray); }
+  .muted, .caption { font-size: 11px; color: var(--mgray); }
+  .chip { display: inline-block; background: var(--lgray); color: var(--red); font-size: 11px; padding: 2px 8px; border-radius: 2px; margin-bottom: 8px; }
+  table.chart { border-collapse: collapse; width: 100%; font-size: 12px; margin: 8px 0; }
+  table.chart th, table.chart td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; }
+  table.chart th { background: var(--lgray); }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+  .node { background: var(--lgray); border-left: 3px solid var(--red); padding: 10px 12px; min-width: 120px; }
+  .node span { display: block; font-size: 11px; color: var(--gray); margin-top: 4px; }
+  .arrow { color: var(--mgray); font-size: 18px; }
+  .section-num { font-size: 48px; margin: 0; opacity: .9; }
+  nav.toc { padding: 0 24px 16px; max-width: 1100px; margin: 0 auto; font-size: 12px; }
+  nav.toc a { color: var(--gray); margin-right: 12px; text-decoration: none; }
+  nav.toc a:hover { color: var(--red); }
+</style>
+</head>
+<body>
+<header class="bar">
+  <h1>${esc(title)}</h1>
+  <p>${esc(deck.metadata?.audience || '')}${deck.metadata?.date ? ` · ${esc(deck.metadata.date)}` : ''}</p>
+  <p class="note">${slides.length} slides · HTML preview (not pixel-perfect PPTX)</p>
+</header>
+<nav class="toc">${slides.map((s, i) => `<a href="#s${i + 1}">${i + 1}. ${esc((s.type || '').slice(0, 8))}</a>`).join('')}</nav>
+<main>
+${slides.map((s, i) => renderSlide(s, i, slides.length)).join('\n')}
+</main>
+</body>
+</html>
+`;
+
+fs.writeFileSync(outFile, html, 'utf8');
+console.log(`Wrote ${outFile} (${slides.length} slides)`);

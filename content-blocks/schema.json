@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cursor.com/deck-machine/content-block.schema.json",
+  "title": "ContentBlock",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "jobTitle",
+    "audience",
+    "summary",
+    "deps",
+    "slides",
+    "briefFragment",
+    "talkTrack"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Kebab-case JTBD id"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semver for stale-hub detection later"
+    },
+    "jobTitle": {
+      "type": "string",
+      "description": "Insight-style job title, not a topic label"
+    },
+    "audience": {
+      "type": "string",
+      "description": "Who the ADM is teaching"
+    },
+    "summary": {
+      "type": "string",
+      "description": "One or two sentences: what this block proves"
+    },
+    "deps": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Other block ids this assumes (may be empty)"
+    },
+    "sourceDocs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Repo-relative paths that authored this block"
+    },
+    "slides": {
+      "type": "string",
+      "const": "slides.json"
+    },
+    "briefFragment": {
+      "type": "string",
+      "const": "brief-fragment.md"
+    },
+    "talkTrack": {
+      "type": "string",
+      "const": "talk-track.md"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "stable"],
+      "default": "draft"
+    }
+  }
+}

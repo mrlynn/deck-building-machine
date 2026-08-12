@@ -1,0 +1,15 @@
+{
+  "assembledAt": "2026-07-18T17:53:54.970Z",
+  "blocks": [
+    {
+      "id": "optimize-tokens",
+      "version": "1.0.0",
+      "jobTitle": "Spend context on the task, not on rule bloat",
+      "slideCount": 5
+    }
+  ],
+  "outputs": [
+    "brief.md",
+    "deck-content.json"
+  ]
+}

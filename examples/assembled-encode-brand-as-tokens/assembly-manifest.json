@@ -1,0 +1,15 @@
+{
+  "assembledAt": "2026-07-18T17:53:54.722Z",
+  "blocks": [
+    {
+      "id": "encode-brand-as-tokens",
+      "version": "1.0.0",
+      "jobTitle": "Encode brand once so Agents and exporters share tokens",
+      "slideCount": 3
+    }
+  ],
+  "outputs": [
+    "brief.md",
+    "deck-content.json"
+  ]
+}

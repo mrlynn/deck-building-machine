@@ -1,0 +1,153 @@
+{
+  "metadata": {
+    "title": "Assembled blocks — encode-brand-as-tokens",
+    "audience": "Customer champions and engineers in a Cursor demo",
+    "presenter": "ADM / FE",
+    "date": "July 2026",
+    "purpose": "inform",
+    "assembledFrom": [
+      {
+        "id": "encode-brand-as-tokens",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "slides": [
+    {
+      "type": "title",
+      "headline": "Leave-behind teaching blocks — assembled",
+      "content": {
+        "eyebrow": "Content blocks spike",
+        "subtitle": "Encode brand once so Agents and exporters share tokens"
+      },
+      "notes": {
+        "opening": "This deck was assembled from versioned content blocks.",
+        "points": [
+          "Edit blocks under content-blocks/, then re-run assemble.",
+          "Polish or export with existing deck skills."
+        ],
+        "transition": "Into the first block section.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "section",
+      "headline": "Encode brand once — Agents and exporters share it",
+      "content": {
+        "eyebrow": "Brand pack",
+        "sectionNumber": "02"
+      },
+      "notes": {
+        "opening": "This is the Encode brand teachable moment.",
+        "points": [
+          "Studio writes rules and brand assets, not a finished customer deck.",
+          "Same tokens show up in Cursor and in Office exporters."
+        ],
+        "transition": "Start with what lands in the zip.",
+        "timeMinutes": 1
+      }
+    },
+    {
+      "type": "content",
+      "headline": "One pack feeds always-on rules and the exporters",
+      "content": {
+        "bullets": [
+          {
+            "text": "Colors, fonts, and voice become an always-on rule",
+            "detail": ".cursor/rules/<slug>-brand.mdc shapes Agent output in every chat"
+          },
+          {
+            "text": "brand/ mirrors the same tokens for humans and exporters",
+            "detail": "brand-pack.json, palette, voice, logos on dark and light"
+          },
+          {
+            "text": "Layout style sets slide mix and frame treatment",
+            "detail": "classic, minimal, or bold — Agents and PPTX stay aligned"
+          }
+        ],
+        "takeaway": "Encode once in Studio; regenerate the zip when brand changes."
+      },
+      "notes": {
+        "opening": "Walk the Encode brand fields without drowning in hex.",
+        "points": [
+          "Call out logos on dark vs light.",
+          "Mention words-to-avoid as brand-guardian fuel.",
+          "Preview shows the layout style before download."
+        ],
+        "transition": "Same factory, more than one Office renderer.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "content",
+      "headline": "PPTX is the proof; Doc and workbook reuse the tokens",
+      "content": {
+        "bullets": [
+          {
+            "text": "Happy path stays /create-brief → /build-deck → PPTX",
+            "detail": "output/ appears after skills run — not pre-built in the zip"
+          },
+          {
+            "text": "Optional /build-doc and /export-metrics-xlsx",
+            "detail": "Thin skills; same brand tokens; not a design-agency replacement"
+          },
+          {
+            "text": "Day 2: brand stays owned by marketing plus champion",
+            "detail": "See docs/after-the-demo.md for regenerate vs edit"
+          }
+        ],
+        "takeaway": "Renderers are skills; the product is the Cursor factory."
+      },
+      "notes": {
+        "opening": "Toggle factory outputs in Studio if you are mid-demo.",
+        "points": [
+          "Keep silhouettes honest — Doc/XLSX are not finished files in Studio.",
+          "Point champions at after-the-demo ownership table."
+        ],
+        "transition": "Next: catch thin decks before export.",
+        "timeMinutes": 3
+      }
+    },
+    {
+      "type": "closing",
+      "headline": "Next: run Lab 4, then read after-the-demo",
+      "content": {
+        "items": [
+          {
+            "number": "01",
+            "action": "Open the leave-behind zip in Cursor",
+            "owner": "Champion",
+            "date": "Today"
+          },
+          {
+            "number": "02",
+            "action": "Complete Lab 4 exit criteria",
+            "owner": "Room",
+            "date": "docs/primitives-lab.md"
+          },
+          {
+            "number": "03",
+            "action": "Read day-2 ownership",
+            "owner": "Champion",
+            "date": "docs/after-the-demo.md"
+          },
+          {
+            "number": "04",
+            "action": "Author new JTBD blocks under content-blocks/",
+            "owner": "ADM / content",
+            "date": "Next"
+          }
+        ]
+      },
+      "notes": {
+        "opening": "Close on ownership and the required exit.",
+        "points": [
+          "Point at catalog.json for queued curriculum blocks.",
+          "CLI / tokens / governance blocks are next for SME draft."
+        ],
+        "transition": "End.",
+        "timeMinutes": 2
+      }
+    }
+  ]
+}
