@@ -21,7 +21,7 @@ We need a **coachable scorecard** always, and an **opt-in structural gate** when
 - Always coach (print score + ranked fixes); never surprise-block by default
 - Hard-fail only when `DECK_QUALITY_GATE=strict` or `--strict` is set, and only for a defined structural error set
 - Hybrid model: Node owns structural metrics; agent owns insight/voice/spine judgment
-- Coach visual aesthetics aligned to **Marriott Executive Classic** (density, mix, brand type/color invariants) — never override brand typography with generic TED-style rules
+- Coach visual aesthetics aligned to **Executive Classic** (density, mix, brand type/color invariants) — never override brand typography with generic TED-style rules
 - Two surfaces: fast `/deck-score`, combined `/brand-check`
 - Zero new npm packages
 
@@ -31,7 +31,7 @@ We need a **coachable scorecard** always, and an **opt-in structural gate** when
 - Blocking export by default
 - Using agent judgment to hard-fail export (agents warn only)
 - Aesthetics checks that hard-fail the strict gate (aesthetics are coach-only: `warning` / always-pass `info`)
-- Generic 5/5/5 or “body ≥18pt” rules that conflict with Marriott type scale (body 13–15pt, ~12 words/bullet)
+- Generic 5/5/5 or “body ≥18pt” rules that conflict with Acme type scale (body 13–15pt, ~12 words/bullet)
 - Measuring literal white-space % or PowerPoint Drawing Guides from JSON
 - Scoring Morph/Fade/animations the exporter does not emit
 - A Studio UI dashboard in this iteration (CLI + chat report only)
@@ -47,7 +47,7 @@ We need a **coachable scorecard** always, and an **opt-in structural gate** when
 | Computation | Hybrid — Node structural + agent judgment |
 | Surfaces | `/deck-score` (Node only) and `/brand-check` (Node + brand-guardian) |
 | Scoring model | Checklist points + category percentages; strict ignores overall % |
-| Aesthetics | Coach-only category; Marriott-aligned; never contributes structural `error` |
+| Aesthetics | Coach-only category; brand-aligned; never contributes structural `error` |
 
 ## Approach (selected)
 
@@ -237,7 +237,7 @@ Applies to content-bearing types: `content`, `two-column`, `metrics`, `chart`, `
 | `variety.noTripleContent` | error | No run of 3+ consecutive `content` slides |
 | `variety.hasVisual` | warning | If deck has ≥8 slides and contains no `chart` or `diagram` slide, emit one deck-level warning (`slideIndex` null) |
 
-### Category: `aesthetics` (Marriott-aligned visual craft — coach only)
+### Category: `aesthetics` (brand-aligned visual craft — coach only)
 
 Preamble for implementers and agents: these checks adapt common presentation aesthetics to **Executive Classic**, not generic conference rules. The exporter already applies brand fonts, type scale, palette, 16:9 layout, and zero animations. The scorer coaches density and mix; it does **not** re-litigate brand pt sizes.
 
@@ -245,7 +245,7 @@ Preamble for implementers and agents: these checks adapt common presentation aes
 
 | Generic rule | Why rejected here |
 |---|---|
-| Body text ≥18pt | Marriott body is 13–15pt (min 12pt) |
+| Body text ≥18pt | Acme body is 13–15pt (min 12pt) |
 | 5 words per line / strict 5/5/5 | Bullets allow ~12 words; assertion+detail would always fail |
 | Dual heading/body typefaces | Single brand stack (Arial first); exporter uses one `fontFace` |
 | Literal 15–20% white space | Not measurable from JSON without a layout engine |

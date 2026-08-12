@@ -25,9 +25,9 @@ describe('assessPrefillConfidence', () => {
     const result = assessPrefillConfidence(
       {
         ...DEFAULT_BRAND,
-        customerName: 'Acme',
-        customerSlug: 'acme',
-        website: 'acme.com',
+        customerName: 'Stripe',
+        customerSlug: 'stripe',
+        website: 'stripe.com',
         logoOnDarkBase64: 'data:image/png;base64,a',
       },
       0.5,

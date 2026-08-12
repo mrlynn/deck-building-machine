@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Delight Sample — Cursor Primitives in Action",
-    "audience": "Marriott AI Studio leadership",
+    "audience": "Acme AI Studio leadership",
     "presenter": "Michael Lynn",
     "date": "July 2026",
     "purpose": "persuade"
@@ -11,7 +11,7 @@
       "type": "title",
       "headline": "Cursor turns brand rules into branded decks in minutes",
       "content": {
-        "eyebrow": "Marriott AI Studio",
+        "eyebrow": "Acme AI Studio",
         "subtitle": "Skills, rules, and agents — proved by the PowerPoint"
       },
       "notes": {
@@ -215,9 +215,9 @@
       "type": "quote",
       "headline": "",
       "content": {
-        "quote": "This is not a new IT app. Marriott already uses Cursor — this turns organic usage into a repeatable builder workflow.",
+        "quote": "This is not a new IT app. Acme already uses Cursor — this turns organic usage into a repeatable builder workflow.",
         "attribution": "Account team leave-behind",
-        "context": "Marriott Cursor Deck Machine one-pager"
+        "context": "Acme Cursor Deck Machine one-pager"
       },
       "notes": {
         "opening": "This is the practical interpretation of the numbers and pipeline.",

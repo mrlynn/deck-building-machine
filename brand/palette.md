@@ -1,14 +1,14 @@
-# Marriott International Corporate Color Palette
+# Acme Corporation Corporate Color Palette
 
-> Note: These values are approximations of Marriott International corporate brand standards.
-> Update with your official brand guide values.
+> Example reference palette for the deck machine dogfood brand.
+> Replace with your customer's official brand guide values.
 
 ## Primary Colors
 
 | Token | Hex | Usage |
 |---|---|---|
-| Marriott Red | `#BE202E` | Title slides, section dividers, key stats, accent lines, bullet dots |
-| Marriott Dark | `#1D1D1B` | Body text, dark backgrounds, primary headings |
+| Primary Red | `#BE202E` | Title slides, section dividers, key stats, accent lines, bullet dots |
+| Brand Dark | `#1D1D1B` | Body text, dark backgrounds, primary headings |
 | White | `#FFFFFF` | Slide backgrounds, reverse text on dark/red |
 
 ## Secondary Colors
@@ -32,7 +32,7 @@
 3. **Body text is always Dark** (`#1D1D1B`) on light backgrounds.
 4. **White text only** on Dark or Red backgrounds.
 5. **Light Gray** is the preferred slide background when you want warmth without white.
-6. **Footer logo.** Every exported slide includes the Marriott M mark in the bottom-right corner (`brand/logo.png` on red/dark slides, `brand/logo-red.png` on white/light slides).
+6. **Footer logo (optional).** Add `brand/logo.png` (light mark for dark slides) and `brand/logo-red.png` (primary mark for light slides) to enable footer logos on export.
 
 ## Color don'ts
 

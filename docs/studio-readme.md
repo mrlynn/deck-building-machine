@@ -1,6 +1,6 @@
 # Deck Machine Studio
 
-Next.js + Material UI app for ADMs and FEs to package a **branded Cursor demonstration asset** — skills, rules, and agent definitions — from a brand pack. The deck workflow is the demo vehicle so customers can feel how those capabilities work together. Marriott is the reference instance; Studio interpolates customer name, colors, logos, voice, and rules into a downloadable repo zip.
+Next.js + Material UI app for ADMs and FEs to package a **branded Cursor demonstration asset** — skills, rules, and agent definitions — from a brand pack. The deck workflow is the demo vehicle so customers can feel how those capabilities work together. Acme is the reference instance; Studio interpolates customer name, colors, logos, voice, and rules into a downloadable repo zip.
 
 ## What it generates
 
@@ -14,7 +14,7 @@ A zip containing:
 - `brand/brand-pack.json` (runtime tokens for PPTX / DOCX / XLSX)
 - `README.md` / `AGENTS.md` / `templates/brief.md`
 
-No Marriott-specific strings remain in the output.
+No reference-brand strings remain in the output.
 
 ## Quick start
 

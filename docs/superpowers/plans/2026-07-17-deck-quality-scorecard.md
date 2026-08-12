@@ -250,7 +250,7 @@ Implement the full module. Required behavior (must match spec):
 'use strict';
 
 /**
- * Deck quality scorecard — structural + Marriott-aligned aesthetics (coach).
+ * Deck quality scorecard — structural + brand-aligned aesthetics (coach).
  * No npm deps. Rejected scoring targets: body≥18pt, 5/5/5, dual fonts,
  * white-space %, Morph/Fade, external palettes.
  */
@@ -1107,7 +1107,7 @@ EOF
 ```markdown
 ---
 name: deck-score
-description: Score a deck-content.json for structural depth, visuals, variety, and Marriott-aligned aesthetics. Warn by default; optional strict gate.
+description: Score a deck-content.json for structural depth, visuals, variety, and brand-aligned aesthetics. Warn by default; optional strict gate.
 ---
 
 # /deck-score
@@ -1129,7 +1129,7 @@ Defaults to `deck-content.json` in the repo root.
 Structural categories: structure, notes, depth, visuals, variety.  
 Aesthetics (coach only): brand type/color invariants, no animation, metrics tile cap, text-heavy runs, quote attribution.
 
-**Not scored (conflicts with Marriott brand):** body ≥18pt, 5/5/5 word rules, dual fonts, external palettes, white-space %, Morph/Fade.
+**Not scored (conflicts with brand):** body ≥18pt, 5/5/5 word rules, dual fonts, external palettes, white-space %, Morph/Fade.
 
 ## Prompt for agent
 
@@ -1225,7 +1225,7 @@ The invoking skill runs the Node scorer and pastes a `DeckQualityReport` JSON. Y
 - Add `judgment` with `spine`, `voice`, `evidence`, `aesthetics`, and `summary`
 - Never invent structural numbers; never mark aesthetics Node warnings as export-blocking errors
 
-Judgment `aesthetics`: pass/warn/fail for one-idea crowding beyond counts, takeaway that restates the headline, wall-of-text feel. Do **not** recommend body ≥18pt, 5/5/5, or dual fonts — Marriott type scale and single font stack remain.
+Judgment `aesthetics`: pass/warn/fail for one-idea crowding beyond counts, takeaway that restates the headline, wall-of-text feel. Do **not** recommend body ≥18pt, 5/5/5, or dual fonts — Acme type scale and single font stack remain.
 ```
 
 Replace the Output format JSON example with the merged shape from the spec (`scorecard`, `judgment` including `aesthetics`, existing `slideReviews` / `globalIssues` / `summary`). Include the `overallCompliance` mapping from the spec.

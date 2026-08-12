@@ -68,7 +68,7 @@ export const HELP_TOPICS: HelpTopic[] = [
     summary: 'A demo asset that shows skills, rules, and agents',
     paragraphs: [
       'Deck Machine Studio builds a powerful demonstration asset for a customer account: a Cursor-native repo with branded skills, always-on rules, and agent definitions. The goal is not “shipping decks as a product.” The goal is helping the customer understand — by using — how skills and rules shape Agent behavior.',
-      'The deck-building workflow (brief → outline → slides → brand check → PPTX) is the concrete demo vehicle. It makes skills, rules, and subagents visible in one sitting. Marriott is the reference instance; the zip you download is fully parameterized for the customer you configure here.',
+      'The deck-building workflow (brief → outline → slides → brand check → PPTX) is the concrete demo vehicle. It makes skills, rules, and subagents visible in one sitting. Acme is the reference instance; the zip you download is fully parameterized for the customer you configure here.',
       'This is not a new IT app or a seat purchase. Customers who already use Cursor get a leave-behind they can open, explore, and run. ADMs and FEs use Studio to package that demonstration for each account.',
     ],
     sections: [
@@ -271,7 +271,7 @@ export const HELP_TOPICS: HelpTopic[] = [
         ],
       },
     ],
-    tip: 'Demo shortcut on the Marriott reference repo: /build-deck examples/ai-studio-brief.md. Customer zips use the same skill flow with their brand tokens.',
+    tip: 'Demo shortcut on the reference repo: /build-deck examples/ai-studio-brief.md. Customer zips use the same skill flow with their brand tokens.',
   },
   {
     id: 'improve-decks',
@@ -291,7 +291,7 @@ export const HELP_TOPICS: HelpTopic[] = [
           'Use /create-brief with real meeting notes — not a hand-filled template',
           'Insist on three key messages and concrete numbers (with context)',
           'Set slide-count and tone constraints in the brief when the room is executive',
-          'Compare against examples/ai-studio-brief.md (Marriott reference) as a quality bar',
+          'Compare against examples/ai-studio-brief.md (reference) as a quality bar',
         ],
       },
       {
@@ -751,9 +751,9 @@ export const HELP_TOPICS: HelpTopic[] = [
         ],
       },
       {
-        heading: 'Will Marriott branding appear in the customer zip?',
+        heading: 'Will branding appear in the customer zip?',
         paragraphs: [
-          'No. Generate interpolates the customer brand pack. No Marriott-specific names or tokens remain in the output — only the customer you configured.',
+          'No. Generate interpolates the customer brand pack. No reference-brand names or tokens remain in the output — only the customer you configured.',
         ],
       },
       {

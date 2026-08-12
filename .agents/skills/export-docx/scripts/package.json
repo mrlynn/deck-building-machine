@@ -1,7 +1,7 @@
 {
-  "name": "marriott-docx-builder",
+  "name": "deck-docx-builder",
   "version": "1.0.0",
-  "description": "Marriott branded DOCX export",
+  "description": "Branded DOCX export",
   "main": "build-docx.js",
   "scripts": {
     "build": "node build-docx.js"

@@ -12,7 +12,7 @@ That assembles every block in `content-blocks/catalog.json` and exports PPTX int
 
 `examples/assembled-<block-id>/output/*.pptx` (gitignored)
 
-Exports use **Cursor** brand tokens (`brand/cursor/`), not the Marriott dogfood pack in `brand/`. Customer leave-behinds still encode each account into `brand/brand-pack.json` via Studio.
+Exports use **Cursor** brand tokens (`brand/cursor/`), not the reference dogfood pack in `brand/`. Customer leave-behinds still encode each account into `brand/brand-pack.json` via Studio.
 
 Optional — one job only:
 

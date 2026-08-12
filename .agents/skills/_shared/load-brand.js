@@ -16,7 +16,7 @@ const fs = require('fs');
 const path = require('path');
 
 const DEFAULTS = {
-  customerName: 'Marriott',
+  customerName: 'Acme',
   primaryBare: 'BE202E',
   darkBare: '1D1D1B',
   grayBare: '4A4A4A',

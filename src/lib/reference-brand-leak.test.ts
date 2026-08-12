@@ -1,32 +1,32 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { DEFAULT_BRAND } from './types';
-import { checkMarriottLeak } from './marriott-leak';
+import { checkReferenceBrandLeak } from './reference-brand-leak';
 
-describe('checkMarriottLeak', () => {
-  it('passes for Marriott dogfood', () => {
-    const report = checkMarriottLeak({
+describe('checkReferenceBrandLeak', () => {
+  it('passes for Acme dogfood', () => {
+    const report = checkReferenceBrandLeak({
       ...DEFAULT_BRAND,
-      customerName: 'Marriott International',
-      customerSlug: 'marriott',
+      customerName: 'Acme Corporation',
+      customerSlug: 'acme',
     });
     assert.equal(report.severity, 'pass');
     assert.equal(report.isReferenceCustomer, true);
   });
 
-  it('fails when audience still says Marriott', () => {
-    const report = checkMarriottLeak({
+  it('fails when audience still says Acme', () => {
+    const report = checkReferenceBrandLeak({
       ...DEFAULT_BRAND,
-      customerName: 'Acme',
-      customerSlug: 'acme',
-      defaultAudience: 'Marriott leadership',
+      customerName: 'Stripe',
+      customerSlug: 'stripe',
+      defaultAudience: 'Acme leadership',
     });
     assert.equal(report.severity, 'fail');
     assert.ok(report.findings.some((f) => f.field === 'defaultAudience'));
   });
 
   it('passes a clean customer pack', () => {
-    const report = checkMarriottLeak({
+    const report = checkReferenceBrandLeak({
       ...DEFAULT_BRAND,
       customerName: 'Stripe',
       customerSlug: 'stripe',

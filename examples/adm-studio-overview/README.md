@@ -13,8 +13,8 @@ From the create-presentation skill directory:
 
 ```bash
 python3 scripts/build_presentation.py \
-  /path/to/marriott-deck-machine/examples/adm-studio-overview/outline.yaml \
-  -o /path/to/marriott-deck-machine/examples/adm-studio-overview/Deck_Machine_Studio_for_ADMs.pptx
+  /path/to/deck-building-machine/examples/adm-studio-overview/outline.yaml \
+  -o /path/to/deck-building-machine/examples/adm-studio-overview/Deck_Machine_Studio_for_ADMs.pptx
 ```
 
 ## Arc

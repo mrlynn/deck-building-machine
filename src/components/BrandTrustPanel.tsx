@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { assessPrefillConfidence } from '@/lib/prefill-confidence';
-import { checkMarriottLeak } from '@/lib/marriott-leak';
+import { checkReferenceBrandLeak } from '@/lib/reference-brand-leak';
 import type { BrandPack } from '@/lib/types';
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
   showPrefill?: boolean;
   /**
    * Surface leftover issues only when something needs attention.
-   * Pass state is never shown — ADMs should not see “Marriott check” chrome.
+   * Pass state is never shown — ADMs should not see “reference brand check” chrome.
    */
   showLeakCheck?: boolean;
 };
@@ -31,7 +31,7 @@ export function BrandTrustPanel({
   showLeakCheck = true,
 }: Props) {
   const confidence = assessPrefillConfidence(brand, qualityScore);
-  const leak = checkMarriottLeak(brand);
+  const leak = checkReferenceBrandLeak(brand);
   const showLeakIssue =
     showLeakCheck && (leak.severity === 'warn' || leak.severity === 'fail');
 

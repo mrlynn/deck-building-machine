@@ -1,7 +1,7 @@
 {
-  "name": "marriott-pptx-builder",
+  "name": "deck-pptx-builder",
   "version": "1.0.0",
-  "description": "Marriott deck PPTX export",
+  "description": "Branded deck PPTX export",
   "main": "build-pptx.js",
   "scripts": {
     "build": "node build-pptx.js"

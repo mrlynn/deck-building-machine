@@ -11,7 +11,7 @@ Then run `/build-deck brief.md`.
 | Field | Value |
 |---|---|
 | **Topic** | Deck Machine next increment — Documents and metrics Excel as renderers, MCP into `/create-brief`, and a revise/preview loop |
-| **Audience** | Marriott Cursor account team — Paul, Kristin, and Cliff |
+| **Audience** | Platform engineering leadership and developer experience champions |
 | **Purpose** | Persuade |
 | **Target slide count** | 8–10 |
 | **Presenter** | Michael Lynn, AI Adoption Engineer |

@@ -4,7 +4,7 @@ The PowerPoint proved the pipeline. This page is what happens on day 2.
 
 ## What you just proved
 
-Three Cursor primitives worked together for Marriott:
+Three Cursor primitives worked together for Acme:
 
 1. **Rules** — brand standards loaded without anyone typing `@` or `/`
 2. **Skills** — humans typed `/create-brief` and `/build-deck`
@@ -25,7 +25,7 @@ Before the next live run, confirm:
 
 | Piece | Owner | Notes |
 |---|---|---|
-| `brand/` + `.cursor/rules/marriott-brand.mdc` | Brand / marketing + champion | Keep palette, voice, and the always-on rule in sync |
+| `brand/` + `.cursor/rules/corporate-brand.mdc` | Brand / marketing + champion | Keep palette, voice, and the always-on rule in sync |
 | This repo (Git home) | Customer champion | Prefer a **team Git repo** over one laptop |
 | Studio zip / layout style / exporter templates | Cursor ADM / FE | Regenerate from Deck Machine Studio when templates improve |
 | Day-to-day decks | Whoever runs `/create-brief` | Same repo; no new IT app |

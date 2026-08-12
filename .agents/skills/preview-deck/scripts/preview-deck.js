@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Marriott Deck Machine — HTML preview from deck-content.json
+ * Corporate Deck Machine — HTML preview from deck-content.json
  * Usage: node preview-deck.js path/to/deck-content.json
  */
 const fs = require('fs');

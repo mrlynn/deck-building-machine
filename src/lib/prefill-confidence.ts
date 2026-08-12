@@ -18,8 +18,8 @@ function hasLogo(brand: BrandPack): boolean {
 function primaryStillReference(brand: BrandPack): boolean {
   return (
     hexBare(brand.primaryColor) === hexBare(DEFAULT_BRAND.primaryColor) &&
-    brand.customerSlug !== 'marriott' &&
-    !brand.customerName.toLowerCase().includes('marriott')
+    brand.customerSlug !== 'acme' &&
+    !brand.customerName.toLowerCase().includes('acme')
   );
 }
 

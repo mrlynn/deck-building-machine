@@ -16,12 +16,12 @@ describe('load-brand', () => {
     assert.equal(repoRootFromInput(nestedDeck), root);
   });
 
-  it('loads Marriott dogfood pack by default', () => {
+  it('loads reference dogfood pack by default', () => {
     const prev = process.env.DECK_BRAND_DIR;
     delete process.env.DECK_BRAND_DIR;
     try {
       const brand = loadBrand(root);
-      assert.equal(brand.customerName, 'Marriott');
+      assert.equal(brand.customerName, 'Acme');
       assert.equal(brand.primaryBare, 'BE202E');
     } finally {
       if (prev === undefined) delete process.env.DECK_BRAND_DIR;

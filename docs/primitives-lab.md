@@ -1,6 +1,6 @@
 # Primitives lab — Skills, Rules, and Agents
 
-Timed practice for Marriott. The PPTX is proof; these labs teach *why* the repo is wired this way.
+Timed practice for Acme. The PPTX is proof; these labs teach *why* the repo is wired this way.
 
 **Prereq:** one successful `/create-brief` → `/build-deck` so `deck-content.json` and `output/` exist.
 
@@ -12,7 +12,7 @@ Timed practice for Marriott. The PPTX is proof; these labs teach *why* the repo 
 
 **Goal:** Feel always-on constraints.
 
-1. Open `.cursor/rules/marriott-brand.mdc`. Note `alwaysApply: true`.
+1. Open `.cursor/rules/corporate-brand.mdc`. Note `alwaysApply: true`.
 2. Open `.cursor/rules/deck-workflow.mdc`. Note it is *not* always on — process loads when you work on decks.
 3. In Agent chat (no skill), ask: `Write one content slide about Q2 results` with a topic-label headline like “Q2 Results”.
 4. Observe: the Agent should push an **insight** headline and brand voice without you pasting the rule.

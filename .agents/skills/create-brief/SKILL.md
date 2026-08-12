@@ -73,7 +73,7 @@ Get enough to fill the template. Defaults in brackets if the user skips:
 | Field | Ask as | Default if skipped |
 |---|---|---|
 | Topic | What is this deck about? | (required — do not invent) |
-| Audience | Who is in the room? | Marriott leadership |
+| Audience | Who is in the room? | Acme leadership |
 | Purpose | Inform / Persuade / Update / Request? | persuade |
 | Ask | What should they decide or do? | (required if purpose is persuade/request) |
 | Key messages | What 3 things should stick? | Derive from topic + ask if user gives 1–2 |
@@ -121,7 +121,7 @@ Write markdown that follows `templates/brief.md` structure exactly:
 - Background (2–3 sentences)
 - Exactly three key messages
 - Content to include (metrics, proof, recommendation/ask)
-- What to avoid (use sensible Marriott defaults if none given — no "AI tool" framing, not an IT procurement pitch — only when the topic is Cursor/AI Studio enablement; otherwise omit canned avoids)
+- What to avoid (use sensible Acme defaults if none given — no "AI tool" framing, not an IT procurement pitch — only when the topic is Cursor/AI Studio enablement; otherwise omit canned avoids)
 - Sections optional — include only if the user specified structure
 
 Do not leave `[placeholder]` brackets in the output. Use real content or omit optional empty sections.

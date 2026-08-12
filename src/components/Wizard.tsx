@@ -66,7 +66,7 @@ import {
   logoFieldsFromSource,
   parseBrandDeepLink,
 } from '@/lib/brand-pack-io';
-import { checkMarriottLeak } from '@/lib/marriott-leak';
+import { checkReferenceBrandLeak } from '@/lib/reference-brand-leak';
 import {
   loadRecentBrands,
   removeRecentBrand,
@@ -410,7 +410,7 @@ export function Wizard() {
 
   const canNextCustomer = Boolean(brand.customerName.trim());
   const canNextBrand = Boolean(brand.primaryColor && brand.darkColor && brand.fontStack);
-  const leakReport = checkMarriottLeak(brand);
+  const leakReport = checkReferenceBrandLeak(brand);
   const downloadBlocked = leakReport.severity === 'fail';
   const heroExpanded =
     forceTeachingTips || (!heroQuiet && activeStep === 0);
@@ -424,7 +424,7 @@ export function Wizard() {
         customerSlug: brand.customerSlug || slugify(brand.customerName),
         layoutStyle: resolveLayoutStyle(brand.layoutStyle),
       };
-      if (checkMarriottLeak(pack).severity === 'fail') {
+      if (checkReferenceBrandLeak(pack).severity === 'fail') {
         throw new Error(
           'Brand pack still has reference leftovers — fix the highlighted fields before download.',
         );
@@ -822,7 +822,7 @@ export function Wizard() {
                   <TextField
                     {...params}
                     label="Search Salesforce accounts (Databricks)"
-                    placeholder="e.g. Marriott, Stripe, Acme"
+                    placeholder="e.g. Acme, Stripe, Acme"
                     helperText={
                       searching
                         ? 'Searching…'

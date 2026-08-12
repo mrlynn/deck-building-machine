@@ -2,16 +2,16 @@
 alwaysApply: true
 ---
 
-# Marriott International Corporate Brand Standards
+# Acme Corporation Corporate Brand Standards
 
-You are working in a Marriott International corporate presentation context. Apply these standards in every interaction.
+You are working in an Acme Corporation corporate presentation context. Apply these standards in every interaction.
 
 ## Color Palette
 
 | Token | Hex | Use |
 |---|---|---|
-| Marriott Red | `#BE202E` | Title slides, section dividers, key stats, accent lines |
-| Marriott Dark | `#1D1D1B` | Body text, dark backgrounds |
+| Primary Red | `#BE202E` | Title slides, section dividers, key stats, accent lines |
+| Brand Dark | `#1D1D1B` | Body text, dark backgrounds |
 | Corporate Gray | `#4A4A4A` | Secondary text, subheadings |
 | Light Gray | `#F2F2F2` | Slide backgrounds, card fills |
 | Mid Gray | `#9B9B9B` | Captions, footnotes, muted text |

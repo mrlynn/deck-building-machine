@@ -45,7 +45,7 @@ export const ASSISTANT_EXAMPLES_BY_STEP: Record<number, AssistantStageExamples> 
       'What is Mission control?',
       'How do I demo this live?',
       'How do /create-brief and /build-deck work?',
-      'Will any Marriott branding leak into the customer zip?',
+      'Will any branding leak into the customer zip?',
       'What is the difference between skills, rules, and agents?',
     ],
   },

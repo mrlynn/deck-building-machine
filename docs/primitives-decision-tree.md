@@ -1,6 +1,6 @@
 # Where does this go — Rule, Skill, Agent, or Doc?
 
-Use this when extending the Marriott deck machine. Placement matters more than prose quality.
+Use this when extending the corporate deck machine. Placement matters more than prose quality.
 
 ## The decision tree
 
@@ -24,9 +24,9 @@ Do humans need to read it too (reference, onboarding)?
 
 ## Quick map (this repo)
 
-| Primitive | Path | Marriott example | Why here |
+| Primitive | Path | Example | Why here |
 |---|---|---|---|
-| **Rule (always on)** | `.cursor/rules/marriott-brand.mdc` | Palette, voice, insight headlines, bullet limits | Brand must constrain every chat without `/` or `@` |
+| **Rule (always on)** | `.cursor/rules/corporate-brand.mdc` | Palette, voice, insight headlines, bullet limits | Brand must constrain every chat without `/` or `@` |
 | **Rule (on demand)** | `.cursor/rules/deck-workflow.mdc` | Outline-first, story arcs, `deck-content.json` schema | Process guidance — load when editing decks, not every unrelated chat |
 | **Skill** | `.agents/skills/` | `/create-brief`, `/build-deck`, `/brand-check`, `/export-pptx` | Humans pick the moment; skill text is the playbook |
 | **Agent** | `.cursor/agents/` | `deck-builder`, `slide-writer`, `brand-guardian` | Multi-step or specialized work skills invoke |
@@ -46,7 +46,7 @@ Do humans need to read it too (reference, onboarding)?
 
 | Mode | File | Behavior |
 |---|---|---|
-| Always apply | `marriott-brand.mdc` | Loaded into every Agent chat |
+| Always apply | `corporate-brand.mdc` | Loaded into every Agent chat |
 | Requestable / contextual | `deck-workflow.mdc` | Loads when working on presentations (description-driven) |
 
 If you add a third rule later, prefer **path/glob scoping** (e.g. only when `deck-content.json` is open) when the guidance is file-specific.
@@ -57,7 +57,7 @@ If you add a third rule later, prefer **path/glob scoping** (e.g. only when `dec
 
 1. **Skill** — user types `/brand-check`
 2. **Agent** — skill delegates to `brand-guardian`
-3. **Rule** — guardian grades against `marriott-brand.mdc`
+3. **Rule** — guardian grades against `corporate-brand.mdc`
 
 Same pattern: `/build-deck` → `deck-builder` → workers.
 

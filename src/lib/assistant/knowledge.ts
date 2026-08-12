@@ -65,7 +65,7 @@ BrandPack fields the wizard collects and passes to generate:
 - Layout: layoutStyle (\`classic\` | \`minimal\` | \`bold\`)
 - Logos: logoOnDarkBase64, logoOnLightBase64 (data URLs)
 
-Defaults start as Marriott-like reference tokens; the downloaded zip is fully parameterized for the selected customer (no Marriott leakage in output).
+Defaults start as reference reference tokens; the downloaded zip is fully parameterized for the selected customer (no Acme leakage in output).
 
 ### API routes
 - \`GET /api/customers/search?q=\` — Databricks Salesforce account search (optional)

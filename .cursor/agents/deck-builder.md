@@ -97,7 +97,7 @@ Summarize:
 - Any items you could not resolve (flag for human review)
 
 ## Brand standards always in effect
-See `.cursor/rules/marriott-brand.mdc` (or the customer brand rule). Key reminders:
+See `.cursor/rules/corporate-brand.mdc` (or the customer brand rule). Key reminders:
 - Every slide headline is an insight, not a topic label
 - Max 5 bullets, max ~12 words per bullet; assertion + `detail` evidence lines carry the depth
 - Every slide ships with structured speaker notes; content-bearing slides carry a `takeaway`

@@ -1,5 +1,5 @@
 {
-  "name": "marriott-deck-preview",
+  "name": "deck-preview",
   "version": "1.0.0",
   "description": "HTML preview from deck-content.json",
   "main": "preview-deck.js",

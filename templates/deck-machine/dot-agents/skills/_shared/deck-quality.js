@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Deck quality scorecard — structural + Marriott-aligned aesthetics (coach).
+ * Deck quality scorecard — structural + brand-aligned aesthetics (coach).
  * No npm deps. Rejected scoring targets: body≥18pt, 5/5/5, dual fonts,
  * white-space %, Morph/Fade, external palettes.
  */

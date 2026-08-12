@@ -1,11 +1,7 @@
 import { DEFAULT_BRAND, type BrandPack, hexBare } from './types';
 
-const MARRIOTT_MARKERS = [
-  'marriott',
-  'bonvoy',
-  'ritz-carlton',
-  'ritz carlton',
-] as const;
+/** Markers from the Studio reference (dogfood) brand that must not leak into customer zips. */
+const REFERENCE_MARKERS = ['acme'] as const;
 
 export type LeakSeverity = 'pass' | 'warn' | 'fail';
 
@@ -16,7 +12,7 @@ export type LeakFinding = {
   message: string;
 };
 
-export type MarriottLeakReport = {
+export type ReferenceBrandLeakReport = {
   severity: LeakSeverity;
   isReferenceCustomer: boolean;
   findings: LeakFinding[];
@@ -24,34 +20,30 @@ export type MarriottLeakReport = {
   summary: string;
 };
 
-function isMarriottCustomer(brand: BrandPack): boolean {
+function isReferenceCustomer(brand: BrandPack): boolean {
   const slug = brand.customerSlug.toLowerCase();
   const name = brand.customerName.toLowerCase();
-  return (
-    slug === 'marriott' ||
-    slug.startsWith('marriott-') ||
-    name.includes('marriott')
-  );
+  return slug === 'acme' || slug.startsWith('acme-') || name.includes('acme');
 }
 
 function fieldHits(value: string | undefined): boolean {
   if (!value) return false;
   const lower = value.toLowerCase();
-  return MARRIOTT_MARKERS.some((m) => lower.includes(m));
+  return REFERENCE_MARKERS.some((m) => lower.includes(m));
 }
 
 /**
- * Client-side trust check: brand pack fields should not carry Marriott
- * leftovers when packaging a non-Marriott customer zip.
+ * Client-side trust check: brand pack fields should not carry reference-brand
+ * leftovers when packaging a customer zip.
  */
-export function checkMarriottLeak(brand: BrandPack): MarriottLeakReport {
-  if (isMarriottCustomer(brand)) {
+export function checkReferenceBrandLeak(brand: BrandPack): ReferenceBrandLeakReport {
+  if (isReferenceCustomer(brand)) {
     return {
       severity: 'pass',
       isReferenceCustomer: true,
       findings: [],
       summary:
-        'Reference customer (Marriott) — Studio defaults are expected for dogfood.',
+        'Reference customer (Acme) — Studio defaults are expected for dogfood.',
     };
   }
 
@@ -74,7 +66,7 @@ export function checkMarriottLeak(brand: BrandPack): MarriottLeakReport {
         id: `field-${field}`,
         severity: 'fail',
         field,
-        message: `${field} still mentions Marriott (or a Marriott brand).`,
+        message: `${field} still mentions the reference brand (Acme).`,
       });
     }
   }
@@ -85,7 +77,7 @@ export function checkMarriottLeak(brand: BrandPack): MarriottLeakReport {
         id: `avoid-${word}`,
         severity: 'warn',
         field: 'wordsToAvoid',
-        message: `Words-to-avoid list includes “${word}” — unusual for a non-Marriott pack.`,
+        message: `Words-to-avoid list includes “${word}” — unusual for a non-reference pack.`,
       });
     }
   }

@@ -29,4 +29,4 @@ See [README.md](./README.md) and [AGENTS.md](./AGENTS.md) for the full skill ref
 
 ## Brand
 
-Default dogfood brand is Marriott (`brand/brand-pack.json`, `.cursor/rules/marriott-brand.mdc`). Replace with your customer's palette, voice, and slide types in `brand/` and update the matching rule file.
+Default reference brand is Acme (`brand/brand-pack.json`, `.cursor/rules/corporate-brand.mdc`). Replace with your customer's palette, voice, and slide types in `brand/` and update the matching rule file.

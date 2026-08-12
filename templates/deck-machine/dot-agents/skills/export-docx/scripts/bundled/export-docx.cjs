@@ -20867,7 +20867,7 @@ var require_load_brand = __commonJS({
     var fs2 = require("fs");
     var path2 = require("path");
     var DEFAULTS = {
-      customerName: "Marriott",
+      customerName: "Acme",
       primaryBare: "BE202E",
       darkBare: "1D1D1B",
       grayBare: "4A4A4A",

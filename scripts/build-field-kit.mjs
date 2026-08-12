@@ -9,7 +9,7 @@
  * PPTX lands in examples/assembled-<id>/output/ (gitignored).
  * Talk tracks stay in content-blocks/<id>/talk-track.md (source of truth).
  *
- * Teaching exports use Cursor brand tokens (brand/cursor/), not the Marriott
+ * Teaching exports use Cursor brand tokens (brand/cursor/), not the Acme
  * dogfood pack in brand/. Override with DECK_BRAND_DIR if needed.
  */
 
@@ -71,7 +71,7 @@ function main() {
       throw new Error(`Expected ${deckPath} after assemble`);
     }
 
-    // Field-kit / curriculum decks are Cursor enablement — not Marriott dogfood.
+    // Field-kit / curriculum decks are Cursor enablement — not reference dogfood.
     runNode(exportScript, [deckPath], `export ${id}`, {
       DECK_BRAND_DIR: process.env.DECK_BRAND_DIR || 'brand/cursor',
     });

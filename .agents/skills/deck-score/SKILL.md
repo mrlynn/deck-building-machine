@@ -1,6 +1,6 @@
 ---
 name: deck-score
-description: Score a deck-content.json for structural depth, visuals, variety, and Marriott-aligned aesthetics. Warn by default; optional strict gate.
+description: Score a deck-content.json for structural depth, visuals, variety, and brand-aligned aesthetics. Warn by default; optional strict gate.
 ---
 
 # /deck-score
@@ -22,7 +22,7 @@ Defaults to `deck-content.json` in the repo root.
 Structural categories: structure, notes, depth, visuals, variety.  
 Aesthetics (coach only): brand type/color invariants, no animation, metrics tile cap, text-heavy runs, quote attribution.
 
-**Not scored (conflicts with Marriott brand):** body ≥18pt, 5/5/5 word rules, dual fonts, external palettes, white-space %, Morph/Fade.
+**Not scored (conflicts with brand):** body ≥18pt, 5/5/5 word rules, dual fonts, external palettes, white-space %, Morph/Fade.
 
 ## Prompt for agent
 

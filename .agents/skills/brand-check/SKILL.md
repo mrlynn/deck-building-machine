@@ -1,11 +1,11 @@
 ---
 name: brand-check
-description: Review presentation content or a deck-content.json file for Marriott brand compliance. Returns a report with flagged issues and suggested fixes.
+description: Review presentation content or a deck-content.json file for Acme brand compliance. Returns a report with flagged issues and suggested fixes.
 ---
 
 # /brand-check
 
-Review your deck for Marriott brand compliance before sharing.
+Review your deck for Acme brand compliance before sharing.
 
 ## How to use
 

@@ -1,4 +1,4 @@
-# Marriott Deck Slide Type Catalog
+# Corporate Deck Slide Type Catalog
 
 **Applies to every type:** each slide carries structured speaker `notes` (opening, 2–4 points beyond the slide text, transition, timeMinutes). Content-bearing slides (`content`, `two-column`, `metrics`, `chart`, `diagram`) also carry a `takeaway` — the one line the audience must remember, rendered as a bottom accent strip.
 
@@ -132,7 +132,7 @@
 | Volume + rate together | `combo` (rate series marked `"type": "line"`, optional `secondaryAxis`) |
 | Parts of a whole | `pie` / `doughnut` — ≤5 slices only |
 
-**Style:** White background; the `highlight` category/series renders in Marriott Red while the rest recedes to gray; caption in mid gray
+**Style:** White background; the `highlight` category/series renders in Primary Red while the rest recedes to gray; caption in mid gray
 
 **Rules:**
 - Prefer `chart` over `metrics` when the story is change over time or category comparison
